@@ -161,7 +161,7 @@ MonoBehaviour:
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 1
   m_AlphaBlendOnOverlap: 0
-  m_OverlapOperation: 1
+  m_OverlapOperation: 0
   m_NormalMapDistance: 3
   m_NormalMapQuality: 2
   m_UseNormalMap: 0
@@ -321,6 +321,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3615438809422013557}
   - component: {fileID: 2721581549809244774}
+  - component: {fileID: 6619086882008622310}
   m_Layer: 0
   m_Name: EnemyParent
   m_TagString: Untagged
@@ -356,7 +357,7 @@ Rigidbody2D:
   m_GameObject: {fileID: 7330901085573960058}
   m_BodyType: 0
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 1
@@ -373,6 +374,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &6619086882008622310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7330901085573960058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85ee1208a82738c49991c940ef69318b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
+  _speed: 5
 --- !u!1001 &6585818918267219073
 PrefabInstance:
   m_ObjectHideFlags: 0
