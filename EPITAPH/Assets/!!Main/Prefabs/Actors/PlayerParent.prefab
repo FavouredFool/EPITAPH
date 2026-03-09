@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3967837825882570733}
   - component: {fileID: 9193680919393893474}
+  - component: {fileID: 4452163614293101704}
   - component: {fileID: 7293642660323857259}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,6 +49,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   _speed: 5
+--- !u!114 &4452163614293101704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2902068242822157332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46e7de4af964051479854d4c495b4c34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerShooting
+  _shootSpeed: 5
+  _instantiationParent: {fileID: 0}
+  _projectileBlueprint: {fileID: 3757731019365391340, guid: ab0c37ca8bfc3e04289b07f66f8f1814, type: 3}
 --- !u!50 &7293642660323857259
 Rigidbody2D:
   serializedVersion: 5
@@ -87,7 +103,7 @@ GameObject:
   - component: {fileID: 8523502130309077559}
   - component: {fileID: 147072272011586763}
   - component: {fileID: 6708977339541424840}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player3D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,7 +206,7 @@ GameObject:
   - component: {fileID: 6832729491387809120}
   - component: {fileID: 9172875970443336580}
   - component: {fileID: 7223937281465304360}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
