@@ -31,7 +31,6 @@ public class EnemyController : MonoBehaviour
 
     void FixedUpdate()
     {
-        _movementVelocity = new Vector2(Mathf.Sin(Time.time), 0) * _speed;
         _knockbackVelocity *= Mathf.Exp(-_knockbackDecay * Time.deltaTime);
         //Debug.Log(_knockbackVelocity);
 
