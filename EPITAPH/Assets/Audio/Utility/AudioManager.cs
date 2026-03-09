@@ -13,6 +13,7 @@ public static class AudioManager
     private static float _musicVolume;
     private static float _ambienceVolume;
 
+
     // filepath to save the audio settings
     static string AudioSaveFile
     => Path.Combine(Application.persistentDataPath, "AudioSettings.json");
@@ -24,13 +25,13 @@ public static class AudioManager
     {   
         get 
         { 
-            RuntimeManager.GetBus("bus:/Master").getVolume(out _masterVolume);
+            RuntimeManager.GetBus("bus:/").getVolume(out _masterVolume);
             return _masterVolume;
         }
         set
         {
             _masterVolume = value;
-            Bus masterBus = RuntimeManager.GetBus("bus:/Master");
+            Bus masterBus = RuntimeManager.GetBus("bus:/");
             masterBus.setVolume(value);
             SaveSettings();
         }

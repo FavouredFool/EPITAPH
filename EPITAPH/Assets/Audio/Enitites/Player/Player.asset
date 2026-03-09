@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f8dd35442b3ae940a17ad5293bfde76, type: 3}
+  m_Name: Player
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAudioData
+  chargeEvent:
+    Guid:
+      Data1: -1303295287
+      Data2: 1196753807
+      Data3: 1798768264
+      Data4: -1896593394
+    Path: event:/SFX/Player/Crossbow Charging
+  lockedEvent:
+    Guid:
+      Data1: -1449765308
+      Data2: 1121381524
+      Data3: 76965517
+      Data4: 63472518
+    Path: event:/SFX/Player/Crossbow Lock
