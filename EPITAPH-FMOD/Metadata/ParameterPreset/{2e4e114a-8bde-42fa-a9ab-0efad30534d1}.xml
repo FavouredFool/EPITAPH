@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{2e4e114a-8bde-42fa-a9ab-0efad30534d1}">
+		<property name="name">
+			<value>Elevation</value>
+		</property>
+		<relationship name="folder">
+			<destination>{5d27db34-ab9e-409d-96f0-ddd649cb7cc8}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{53469b2a-e186-45f2-8d0e-b8685943229c}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{53469b2a-e186-45f2-8d0e-b8685943229c}">
+		<property name="parameterType">
+			<value>5</value>
+		</property>
+		<property name="minimum">
+			<value>-90</value>
+		</property>
+		<property name="maximum">
+			<value>90</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<property name="isExposedRecursively">
+			<value>false</value>
+		</property>
+	</object>
+</objects>
