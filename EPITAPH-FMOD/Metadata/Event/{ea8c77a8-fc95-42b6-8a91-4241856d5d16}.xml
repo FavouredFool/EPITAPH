@@ -81,6 +81,7 @@
 		<relationship name="markers">
 			<destination>{944bbd38-1269-4a27-a907-ef0ef66d5350}</destination>
 			<destination>{73210705-0ba5-4390-8eff-0635c4e2ffe3}</destination>
+			<destination>{49d737da-c741-4b61-a493-a2bab764f5d2}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{f05e6d29-0e56-4301-8327-310e891e6a0f}">
@@ -183,6 +184,20 @@
 		</relationship>
 		<relationship name="transitionTimeline">
 			<destination>{8f063090-7a82-4ab2-9d21-5b7167284528}</destination>
+		</relationship>
+	</object>
+	<object class="TempoMarker" id="{49d737da-c741-4b61-a493-a2bab764f5d2}">
+		<property name="position">
+			<value>14.876847290640397</value>
+		</property>
+		<property name="tempo">
+			<value>129</value>
+		</property>
+		<relationship name="timeline">
+			<destination>{3c0b3b42-ca9f-4e6d-a652-62d964c1bde4}</destination>
+		</relationship>
+		<relationship name="markerTrack">
+			<destination>{078cd233-fab4-4407-bb70-c49a68ba73f8}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{a3bf18e6-70e4-4394-b070-8bcc3923bda1}">

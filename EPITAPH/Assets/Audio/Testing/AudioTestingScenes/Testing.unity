@@ -1169,57 +1169,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1192319715}
   m_CullTransparentMesh: 1
---- !u!1 &1214831759
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1214831761}
-  - component: {fileID: 1214831760}
-  m_Layer: 0
-  m_Name: Beat
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1214831760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1214831759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54c00fb900eaaee46823e57bd4350953, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ScriptUsageTimeline
-  EventName:
-    Guid:
-      Data1: -359893080
-      Data2: 1119288469
-      Data3: 1094881674
-      Data4: 375221637
-    Path: event:/Music/PlaceholderTrack
---- !u!4 &1214831761
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1214831759}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 957.0787, y: 540, z: 0.46526}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1556942342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1780,6 +1729,63 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1001 &4624182547915906753
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8024424281235067106, guid: 41469e39d2acd87448a517c7a531e56b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 957.0787
+      objectReference: {fileID: 0}
+    - target: {fileID: 8024424281235067106, guid: 41469e39d2acd87448a517c7a531e56b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 540
+      objectReference: {fileID: 0}
+    - target: {fileID: 8024424281235067106, guid: 41469e39d2acd87448a517c7a531e56b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.46526
+      objectReference: {fileID: 0}
+    - target: {fileID: 8024424281235067106, guid: 41469e39d2acd87448a517c7a531e56b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8024424281235067106, guid: 41469e39d2acd87448a517c7a531e56b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8024424281235067106, guid: 41469e39d2acd87448a517c7a531e56b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8024424281235067106, guid: 41469e39d2acd87448a517c7a531e56b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8024424281235067106, guid: 41469e39d2acd87448a517c7a531e56b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8024424281235067106, guid: 41469e39d2acd87448a517c7a531e56b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8024424281235067106, guid: 41469e39d2acd87448a517c7a531e56b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8400946379320409867, guid: 41469e39d2acd87448a517c7a531e56b, type: 3}
+      propertyPath: m_Name
+      value: MusicPlayer
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 41469e39d2acd87448a517c7a531e56b, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1787,4 +1793,4 @@ SceneRoots:
   - {fileID: 7300418}
   - {fileID: 798891632}
   - {fileID: 441178117}
-  - {fileID: 1214831761}
+  - {fileID: 4624182547915906753}
