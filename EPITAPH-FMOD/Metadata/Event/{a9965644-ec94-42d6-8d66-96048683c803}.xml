@@ -5,7 +5,7 @@
 			<value>Crossbow Lock</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{9d92fe62-e579-488d-9e90-faf0fccb655e}</destination>
@@ -187,10 +187,13 @@
 			<value>0.066194581280788173</value>
 		</property>
 		<property name="length">
-			<value>2.0137868480725625</value>
+			<value>1.1752196223878641</value>
 		</property>
 		<relationship name="fadeInCurve">
 			<destination>{ea16a0fc-c4ad-40b8-b24a-808e4d1c4834}</destination>
+		</relationship>
+		<relationship name="fadeOutCurve">
+			<destination>{312f67a5-ef27-4cd1-b799-9882a0557056}</destination>
 		</relationship>
 		<relationship name="audioFile">
 			<destination>{a56c1f24-c5b9-48ea-aa0e-8dee1b9a7b01}</destination>
@@ -249,6 +252,14 @@
 			<destination>{8394a915-c3ce-424d-9cb9-63ad1be98e4c}</destination>
 		</relationship>
 	</object>
+	<object class="FadeCurve" id="{312f67a5-ef27-4cd1-b799-9882a0557056}">
+		<relationship name="startPoint">
+			<destination>{e849a081-3eac-4ed9-a17b-e68314b4b2d0}</destination>
+		</relationship>
+		<relationship name="endPoint">
+			<destination>{380ac556-42a1-4f0a-b085-985b28ca6dfc}</destination>
+		</relationship>
+	</object>
 	<object class="Automator" id="{1f07669a-0fb3-4438-8c4e-7b0f63e08e42}">
 		<property name="nameOfPropertyBeingAutomated">
 			<value>volume</value>
@@ -301,6 +312,25 @@
 		</property>
 		<property name="value">
 			<value>1</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{e849a081-3eac-4ed9-a17b-e68314b4b2d0}">
+		<property name="position">
+			<value>0.80740165829085764</value>
+		</property>
+		<property name="value">
+			<value>1</value>
+		</property>
+		<property name="curveShape">
+			<value>-0.548574984</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{380ac556-42a1-4f0a-b085-985b28ca6dfc}">
+		<property name="position">
+			<value>1.2414142036686524</value>
+		</property>
+		<property name="value">
+			<value>0</value>
 		</property>
 	</object>
 	<object class="AutomationCurve" id="{a0ca689b-0b9d-4034-a1a1-26e495bee6e8}">

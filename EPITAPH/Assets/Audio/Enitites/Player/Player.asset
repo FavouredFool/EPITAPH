@@ -26,3 +26,17 @@ MonoBehaviour:
       Data3: 76965517
       Data4: 63472518
     Path: event:/SFX/Player/Crossbow Lock
+  hitMeat:
+    Guid:
+      Data1: 551514837
+      Data2: 1285769575
+      Data3: -448560214
+      Data4: 681000608
+    Path: event:/SFX/Player/Hits/MeatHit
+  hitWall:
+    Guid:
+      Data1: 2143872904
+      Data2: 1250617760
+      Data3: 1358742182
+      Data4: -369695082
+    Path: event:/SFX/Player/Hits/WallHit
