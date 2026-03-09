@@ -4,8 +4,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerShooting : MonoBehaviour
 {
-    [SerializeField, Range(1, 20)] float _shootSpeed;
-    
     [SerializeField] Transform _instantiationParent;
     [SerializeField] Rigidbody2D _projectileBlueprint;
     
@@ -34,8 +32,6 @@ public class PlayerShooting : MonoBehaviour
     
     void ShootBolt()
     {
-        Rigidbody2D boltRB = Instantiate(_projectileBlueprint, transform.position, transform.rotation, _instantiationParent);
-
-        boltRB.AddForce(transform.up * _shootSpeed, ForceMode2D.Impulse);
+        Instantiate(_projectileBlueprint, transform.position, transform.rotation, _instantiationParent);
     }
 }

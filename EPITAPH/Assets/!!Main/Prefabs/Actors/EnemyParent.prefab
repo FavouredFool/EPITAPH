@@ -256,7 +256,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Radius: 0.2
 --- !u!1 &7330901085573960058
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,11 +491,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5518057825216685197, guid: 6fe48fe348c21af409d006239212ad86, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.07550001
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5518057825216685197, guid: 6fe48fe348c21af409d006239212ad86, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.14599991
+      value: -0.062
       objectReference: {fileID: 0}
     - target: {fileID: 5518057825216685197, guid: 6fe48fe348c21af409d006239212ad86, type: 3}
       propertyPath: m_LocalPosition.z
