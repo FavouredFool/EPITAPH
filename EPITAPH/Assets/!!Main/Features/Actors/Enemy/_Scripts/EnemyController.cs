@@ -2,10 +2,12 @@ using System;
 using System.Linq;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.AI;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(NavMeshAgent))]
 public class EnemyController : MonoBehaviour
 {
+    [SerializeField] Transform _target;
     [SerializeField] LayerMask _wallLayers;
     [SerializeField] LayerMask _hitLayers;
     [SerializeField, UnityEngine.Range(1, 6)] int _maxHp;
@@ -23,16 +25,25 @@ public class EnemyController : MonoBehaviour
 
     bool _isDead;
     
+    NavMeshAgent _agent;
+    
 
     void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        
+        _agent = GetComponent<NavMeshAgent>();
+        _agent.updatePosition = false;
+        _agent.updateRotation = false;
+        _agent.updateUpAxis = false;
+        
         _currentHp = _maxHp;
     }
 
     void Update()
     {
-        
+        _agent.destination= _target.position;
+
     }
 
     void FixedUpdate()
@@ -42,7 +53,16 @@ public class EnemyController : MonoBehaviour
             _rb.linearVelocity = Vector3.zero;
             return;
         }
+
+
+
+        Vector2 xyVelocity = new Vector2(_agent.desiredVelocity.x, _agent.desiredVelocity.y);
         
+        //m_Agent.desiredVelocity;
+        //m_Agent.nextPosition;
+        //m_Agent.steeringTarget;
+        
+        _movementVelocity = xyVelocity;
         _knockbackVelocity *= Mathf.Exp(-_knockbackDecay * Time.deltaTime);
         //Debug.Log(_knockbackVelocity);
 
