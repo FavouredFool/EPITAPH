@@ -4,13 +4,15 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class BoltController : MonoBehaviour
 {
-    [SerializeField, Range(1, 20)] float _shootSpeed = 15;
+    [SerializeField, Range(1, 300)] float _shootSpeed = 15;
 
     Rigidbody2D _rb;
+    Rigidbody _rb3D;
     
     void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _rb3D = GetComponentInChildren<Rigidbody>();
     }
 
     void Start()
@@ -20,8 +22,7 @@ public class BoltController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         _rb.simulated = false;
-        
-        // if you hit a wall, 
+        _rb3D.GetComponent<Bolt3DVisual>().StopPhysics();
         
         _rb.transform.SetParent(other.transform.parent, true);
     }

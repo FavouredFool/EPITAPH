@@ -6,6 +6,7 @@ using UnityEngine.Assertions;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField, Range(1, 20)] float _speed;
+    [SerializeField, Range(0, 0.95f)] float _moveLockThreshold = 0.3f;
     
     InputActions _inputActions;
     Rigidbody2D _rb;
@@ -35,6 +36,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Translation()
     {
+        if (_rotateInput.sqrMagnitude > _moveLockThreshold)
+        {
+            _rb.linearVelocity = Vector2.zero;
+            return;
+        }
+        
         _rb.linearVelocity = _movementInput * _speed;
     }
 
@@ -42,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 dir = transform.up;
         
-        if (_rotateInput.sqrMagnitude > 0.01f)
+        if (_rotateInput.sqrMagnitude > _moveLockThreshold)
         {
             dir = _rotateInput.normalized;
         }
