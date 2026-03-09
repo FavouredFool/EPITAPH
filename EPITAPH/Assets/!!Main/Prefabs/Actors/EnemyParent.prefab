@@ -152,7 +152,7 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 1
   m_FalloffIntensity: 1
-  m_Color: {r: 0.38570368, g: 0.32275295, b: 0.5058824, a: 1}
+  m_Color: {r: 0.13709258, g: 0.10559807, b: 0.1981132, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
@@ -433,7 +433,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _maxHp: 5
-  _speed: 5
+  _speed: 1
   _knockbackDecay: 15
   _knockbackResistance: 2.5
   _pinKnockbackMagnitudeThreshold: 0.25
