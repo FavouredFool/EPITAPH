@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="EffectPreset" id="{e1acdf7e-1af5-4c0e-8317-6d80b88b487b}">
+		<property name="name">
+			<value>Reverb</value>
+		</property>
+		<relationship name="folder">
+			<destination>{38d0270c-dbd0-41e9-9eab-f0bc4f3ff42a}</destination>
+		</relationship>
+		<relationship name="effect">
+			<destination>{d12cda9d-ed6a-4586-9423-7a6a914f428f}</destination>
+		</relationship>
+	</object>
+	<object class="EffectChain" id="{d12cda9d-ed6a-4586-9423-7a6a914f428f}">
+		<relationship name="effects">
+			<destination>{62e9f7b1-2a67-40ce-a83d-b1fca8e39699}</destination>
+		</relationship>
+	</object>
+	<object class="SFXReverbEffect" id="{62e9f7b1-2a67-40ce-a83d-b1fca8e39699}">
+		<property name="decayTime">
+			<value>10500</value>
+		</property>
+		<property name="earlyDelay">
+			<value>10</value>
+		</property>
+		<property name="HFDecayRatio">
+			<value>22</value>
+		</property>
+		<property name="highCut">
+			<value>2200</value>
+		</property>
+		<property name="wetLevel">
+			<value>-16</value>
+		</property>
+	</object>
+</objects>

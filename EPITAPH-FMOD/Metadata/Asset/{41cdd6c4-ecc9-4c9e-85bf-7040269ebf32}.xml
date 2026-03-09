@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="EncodableAsset" id="{41cdd6c4-ecc9-4c9e-85bf-7040269ebf32}">
+		<property name="assetPath">
+			<value>Player/Crossbow/</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d8d3a64f-1576-4084-b11e-614e2cb247e0}</destination>
+		</relationship>
+	</object>
+</objects>
