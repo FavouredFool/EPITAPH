@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8987049625906859077}
+  - component: {fileID: 7836326258251045604}
   - component: {fileID: 9099935613033347814}
   - component: {fileID: 4760523681197598067}
   m_Layer: 5
@@ -37,6 +38,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 500}
   m_SizeDelta: {x: 250, y: 1000}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &7836326258251045604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5411325912278222617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca229654c0a8482458df77da63551fd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AmmoMarker
+  _background: {fileID: 4760523681197598067}
 --- !u!222 &9099935613033347814
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -9,14 +9,7 @@ public class AmmoMarker : MonoBehaviour
     {
         gameObject.SetActive(active);
         if(!active) return;
-
-        Color col;
-
-        if(filled)
-            col=CustomColor.HotBlood;
-        else
-            col= CustomColor.OldBlood;
         
-        _background.color = filled? CustomColor.HotBlood: CustomColor.OldBlood;
+        _background.color = filled? CustomColor.White: CustomColor.OldBlood;
     }
 }

@@ -16,5 +16,5 @@ MonoBehaviour:
   _healthMax: 2
   _ammo: 2
   _ammoMax: 4
-  _charge: 3
+  _charge: 2.8
   _chargeMax: 3
