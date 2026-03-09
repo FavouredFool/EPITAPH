@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
 public class AimLineGeneration : MonoBehaviour
 {
-    [SerializeField] PlayerMovement _playerMovement;
+    [SerializeField] PlayerController _playerController;
     [SerializeField, Range(4, 16)] int _resolution;
     [SerializeField, Range(1, 10)] float _startDistance;
     [SerializeField, Range(1, 10)] float _endDistance;
@@ -30,7 +30,7 @@ public class AimLineGeneration : MonoBehaviour
     void UpdateOffsetAngle()
     {
         // Should turn this into a windup that i can then resolve with the UI
-        _actualAngle = Vector2.SignedAngle(Vector2.up, _playerMovement.transform.up);
+        _actualAngle = Vector2.SignedAngle(Vector2.up, _playerController.transform.up);
         _offsetAngle = Mathf.MoveTowardsAngle(_offsetAngle, _actualAngle, _angleDecaySpeed * Time.deltaTime * 100);
     }
 
@@ -40,15 +40,15 @@ public class AimLineGeneration : MonoBehaviour
 
         Quaternion actualRotation = Quaternion.Euler(0, 0, _actualAngle);
         
-        points[0] = _playerMovement.transform.position + actualRotation * Vector3.up * _startDistance;
-        points[1] = _playerMovement.transform.position + actualRotation * Vector3.up * _endDistance;
+        points[0] = _playerController.transform.position + actualRotation * Vector3.up * _startDistance;
+        points[1] = _playerController.transform.position + actualRotation * Vector3.up * _endDistance;
         
         for (int i = 0; i < _resolution; i++)
         {
             Quaternion offsetRotation = Quaternion.Euler(0, 0, _offsetAngle);
             Quaternion partRotation = Quaternion.Slerp(actualRotation, offsetRotation, (i + 1f) / _resolution);
             
-            points[i+2] = _playerMovement.transform.position + partRotation * Vector3.up * _endDistance;
+            points[i+2] = _playerController.transform.position + partRotation * Vector3.up * _endDistance;
         }
 
         _lineRenderer.SetPositions(points);
