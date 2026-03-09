@@ -36,6 +36,6 @@ public class PlayerShooting : MonoBehaviour
     {
         Rigidbody2D boltRB = Instantiate(_projectileBlueprint, transform.position, transform.rotation, _instantiationParent);
 
-        boltRB.AddForce(transform.forward * _shootSpeed, ForceMode2D.Impulse);
+        boltRB.AddForce(transform.up * _shootSpeed, ForceMode2D.Impulse);
     }
 }
