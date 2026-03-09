@@ -7,14 +7,15 @@ public class PlayerTest : MonoBehaviour
 
     private void Awake()
     {
-        data.Setup(gameObject);
-        pa = GetComponent<PlayerAudio>();
+        pa =data.Setup(gameObject);
+         
     }
 
     public void PlayStep(float step)
     {
         Debug.Log((int)step);
         pa.PlayStepLock((int)step);
+        
     }
 
     public void charging(bool on)

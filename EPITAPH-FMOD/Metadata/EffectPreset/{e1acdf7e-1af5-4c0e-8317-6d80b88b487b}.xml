@@ -34,7 +34,11 @@
 			<destination>{542d7a77-38a6-4aa2-8955-53beaf2539b8}</destination>
 		</relationship>
 	</object>
-	<object class="SpatialiserEffect" id="{c1a14778-9d21-4e0f-8f4e-371797bf56f0}" />
+	<object class="SpatialiserEffect" id="{c1a14778-9d21-4e0f-8f4e-371797bf56f0}">
+		<property name="distanceRolloffType">
+			<value>4</value>
+		</property>
+	</object>
 	<object class="Automator" id="{542d7a77-38a6-4aa2-8955-53beaf2539b8}">
 		<property name="nameOfPropertyBeingAutomated">
 			<value>frequencyA</value>

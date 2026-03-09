@@ -72,4 +72,13 @@ public class PlayerAudio : MonoBehaviour
 
     }
 
+    public void PlayMeatHit(Vector3 position)
+    {
+        RuntimeManager.PlayOneShot(data.hitMeat, position);
+    }
+
+    public void PlayWallHit(Vector3 position)
+    {
+        RuntimeManager.PlayOneShot(data.hitWall, position);
+    }
 }
