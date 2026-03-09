@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
         }
         
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
-        transform.rotation = Quaternion.Euler(0f, 0f, angle);
+        _rb.MoveRotation(Quaternion.Euler(0f, 0f, angle));
     }
     
     public void Knockback(Vector2 velocity)

@@ -42,7 +42,8 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        _agent.destination= _target.position;
+        _agent.nextPosition = _rb.position;
+        _agent.destination = _target.position;
 
     }
 
@@ -54,19 +55,30 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
+        Translate();
+        Rotate();
+    }
 
-
-        Vector2 xyVelocity = new Vector2(_agent.desiredVelocity.x, _agent.desiredVelocity.y);
-        
+    void Translate()
+    {
         //m_Agent.desiredVelocity;
         //m_Agent.nextPosition;
         //m_Agent.steeringTarget;
+        // movement
+        _movementVelocity = _agent.desiredVelocity;
         
-        _movementVelocity = xyVelocity;
+        // knockback
         _knockbackVelocity *= Mathf.Exp(-_knockbackDecay * Time.deltaTime);
-        //Debug.Log(_knockbackVelocity);
 
+        // combine
         _rb.linearVelocity = _movementVelocity + _knockbackVelocity;
+    }
+
+    void Rotate()
+    {        
+        Vector2 dir = _rb.linearVelocity.normalized;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
+        _rb.MoveRotation(Quaternion.Euler(0f, 0f, angle));
     }
     
     public void Hit(Vector2 velocity)
