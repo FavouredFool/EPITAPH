@@ -11,7 +11,7 @@ public class MenuScreen : MonoBehaviour
     public void Toggle(bool on)
     {
         gameObject.SetActive(on);
-        
+
         if (on)
         {
             _buttons[0].Select();

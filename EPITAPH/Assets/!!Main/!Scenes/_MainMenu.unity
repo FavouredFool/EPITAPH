@@ -590,30 +590,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1039999819377138039, guid: 1d631579d2d39ff4a839b4a3ae4106ef, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1039999819377138039, guid: 1d631579d2d39ff4a839b4a3ae4106ef, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1039999819377138039, guid: 1d631579d2d39ff4a839b4a3ae4106ef, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1039999819377138039, guid: 1d631579d2d39ff4a839b4a3ae4106ef, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1039999819377138039, guid: 1d631579d2d39ff4a839b4a3ae4106ef, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1039999819377138039, guid: 1d631579d2d39ff4a839b4a3ae4106ef, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 1124
-      objectReference: {fileID: 0}
     - target: {fileID: 1889660405228000759, guid: 1d631579d2d39ff4a839b4a3ae4106ef, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
