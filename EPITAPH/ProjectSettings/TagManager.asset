@@ -16,7 +16,7 @@ TagManager:
   - EnemyDamagingStuff
   - PlayerDamagingStuff
   - Wall
-  - 
+  - BoltPickup
   - 
   - 
   - 
@@ -40,6 +40,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BloodLayer
+    uniqueID: 95642909
     locked: 0
   m_RenderingLayers:
   - Default

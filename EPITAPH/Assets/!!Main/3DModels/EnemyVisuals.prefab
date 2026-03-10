@@ -108,6 +108,10 @@ PrefabInstance:
       propertyPath: m_AABB.m_Extent.z
       value: 0.95803785
       objectReference: {fileID: 0}
+    - target: {fileID: -6860119145496635563, guid: fb12f0b55f583df44b01cd5922831403, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c6866dd677b7bd042aa17d45e5cc2fcb, type: 2}
     - target: {fileID: 919132149155446097, guid: fb12f0b55f583df44b01cd5922831403, type: 3}
       propertyPath: m_Name
       value: Enemy

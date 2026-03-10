@@ -4,28 +4,59 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class BoltController : MonoBehaviour
 {
+    [SerializeField] LayerMask _boltPickup;
     [SerializeField, Range(1, 300)] float _shootSpeed = 15;
 
-    Rigidbody2D _rb;
+    public Rigidbody2D RB2D { get; set; }
     Rigidbody _rb3D;
+
+    BoltType _boltType;
     
+    public BoltType BoltType
+    {
+        get => _boltType;
+        set
+        {
+            gameObject.name = $"Bolt: {value}";
+            _boltType = value;
+        }
+    }
+
     void Awake()
     {
-        _rb = GetComponent<Rigidbody2D>();
+        RB2D = GetComponent<Rigidbody2D>();
         _rb3D = GetComponentInChildren<Rigidbody>();
     }
 
     void Start()
     {
-        _rb.AddForce(transform.up * _shootSpeed, ForceMode2D.Impulse);
+        RB2D.AddForce(transform.up * _shootSpeed, ForceMode2D.Impulse);
     }
-    
+
     void OnTriggerEnter2D(Collider2D other)
     {
-        _rb.simulated = false;
-        _rb3D.GetComponent<Bolt3DVisual>().StopPhysics();
-        
-        _rb.transform.SetParent(other.transform.parent, true);
+        HitSomething(other);
     }
-    
+
+    public void HitSomething(Collider2D other = null)
+    {
+        RB2D.linearVelocity = Vector2.zero;
+        LayerUtil.SetLayerRecursively(gameObject, LayerUtil.ExtractLayerFromMask(_boltPickup));
+        _rb3D.GetComponent<Bolt3DVisual>().StopPhysics();
+
+        if (other != null)
+        {
+            RB2D.transform.SetParent(other.transform.parent, true);
+        }
+    }
+}
+
+
+public enum BoltType
+{
+    DOWN,
+    LEFT,
+    UP,
+    RIGHT,
+    NONE
 }

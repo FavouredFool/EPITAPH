@@ -114,7 +114,7 @@ public class EnemyController : MonoBehaviour
         Collider2D[] contacts = new Collider2D[12];
         _rb.GetContacts(ContactFilter2D.noFilter, contacts);
         
-        if (contacts.Any(e => e != null && MaskContainsLayer(_wallLayers, e.gameObject.layer)))
+        if (contacts.Any(e => e != null && LayerUtil.MaskContainsLayer(_wallLayers, e.gameObject.layer)))
         {
             if (_knockbackVelocity.magnitude > _pinKnockbackMagnitudeThreshold)
             {
@@ -134,7 +134,7 @@ public class EnemyController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (!MaskContainsLayer(_hitLayers, other.gameObject.layer)) return;
+        if (!LayerUtil.MaskContainsLayer(_hitLayers, other.gameObject.layer)) return;
         
         Rigidbody2D rb = other.GetComponentInParent<Rigidbody2D>();
         Assert.IsNotNull(rb);
@@ -143,10 +143,7 @@ public class EnemyController : MonoBehaviour
         CheckForStake();
     }
 
-    bool MaskContainsLayer(LayerMask mask, int layer)
-    {
-        return (mask & (1 << layer)) != 0;
-    }
+
     
 
 }
