@@ -187,10 +187,11 @@ public class EnemyController : MonoBehaviour
             Die();
             return;
         }
-
+        SignalBus.Fire(new Hit_Enemy(_rb.position));
+        
         Knockback(velocity);
     }
-
+ 
     void Die()
     {
         _deadSprite.SetActive(true);

@@ -2,15 +2,10 @@ using UnityEngine;
 
 public class MenuButton : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public GameObject _selectionMarker;
 
-    // Update is called once per frame
-    void Update()
+    protected virtual void OnEnable()
     {
-        
+        _selectionMarker.SetActive(false);
     }
 }

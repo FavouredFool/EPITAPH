@@ -49,3 +49,29 @@ public struct Signal_TriggerBoltMarker
         this.type = type;
     }
 }
+public struct Hit_Enemy
+{
+    public Vector3 EnemyPosition;
+    public Hit_Enemy(Vector3 position)
+    {
+        EnemyPosition = position;
+    }
+}
+public struct Hit_Player
+{
+    public Transform PlayerTransform;
+    public Hit_Player(Transform PlayerTransform)
+    {
+        this.PlayerTransform = PlayerTransform;
+    }
+}
+
+public struct Signal_RefreshVolume
+{
+    public string variableName;
+    public Signal_RefreshVolume(string varName)
+    {
+        variableName=varName;
+        Debug.Log(varName+" is "+PlayerPrefs.GetInt(varName));
+    }
+}

@@ -5,9 +5,16 @@ using DG.Tweening;
 public class MenuButton_Level : MenuButton
 {
     [SerializeField] TMP_Text _levelText;
+    [SerializeField] string _variableName;
 
-    public void RefreshLevel(int level)
+    protected override void OnEnable()
     {
+        base.OnEnable();
+        RefreshVariable();
+    }
+    public void RefreshVariable()
+    {
+        int level= PlayerPrefs.GetInt(_variableName,0);
         _levelText.text=level.ToString();
         
         DOTween.Kill(this,true);

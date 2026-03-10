@@ -166,7 +166,9 @@ public class PlayerController : MonoBehaviour
     void UpdateReload()
     {
         if (!_isReloading) return;
-        
+
+        PlayerAudio.SetCharge((Time.time - _reloadStart) / _reloadTime);
+
         if (Time.time - _reloadStart > _reloadTime)
         {
             FinishReload();
@@ -287,6 +289,9 @@ public class PlayerController : MonoBehaviour
         
         _reloadStart = Time.time;
         _isReloading = true;
+
+        PlayerAudio.StartCharging();
+
         _crossbowAnimator.SetTrigger(StartReloadTrigger);
     }
 
@@ -294,6 +299,9 @@ public class PlayerController : MonoBehaviour
     {
         _boltInChamber = true;
         _isReloading = false;
+        PlayerAudio.StopCharging();
+
+        PlayerAudio.PlayStepLock(3); // TODO: ADD Steps
         _crossbowAnimator.SetTrigger(FinishReloadTrigger);
     }
 
@@ -303,6 +311,9 @@ public class PlayerController : MonoBehaviour
         
         _reloadStart = float.PositiveInfinity;
         _isReloading = false;
+
+        PlayerAudio.StopCharging();
+
         _crossbowAnimator.SetTrigger(InterruptReloadTrigger);
     }
     
