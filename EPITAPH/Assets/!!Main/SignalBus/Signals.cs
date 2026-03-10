@@ -49,3 +49,19 @@ public struct Signal_TriggerBoltMarker
         this.type = type;
     }
 }
+public struct Hit_Enemy
+{
+    public Vector3 EnemyPosition;
+    public Hit_Enemy(Vector3 position)
+    {
+        EnemyPosition = position;
+    }
+}
+public struct Hit_Player
+{
+    public Transform PlayerTransform;
+    public Hit_Player(Transform PlayerTransform)
+    {
+        this.PlayerTransform = PlayerTransform;
+    }
+}
