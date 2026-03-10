@@ -8,7 +8,19 @@ public class BoltController : MonoBehaviour
 
     Rigidbody2D _rb;
     Rigidbody _rb3D;
+
+    BoltType _boltType;
     
+    public BoltType BoltType
+    {
+        get => _boltType;
+        set
+        {
+            gameObject.name = $"Bolt: {value}";
+            _boltType = value;
+        }
+    }
+
     void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -28,4 +40,14 @@ public class BoltController : MonoBehaviour
         _rb.transform.SetParent(other.transform.parent, true);
     }
     
+}
+
+
+public enum BoltType
+{
+    DOWN,
+    LEFT,
+    UP,
+    RIGHT,
+    NONE
 }
