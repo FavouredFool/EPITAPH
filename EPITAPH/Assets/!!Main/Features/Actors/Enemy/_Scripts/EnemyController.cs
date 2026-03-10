@@ -44,12 +44,29 @@ public class EnemyController : MonoBehaviour
         _currentHp = _maxHp;
     }
 
+    private void Start()
+    {
+        Invoke("KnockbackTest", 3);
+    }
     void Update()
     {
         ChaseBehaviourUpdateTick();
         _agent.nextPosition = transform.position;
     }
 
+
+    [ContextMenu("test knockback")]
+    public void KnockbackTest()
+    {
+        ApplyKnockback(UnityEngine.Random.insideUnitCircle.normalized, 10);
+    }
+
+    public void ApplyKnockback(Vector2 direction,float intensity)
+    {
+        _knockbackVelocity = direction * intensity;
+        _rb.linearVelocity = _knockbackVelocity; 
+
+    }
     void FixedUpdate()
     {
         if (_isDead)
@@ -63,8 +80,16 @@ public class EnemyController : MonoBehaviour
     void Translate()
     {
         _movementVelocity = _agent.desiredVelocity;
-        _knockbackVelocity *= Mathf.Exp(-_knockbackDecay * Time.deltaTime);
-        _rb.linearVelocity = _movementVelocity + _knockbackVelocity;
+        _knockbackVelocity *= Mathf.Exp(-_knockbackDecay * Time.fixedDeltaTime);
+        if(_knockbackVelocity.magnitude < 0.01f)
+        {
+            _rb.linearVelocity = _movementVelocity;
+        }
+        else
+        {
+            _rb.linearVelocity = _knockbackVelocity;
+
+        }
     }
 
     void Rotate()
