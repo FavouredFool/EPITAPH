@@ -65,6 +65,7 @@ public struct Hit_Player
         this.PlayerTransform = PlayerTransform;
     }
 }
+
 public struct Signal_RefreshVolume
 {
     public string variableName;
@@ -72,3 +73,5 @@ public struct Signal_RefreshVolume
     {
         variableName=varName;
         Debug.Log(varName+" is "+PlayerPrefs.GetInt(varName));
+    }
+}
