@@ -2,6 +2,7 @@ using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Rendering;
 
 public class PlayerAudio : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class PlayerAudio : MonoBehaviour
 
     EventInstance chargeInstance;
     EventInstance lockedInstance;
+    EventInstance releasedInstance;
 
     public static PlayerAudio instance;
     
@@ -21,10 +23,13 @@ public class PlayerAudio : MonoBehaviour
         chargeInstance.setParameterByName("Charge", 0);
         RuntimeManager.AttachInstanceToGameObject(chargeInstance,gameObject.transform);
 
+        releasedInstance = RuntimeManager.CreateInstance(data.releaseEvent);
+        RuntimeManager.AttachInstanceToGameObject(releasedInstance, gameObject.transform);
+
+
         lockedInstance = RuntimeManager.CreateInstance(data.lockedEvent);
         lockedInstance.setParameterByName("ChargeStep", 1);
-        RuntimeManager.AttachInstanceToGameObject(lockedInstance,gameObject.transform);
-        
+        RuntimeManager.AttachInstanceToGameObject(lockedInstance, gameObject.transform);
     }
 
 
@@ -72,6 +77,17 @@ public class PlayerAudio : MonoBehaviour
         instance.lockedInstance.start();
         instance.lockedInstance.setParameterByName("ChargeStep", step);
 
+    }
+    public static void PlayReleaseCrossbow()
+    {
+        PLAYBACK_STATE state;
+        instance.releasedInstance.getPlaybackState(out state);
+        if (state == PLAYBACK_STATE.PLAYING)
+        {
+            instance.releasedInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        }
+
+        instance.releasedInstance.start();
     }
 
     public static void PlayMeatHit(Vector3 position)

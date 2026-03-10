@@ -86,6 +86,8 @@ public class EnemyController : MonoBehaviour
     {
         _currentHp -= 1;
 
+        PlayerAudio.PlayMeatHit(this.transform.position);
+
         if (_currentHp <= 0)
         {
             Die();
@@ -93,6 +95,9 @@ public class EnemyController : MonoBehaviour
         }
         
         Knockback(velocity);
+
+        //Add Audio
+
     }
 
     void Die()
