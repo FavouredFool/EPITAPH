@@ -13,16 +13,18 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     [SerializeField, Range(1, 20)] float _speed;
     [SerializeField, Range(1, 20)] float _speedAimReduction;
+    [SerializeField, Range(1, 20)] float _speedReloadReduction;
     [SerializeField, Range(0, 0.95f)] float _moveLockThreshold = 0.3f;
     [SerializeField, Range(1, 20)] float _knockbackDecay;
     [SerializeField] AimAssistV3 _aimAssist;
     
     [Header("Shooting")]
-    [SerializeField, Range(0, 10)] float _knockbackStrength = 2;
+    [SerializeField, Range(0, 50)] float _knockbackStrength = 2;
     [SerializeField] Transform _instantiationParent;
     [SerializeField] BoltController _projectileBlueprint;
     [SerializeField, Range(0, 4)] float _spawnDist;
     [SerializeField] Transform _bloodlineConnection;
+    [SerializeField, Range(0.1f, 4)] float _reloadTime;
     
     [Header("Cam")]
     [SerializeField] Transform _cameraFollow;
@@ -30,6 +32,11 @@ public class PlayerController : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] PlayerAudioData PADScriptableObject;
+
+    [Header("Animation")]
+    [SerializeField] Animator _characterAnimator;
+    [SerializeField] Animator _crossbowAnimator;
+    
     
     InputActions _inputActions;
     Rigidbody2D _rb;
@@ -37,8 +44,19 @@ public class PlayerController : MonoBehaviour
     Vector2 MovementInput { get; set; }
     Vector2 RotateInput  { get; set; }
 
-    Dictionary<BoltType, bool> _currentBoltsHeld;
+    float _reloadStart = float.PositiveInfinity;
 
+    bool _isReloading = false;
+
+    bool _boltInChamber = true;
+    Dictionary<BoltType, bool> _currentBoltsHeld;
+    
+    static readonly int ShootTrigger = Animator.StringToHash("Shoot");
+    static readonly int StartReloadTrigger = Animator.StringToHash("StartReload");
+    static readonly int InterruptReloadTrigger = Animator.StringToHash("InterruptReload");
+    static readonly int FinishReloadTrigger = Animator.StringToHash("FinishReload");
+    
+    
     public Vector2 AimAssistedLookDirection
     {
         get
@@ -55,7 +73,7 @@ public class PlayerController : MonoBehaviour
     Vector2 _movementVelocity;
     Vector2 _knockbackVelocity;
     
-    public bool ReadyToShoot => RotateInput.magnitude > _moveLockThreshold;
+    public bool ReadyToShoot => RotateInput.magnitude > _moveLockThreshold && _boltInChamber;
     
     void Awake()
     {
@@ -73,6 +91,9 @@ public class PlayerController : MonoBehaviour
         };
 
         PADScriptableObject.Setup(this.gameObject);
+        
+        Assert.IsNotNull(_characterAnimator);
+        Assert.IsNotNull(_crossbowAnimator);
     }
 
     void Start()
@@ -84,18 +105,23 @@ public class PlayerController : MonoBehaviour
     void OnEnable()
     {
         _inputActions.Player.Shoot.performed += ShootBoltInput;
+        _inputActions.Player.Reload.performed += ReloadInputStart;
+        _inputActions.Player.Reload.canceled += ReloadInputStop;
     }
     
     void OnDisable()
     {
         _inputActions.Player.Shoot.performed -= ShootBoltInput;
+        _inputActions.Player.Reload.performed -= ReloadInputStart;
+        _inputActions.Player.Reload.canceled -= ReloadInputStop;
     }
 
     void Update()
     {
         MovementInput = _inputActions.Player.Movement.ReadValue<Vector2>();
         RotateInput = _inputActions.Player.Look.ReadValue<Vector2>();
-        
+
+        UpdateReload();
         CameraPos();
     }
 
@@ -105,6 +131,16 @@ public class PlayerController : MonoBehaviour
         Rotation();
     }
 
+    void UpdateReload()
+    {
+        if (!_isReloading) return;
+        
+        if (Time.time - _reloadStart > _reloadTime)
+        {
+            FinishReload();
+        }
+    }
+    
     void CameraPos()
     {
         if (ReadyToShoot)
@@ -119,16 +155,22 @@ public class PlayerController : MonoBehaviour
 
     void Translation()
     {
-        // movement
-        if (ReadyToShoot)
+        if (_isReloading)
         {
-            //_movementVelocity = Vector2.zero;
-            _movementVelocity = MovementInput * _speed / _speedAimReduction;
+            _movementVelocity = MovementInput * _speed / _speedReloadReduction;
         }
         else
         {
-            _movementVelocity = MovementInput * _speed;
+            if (ReadyToShoot)
+            {
+                _movementVelocity = MovementInput * _speed / _speedAimReduction;
+            }
+            else
+            {
+                _movementVelocity = MovementInput * _speed;
+            }
         }
+
         
         // knockback
         _knockbackVelocity *= Mathf.Exp(-_knockbackDecay * Time.deltaTime);
@@ -161,18 +203,54 @@ public class PlayerController : MonoBehaviour
     
     void ShootBoltInput(InputAction.CallbackContext ctx)
     {
-        if (!ReadyToShoot) return;
-        
         ShootBolt();
+    }
+
+    void ReloadInputStart(InputAction.CallbackContext ctx)
+    {
+        StartReload();
+    }
+
+    void ReloadInputStop(InputAction.CallbackContext ctx)
+    {
+        InterruptReload();
+    }
+
+    void StartReload()
+    {
+        if (_boltInChamber) return;
+        
+        _reloadStart = Time.time;
+        _isReloading = true;
+        _crossbowAnimator.SetTrigger(StartReloadTrigger);
+    }
+
+    void FinishReload()
+    {
+        _boltInChamber = true;
+        _isReloading = false;
+        _crossbowAnimator.SetTrigger(FinishReloadTrigger);
+    }
+
+    void InterruptReload()
+    {
+        if (!_isReloading) return;
+        
+        _reloadStart = float.PositiveInfinity;
+        _isReloading = false;
+        _crossbowAnimator.SetTrigger(InterruptReloadTrigger);
     }
     
     void ShootBolt()
     {
+        if (!ReadyToShoot) return;
+        
         BoltType type = GetBoltTypeToShoot();
 
         if (type == BoltType.NONE) return;
 
         _currentBoltsHeld[type] = false;
+        _boltInChamber = false;
         
         BoltController bolt = Instantiate(_projectileBlueprint, transform.position + transform.forward * _spawnDist, transform.rotation, _instantiationParent);
         bolt.BoltType = type;
@@ -182,6 +260,9 @@ public class PlayerController : MonoBehaviour
 
         // Play Audio
         PlayerAudio.PlayReleaseCrossbow();
+        
+        // Animation
+        _crossbowAnimator.SetTrigger(ShootTrigger);
     }
 
     BoltType GetBoltTypeToShoot()
