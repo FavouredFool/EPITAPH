@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     [SerializeField, Range(1, 20)] float _speed;
     [SerializeField, Range(1, 20)] float _speedAimReduction;
+    [SerializeField, Range(1, 20)] float _speedReloadReduction;
     [SerializeField, Range(0, 0.95f)] float _moveLockThreshold = 0.3f;
     [SerializeField, Range(1, 20)] float _knockbackDecay;
     [SerializeField] AimAssistV3 _aimAssist;
@@ -154,16 +155,22 @@ public class PlayerController : MonoBehaviour
 
     void Translation()
     {
-        // movement
-        if (ReadyToShoot)
+        if (_isReloading)
         {
-            //_movementVelocity = Vector2.zero;
-            _movementVelocity = MovementInput * _speed / _speedAimReduction;
+            _movementVelocity = MovementInput * _speed / _speedReloadReduction;
         }
         else
         {
-            _movementVelocity = MovementInput * _speed;
+            if (ReadyToShoot)
+            {
+                _movementVelocity = MovementInput * _speed / _speedAimReduction;
+            }
+            else
+            {
+                _movementVelocity = MovementInput * _speed;
+            }
         }
+
         
         // knockback
         _knockbackVelocity *= Mathf.Exp(-_knockbackDecay * Time.deltaTime);
