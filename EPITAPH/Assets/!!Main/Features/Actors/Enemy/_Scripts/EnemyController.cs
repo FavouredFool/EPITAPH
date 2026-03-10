@@ -27,33 +27,29 @@ public class EnemyController : MonoBehaviour
 
     NavMeshAgent _agent;
 
-
     public Animator animator;
     public EnemyState CurrentState { get; private set; }
-
 
     void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _target = FindFirstObjectByType<PlayerController>().transform;
         _agent = GetComponent<NavMeshAgent>();
+
         _agent.updatePosition = false;
         _agent.updateRotation = false;
         _agent.updateUpAxis = false;
         _agent.speed = _speed;
-
 
         _currentHp = _maxHp;
     }
 
     void Update()
     {
-
         ChaseBehaviourUpdateTick();
         _agent.nextPosition = transform.position;
-        //CurrentState.UpdateTick();
-
     }
+
     void FixedUpdate()
     {
         if (_isDead)
@@ -62,31 +58,18 @@ public class EnemyController : MonoBehaviour
             return;
         }
         ChaseBehaviourFixedUpdateTick();
-
-        
     }
-
-    //remove to state later on 
-
 
     void Translate()
     {
-        //m_Agent.desiredVelocity;
-        //m_Agent.nextPosition;
-        //m_Agent.steeringTarget;
-        // movement
         _movementVelocity = _agent.desiredVelocity;
-       // _agent.Move(Vector3.zero);
-
-        // knockback
         _knockbackVelocity *= Mathf.Exp(-_knockbackDecay * Time.deltaTime);
-
-        // combine
         _rb.linearVelocity = _movementVelocity + _knockbackVelocity;
     }
 
     void Rotate()
     {
+        if (_agent.speed == 0) return;
         Vector2 dir = _rb.linearVelocity;
         dir.Normalize();
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
@@ -96,6 +79,8 @@ public class EnemyController : MonoBehaviour
     #region ChaseBehaviour
 
     bool charging = false;
+    float _lastChargeTime = -Mathf.Infinity;
+
     [SerializeField, UnityEngine.Range(1, 15)] float _chargeSpeed;
     [SerializeField, UnityEngine.Range(1, 15)] float _chargeStartRange;
     [SerializeField, UnityEngine.Range(1, 15)] float _chargeAttackRange;
@@ -104,72 +89,75 @@ public class EnemyController : MonoBehaviour
 
     public void ChaseBehaviourUpdateTick()
     {
-
-        if (!charging) { 
-        _agent.destination = _target.position;
-
+        if (!charging)
+        {
+            _agent.destination = _target.position;
         }
     }
 
     public void ChaseBehaviourFixedUpdateTick()
     {
-        if (IsTargetInRangeForCharge() && IsTargetVisible() && !charging)
+        if (IsTargetInRangeForCharge() && IsTargetVisible() && !charging && Time.time >= _lastChargeTime + _chargeCooldown)
         {
             StartCoroutine(MeleeChaseAttackLoop());
         }
-       
-            Translate();
-     
-           Rotate();
 
+        Translate();
+        Rotate();
     }
 
     public IEnumerator MeleeChaseAttackLoop()
     {
-        bool attacked = false;
         charging = true;
+
+        bool attacked = false;
         animator.SetBool("charging", true);
         animator.SetTrigger("startCharge");
+           // _agent.ResetPath();
         _agent.speed = 0;
 
         yield return new WaitForSeconds(1);
         _agent.speed = _chargeSpeed;
 
         float timer = 0;
-       
+
         while (timer < _chargeDuration)
         {
             timer += Time.deltaTime;
             if (IsTargetInRangeForMelee())
             {
-
+                _agent.ResetPath();
                 _agent.speed = 0;
                 animator.SetTrigger("chargeAttack");
                 attacked = true;
                 break;
-                //start attacking 
+            }
 
+            if(Vector2.Distance(transform.position, _agent.destination) < 0.5f)
+            {
+                _agent.ResetPath();
+                _agent.speed = 0;
+                animator.SetTrigger("chargeAttack");
+                attacked = true;
+                break;
             }
             yield return null;
         }
 
-
         if (!attacked)
         {
-
-        animator.SetTrigger("chargeAttack");
+            _agent.ResetPath();
+            _agent.speed = 0;
+            animator.SetTrigger("chargeAttack");
+            attacked = true;
         }
 
-        //   yield return new WaitForSeconds(_chargeCooldown);
-
-
-
-        yield return new WaitForSeconds(2);
-
+        yield return new WaitForSeconds(1);
         animator.SetBool("charging", false);
         _agent.speed = _speed;
 
         charging = false;
+        _lastChargeTime = Time.time;
     }
 
     public bool IsTargetVisible()
@@ -189,11 +177,9 @@ public class EnemyController : MonoBehaviour
 
     #endregion
 
-
     public void Hit(Vector2 velocity)
     {
         _currentHp -= 1;
-
         PlayerAudio.PlayMeatHit(this.transform.position);
 
         if (_currentHp <= 0)
@@ -203,18 +189,12 @@ public class EnemyController : MonoBehaviour
         }
 
         Knockback(velocity);
-
-        //Add Audio
-
     }
 
     void Die()
     {
         _deadSprite.SetActive(true);
-        // this should be a bit better guarded later on
         _isDead = true;
-
-        //Destroy(this.gameObject);
     }
 
     void Knockback(Vector2 velocity)
@@ -231,8 +211,6 @@ public class EnemyController : MonoBehaviour
         {
             if (_knockbackVelocity.magnitude > _pinKnockbackMagnitudeThreshold)
             {
-                Debug.Log("STAKED");
-                //Play Wall hit sound
                 PlayerAudio.PlayWallHit(this.transform.position);
                 Die();
             }
