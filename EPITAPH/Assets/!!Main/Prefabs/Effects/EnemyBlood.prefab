@@ -14826,7 +14826,7 @@ GameObject:
   - component: {fileID: 2775001966971685917}
   - component: {fileID: 4472937256768359988}
   m_Layer: 0
-  m_Name: BloodMain
+  m_Name: EnemyBlood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
