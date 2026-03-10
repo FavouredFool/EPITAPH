@@ -38,14 +38,14 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: GroundLayer
     uniqueID: 4054686155
     locked: 0
   - name: BloodLayer
     uniqueID: 95642909
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0
   - name: WallLayer
     uniqueID: 3516082567
