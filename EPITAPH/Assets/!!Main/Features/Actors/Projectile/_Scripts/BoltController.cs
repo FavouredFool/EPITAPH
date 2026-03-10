@@ -19,6 +19,7 @@ public class BoltController : MonoBehaviour
     {
         _rb.AddForce(transform.up * _shootSpeed, ForceMode2D.Impulse);
     }
+    
     void OnTriggerEnter2D(Collider2D other)
     {
         _rb.simulated = false;

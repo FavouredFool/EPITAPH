@@ -16,6 +16,8 @@ public class AimAssistV3 : MonoBehaviour
 
     public float GetAssistedAngle(float playerAimAngle, Vector2 playerPos)
     {
+        if (!enabled || !gameObject.activeSelf) return playerAimAngle;
+        
         // TODO lots of stuff to improve here. Distance, Block behind Walls, etc.
         
         float bestDiff = Mathf.Infinity;

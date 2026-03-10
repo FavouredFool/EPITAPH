@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField, Range(1, 20)] float _speed;
+    [SerializeField, Range(1, 20)] float _speedAimReduction;
     [SerializeField, Range(0, 0.95f)] float _moveLockThreshold = 0.3f;
     [SerializeField, UnityEngine.Range(1, 20)] float _knockbackDecay;
     [SerializeField] AimAssistV3 _aimAssist;
@@ -17,6 +18,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform _instantiationParent;
     [SerializeField] Rigidbody2D _projectileBlueprint;
     [SerializeField, Range(0, 4)] float _spawnDist;
+    
+    [Header("Cam")]
+    [SerializeField] Transform _cameraFollow;
+    [SerializeField, Range(0, 10)] float _cameraAimOffset;
     
     
     InputActions _inputActions;
@@ -38,8 +43,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public Vector2 _movementVelocity;
-    public Vector2 _knockbackVelocity;
+    Vector2 _movementVelocity;
+    Vector2 _knockbackVelocity;
     
     public bool ReadyToShoot => RotateInput.magnitude > _moveLockThreshold;
     
@@ -66,6 +71,8 @@ public class PlayerController : MonoBehaviour
     {
         MovementInput = _inputActions.Player.Movement.ReadValue<Vector2>();
         RotateInput = _inputActions.Player.Look.ReadValue<Vector2>();
+        
+        CameraPos();
     }
 
     void FixedUpdate()
@@ -74,12 +81,25 @@ public class PlayerController : MonoBehaviour
         Rotation();
     }
 
+    void CameraPos()
+    {
+        if (ReadyToShoot)
+        {
+            _cameraFollow.localPosition = Vector3.up * _cameraAimOffset;
+        }
+        else
+        {
+            _cameraFollow.localPosition = Vector3.zero;
+        }
+    }
+
     void Translation()
     {
         // movement
         if (ReadyToShoot)
         {
-            _movementVelocity = Vector2.zero;
+            //_movementVelocity = Vector2.zero;
+            _movementVelocity = MovementInput * _speed / _speedAimReduction;
         }
         else
         {
