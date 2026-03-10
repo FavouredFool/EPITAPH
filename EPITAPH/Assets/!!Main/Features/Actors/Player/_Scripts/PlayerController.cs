@@ -8,6 +8,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] LayerMask _boltLayer;
+    
     [Header("Movement")]
     [SerializeField, Range(1, 20)] float _speed;
     [SerializeField, Range(1, 20)] float _speedAimReduction;
@@ -183,14 +185,21 @@ public class PlayerController : MonoBehaviour
         return BoltType.NONE;
     }
 
-    void OnDrawGizmos()
+    void PickupBolt(BoltController bolt)
     {
-        if (!Application.isPlaying) return;
-        
-        //Gizmos.color = Color.yellow;
-        //Gizmos.DrawLine(transform.position, (Vector2)transform.position + RotateInput.normalized);
-        //
-        //Gizmos.color = Color.green;
-        //Gizmos.DrawLine(transform.position, (Vector2)transform.position + AimAssistedLookDirection);
+        _currentBoltsHeld[bolt.BoltType] = true;
+
+        Destroy(bolt.gameObject);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.GetComponentInParent<BoltController>() is { } bolt)
+        {
+            if (LayerUtil.MaskContainsLayer(_boltLayer, bolt.gameObject.layer))
+            {
+                PickupBolt(bolt);
+            }
+        }
     }
 }

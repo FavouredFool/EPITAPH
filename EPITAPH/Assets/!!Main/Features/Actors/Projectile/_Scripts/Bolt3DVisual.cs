@@ -8,14 +8,14 @@ public class Bolt3DVisual : MonoBehaviour
     [SerializeField, UnityEngine.Range(-0.1f, 0.5f)] float _staticHeightThreshold;
 
     Rigidbody _rb;
-    Rigidbody2D _rb2D;
+    BoltController _boltController;
     bool _isStatic = false;
     
     void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        _rb2D = GetComponentInParent<Rigidbody2D>();
-        Assert.IsNotNull(_rb2D);
+        _boltController = GetComponentInParent<BoltController>();
+
     }
 
     void FixedUpdate()
@@ -24,7 +24,7 @@ public class Bolt3DVisual : MonoBehaviour
 
         if (transform.position.z > _staticHeightThreshold)
         {
-            StopPhysics();
+            _boltController.HitSomething();
         }
 
         SetRotation();
@@ -32,15 +32,15 @@ public class Bolt3DVisual : MonoBehaviour
 
     void SetRotation()  
     {
-        Vector3 velocity = new(_rb2D.linearVelocity.x, _rb2D.linearVelocity.y, _rb.linearVelocity.z);
+        Vector3 velocity = new(_boltController.RB2D.linearVelocity.x, _boltController.RB2D.linearVelocity.y, _rb.linearVelocity.z);
         Quaternion rotation = Quaternion.FromToRotation(Vector3.up, velocity.normalized);
         _rb.MoveRotation(rotation);
     }
 
+    // this is invoked through the BoltController and not directly from here
     public void StopPhysics()
     {
         _rb.isKinematic = true;
-        _rb2D.simulated = false;
         _isStatic = true;
     }
 }

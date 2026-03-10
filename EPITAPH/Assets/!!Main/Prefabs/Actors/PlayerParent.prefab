@@ -80,6 +80,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe983a30cc7f7f34caf364576a2f8147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  _boltLayer:
+    serializedVersion: 2
+    m_Bits: 2048
   _speed: 5
   _speedAimReduction: 8
   _moveLockThreshold: 0.5
@@ -89,7 +92,6 @@ MonoBehaviour:
   _instantiationParent: {fileID: 0}
   _projectileBlueprint: {fileID: 3159500885758386700, guid: ab0c37ca8bfc3e04289b07f66f8f1814, type: 3}
   _spawnDist: 0.2
-  _maxBolts: 4
   _cameraFollow: {fileID: 6711845830664808249}
   _cameraAimOffset: 2.5
 --- !u!50 &7293642660323857259
