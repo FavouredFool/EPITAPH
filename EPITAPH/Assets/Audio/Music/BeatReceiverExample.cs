@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BeatReceiverExample : MonoBehaviour,AudioEventSubscriber<BeatChanged> 
+public class BeatReceiverExample : MonoBehaviour,AudioEventSubscriber<EarlyBeatChanged> 
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -15,8 +15,8 @@ public class BeatReceiverExample : MonoBehaviour,AudioEventSubscriber<BeatChange
         AudioBus.Unsubscribe(this);
     }
 
-    public void OnEventHappened(BeatChanged e)
+    public void OnEventHappened(EarlyBeatChanged e)
     {
-        Debug.Log($"{Time.time} Beat: {e.beat}\n Bar: {e.bar}");
+        Debug.Log($"{Time.time} Beat: {e.beat}\n");
     }
 }

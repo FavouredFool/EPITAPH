@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MusicPlayer : MonoBehaviour
@@ -10,7 +12,14 @@ public class MusicPlayer : MonoBehaviour
     {
         public int CurrentMusicBar = 0;
         public int Beat = 0;
-        
+        public int position;
+        public float tempo;
+        public int timesignatureupper;
+        public int timesignaturelower;
+        public float timePerBeat;
+        public int total_beats = 0;
+
+
     }
 
 
@@ -23,16 +32,19 @@ public class MusicPlayer : MonoBehaviour
     FMOD.Studio.EventInstance musicInstance;
 
     // Make the Music player a singleton for now
-    static MusicPlayer instance;
+    static MusicPlayer PlayerInstance;
+    [SerializeField] float lookahead;
 
+    // Early Beat Signal
+    
     
     void Awake()
     {
-        if(instance != null)
+        if(PlayerInstance != null)
         {
             Debug.LogError("Tried to initialize multiple Music Players");
         }
-        instance = this;
+        PlayerInstance = this;
 
         timelineInfo = new TimelineInfo();
 
@@ -44,6 +56,8 @@ public class MusicPlayer : MonoBehaviour
 
     void OnDestroy()
     {
+        StopAllCoroutines();
+        PlayerInstance = null;
         musicInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         musicInstance.release();
     }
@@ -87,7 +101,13 @@ public class MusicPlayer : MonoBehaviour
                         var parameter = (FMOD.Studio.TIMELINE_BEAT_PROPERTIES)Marshal.PtrToStructure(parameterPtr, typeof(FMOD.Studio.TIMELINE_BEAT_PROPERTIES));
                         timelineInfo.CurrentMusicBar = parameter.bar;
                         timelineInfo.Beat = parameter.beat;
+                        timelineInfo.timesignaturelower = parameter.timesignaturelower;
+                        timelineInfo.tempo = parameter.tempo;
+                        
+                        timelineInfo.timePerBeat = 60.0f / parameter.tempo;
                         AudioBus.Fire<BeatChanged>(new BeatChanged(parameter.bar, parameter.beat));
+                        timelineInfo.total_beats++;
+                        PlayerInstance?.StartCoroutine(PlayerInstance?.LookAheadFire());
                         break;
                     }
                 case FMOD.Studio.EVENT_CALLBACK_TYPE.DESTROYED:
@@ -100,4 +120,13 @@ public class MusicPlayer : MonoBehaviour
         }
         return FMOD.RESULT.OK;
     }
+
+    public IEnumerator LookAheadFire()
+    {
+        yield return new WaitForSeconds(timelineInfo.timePerBeat-lookahead);
+        AudioBus.Fire<EarlyBeatChanged>(new EarlyBeatChanged(timelineInfo.total_beats));
+        yield return null;
+        
+    }
+    
 }

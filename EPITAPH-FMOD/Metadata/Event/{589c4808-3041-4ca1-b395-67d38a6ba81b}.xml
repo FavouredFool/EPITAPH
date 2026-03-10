@@ -85,7 +85,7 @@
 			<value>0</value>
 		</property>
 		<property name="length">
-			<value>7.441860465116279</value>
+			<value>8</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{378b026d-6561-445f-93ca-fe0d98a917f7}</destination>
@@ -99,7 +99,7 @@
 			<value>0</value>
 		</property>
 		<property name="tempo">
-			<value>129</value>
+			<value>60</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{378b026d-6561-445f-93ca-fe0d98a917f7}</destination>
