@@ -3,13 +3,21 @@ using UnityEngine;
 
 public class AmmoUID : MonoBehaviour
 {
-     [SerializeField] PlayerVariables _playerVariables;
     [SerializeField] AmmoMarker[] _ammoMarkers;
 
-    public void RefreshUID()
+    void OnEnable()
     {
-        float value= _playerVariables.Ammo;
-        float max= _playerVariables.AmmoMax;
+        SignalBus.Subscribe<Signal_RefreshUI_Ammo>(RefreshUID);
+    }
+    void OnDisable()
+    {
+        SignalBus.Unsubscribe<Signal_RefreshUI_Ammo>(RefreshUID);
+    }
+
+    public void RefreshUID(Signal_RefreshUI_Ammo signal)
+    {
+        float value= signal.variables.Ammo;
+        float max= signal.variables.AmmoMax;
 
         for(int i=0; i<_ammoMarkers.Length; i++)
         {

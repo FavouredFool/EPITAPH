@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8a63de3b7720714a99910a9e691eb10, type: 3}
   m_Name: PlayerVariables
   m_EditorClassIdentifier: Assembly-CSharp::PlayerVariables
-  _health: 2
-  _healthMax: 2
-  _ammo: 2
+  _health: 3
+  _healthMax: 3
+  _ammo: 4
   _ammoMax: 4
-  _charge: 2.8
+  _charge: 0
   _chargeMax: 3

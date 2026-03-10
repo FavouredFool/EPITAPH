@@ -2,8 +2,8 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-public class HealthMarker : MonoBehaviour, AudioEventSubscriber<BeatChanged>
+[RequireComponent(typeof(BeatResponderGroup))]
+public class HealthMarker : MonoBehaviour, AudioEventSubscriber<EarlyBeatChanged>
 {
     [SerializeField] Image _background, _fill;
 
@@ -11,6 +11,8 @@ public class HealthMarker : MonoBehaviour, AudioEventSubscriber<BeatChanged>
 
     [SerializeField] float _tweenDuration=2;
     bool lastState=false, initiated;
+    BeatResponderGroup _beatGroup;
+
 
     [ContextMenu("Hit")]public void Hit() => RefreshGUI(false);
     [ContextMenu("Heal")]public void Heal() => RefreshGUI(true);
@@ -24,6 +26,7 @@ public class HealthMarker : MonoBehaviour, AudioEventSubscriber<BeatChanged>
         {
             initiated=true;
             DOTween.Kill(this,true);
+            _beatGroup.Toggle(filled);
             Sequence seq = DOTween.Sequence(this);
             seq.SetUpdate(true);
             if (filled)
@@ -38,7 +41,10 @@ public class HealthMarker : MonoBehaviour, AudioEventSubscriber<BeatChanged>
             {
                 float time= _tweenDuration;
                 
-                _fill.color=CustomColor.BadBlood;
+                seq.OnPlay(() =>
+                {
+                    _fill.color=CustomColor.BadBlood;
+                });
 
                 seq.Insert(0,_b_rect.DOPunchScale(Vector3.one * 0.1f,time,10));
                 seq.Insert(0,_f_rect.DOAnchorPosY(0,time).SetEase(Ease.InBack));
@@ -52,6 +58,8 @@ public class HealthMarker : MonoBehaviour, AudioEventSubscriber<BeatChanged>
     void Awake()
     {
         AudioBus.Subscribe(this);
+
+        _beatGroup = GetComponent<BeatResponderGroup>();
     }
 
     private void OnDisable()
@@ -61,11 +69,11 @@ public class HealthMarker : MonoBehaviour, AudioEventSubscriber<BeatChanged>
         AudioBus.Unsubscribe(this);
     }
 
-    public void OnEventHappened(BeatChanged e)
+    public void OnEventHappened(EarlyBeatChanged e)
     {
         if (lastState)
         {
-            DOTween.Kill(this,true);
+            DOTween.Kill(this, true);            
             Sequence seq = DOTween.Sequence(this);
             seq.SetUpdate(true);
   

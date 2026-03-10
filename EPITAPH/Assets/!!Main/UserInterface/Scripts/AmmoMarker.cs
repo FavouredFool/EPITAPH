@@ -2,7 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class AmmoMarker : MonoBehaviour, AudioEventSubscriber<BeatChanged>
+[RequireComponent(typeof(BeatResponderGroup))]
+public class AmmoMarker : MonoBehaviour, AudioEventSubscriber<EarlyBeatChanged>
 {
     [SerializeField] Image _background;
     [SerializeField] RectTransform _b_rect;
@@ -10,6 +11,7 @@ public class AmmoMarker : MonoBehaviour, AudioEventSubscriber<BeatChanged>
     [SerializeField] float _tweenDuration=2.5f;
     bool lastState=false, initiated;
     int siblingIndex, siblingCount;
+    BeatResponderGroup _beatGroup;
 
     [ContextMenu("Hit")]public void Hit() => RefreshGUI(false);
     [ContextMenu("Heal")]public void Heal() => RefreshGUI(true);
@@ -55,6 +57,8 @@ public class AmmoMarker : MonoBehaviour, AudioEventSubscriber<BeatChanged>
         siblingCount= transform.parent.childCount;
 
         AudioBus.Subscribe(this);
+
+        _beatGroup = GetComponent<BeatResponderGroup>();
     }
 
     private void OnDisable()
@@ -64,18 +68,23 @@ public class AmmoMarker : MonoBehaviour, AudioEventSubscriber<BeatChanged>
         AudioBus.Unsubscribe(this);
     }
 
-    public void OnEventHappened(BeatChanged e)
+    public void OnEventHappened(EarlyBeatChanged e)
     {
-        if ((e.beat%siblingCount)==siblingCount-1-siblingIndex)
+        if ((e.beat%siblingCount)==siblingCount-1-siblingIndex|| !initiated)
         {
+            initiated = true;
+
             DOTween.Kill(this,true);
+                        _beatGroup.Halt();
+
             Sequence seq = DOTween.Sequence(this);
             seq.SetUpdate(true);
 
             float pos= lastState? 0 : -110;
   
-            seq.Insert(0,_b_rect.DOAnchorPosY(pos+15,0.1f).SetEase(Ease.OutSine));
-            seq.Append(_b_rect.DOAnchorPosY(pos,0.3f)).SetEase(Ease.InOutSine);
+            seq.Insert(0,_b_rect.DOAnchorPosY(pos+15,0.2f).SetEase(Ease.OutBack));
+            seq.Append(_b_rect.DOAnchorPosY(pos,0.3f)).SetEase(Ease.OutCirc);
+
         }
     }
 }
