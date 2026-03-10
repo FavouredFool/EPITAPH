@@ -176,8 +176,8 @@ MonoBehaviour:
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 3
-  m_PointLightOuterRadius: 3.2
+  m_PointLightInnerRadius: 2
+  m_PointLightOuterRadius: 2.1
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -433,7 +433,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _maxHp: 5
-  _speed: 1
+  _speed: 0
   _knockbackDecay: 15
   _knockbackResistance: 2.5
   _pinKnockbackMagnitudeThreshold: 0.25
