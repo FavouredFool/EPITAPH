@@ -51,10 +51,17 @@ public class PlayerController : MonoBehaviour
     bool _boltInChamber = true;
     Dictionary<BoltType, bool> _currentBoltsHeld;
     
-    static readonly int ShootTrigger = Animator.StringToHash("Shoot");
+    // Crossbow
+    static readonly int ShootCrossbowTrigger = Animator.StringToHash("Shoot");
     static readonly int StartReloadTrigger = Animator.StringToHash("StartReload");
     static readonly int InterruptReloadTrigger = Animator.StringToHash("InterruptReload");
     static readonly int FinishReloadTrigger = Animator.StringToHash("FinishReload");
+    
+    // Player
+    static readonly int IsMovingBool = Animator.StringToHash("IsMoving");
+    static readonly int IsAimingBool = Animator.StringToHash("IsAiming");
+    static readonly int IsReloadingBool = Animator.StringToHash("IsReloading");
+    static readonly int ShotCharacterTrigger = Animator.StringToHash("Shot");
     
     
     public Vector2 AimAssistedLookDirection
@@ -62,6 +69,8 @@ public class PlayerController : MonoBehaviour
         get
         {
             Vector2 rawAimDir = RotateInput.normalized;
+
+            if (!IsAiming) return rawAimDir;
             
             float angle = Mathf.Atan2(rawAimDir.y, rawAimDir.x) * Mathf.Rad2Deg - 90;
             float assistedAngle = _aimAssist.GetAssistedAngle(angle, transform.position);
@@ -73,7 +82,9 @@ public class PlayerController : MonoBehaviour
     Vector2 _movementVelocity;
     Vector2 _knockbackVelocity;
     
-    public bool ReadyToShoot => RotateInput.magnitude > _moveLockThreshold && _boltInChamber;
+    public bool IsAiming => RotateInput.magnitude > _moveLockThreshold && _boltInChamber;
+    // arbitrary threshold
+    public bool IsMoving => _rb.linearVelocity.magnitude > 0.05f;
     
     void Awake()
     {
@@ -123,12 +134,21 @@ public class PlayerController : MonoBehaviour
 
         UpdateReload();
         CameraPos();
+
+        UpdateAnimationParams();
     }
 
     void FixedUpdate()
     {
         Translation();
         Rotation();
+    }
+
+    void UpdateAnimationParams()
+    {
+        _characterAnimator.SetBool(IsAimingBool, IsAiming);
+        _characterAnimator.SetBool(IsMovingBool, IsMoving);
+        _characterAnimator.SetBool(IsReloadingBool, _isReloading);
     }
 
     void UpdateReload()
@@ -143,7 +163,7 @@ public class PlayerController : MonoBehaviour
     
     void CameraPos()
     {
-        if (ReadyToShoot)
+        if (IsAiming)
         {
             _cameraFollow.localPosition = Vector3.up * _cameraAimOffset;
         }
@@ -157,11 +177,12 @@ public class PlayerController : MonoBehaviour
     {
         if (_isReloading)
         {
-            _movementVelocity = MovementInput * _speed / _speedReloadReduction;
+            _movementVelocity = Vector2.zero;
+            //_movementVelocity = MovementInput * _speed / _speedReloadReduction;
         }
         else
         {
-            if (ReadyToShoot)
+            if (IsAiming)
             {
                 _movementVelocity = MovementInput * _speed / _speedAimReduction;
             }
@@ -183,13 +204,13 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 dir = transform.up;
         
-        if (ReadyToShoot)
+        if (IsAiming)
         {
             dir = AimAssistedLookDirection;
         }
-        else if (_rb.linearVelocity.sqrMagnitude > 0.01)
+        else if (MovementInput.sqrMagnitude > 0.01)
         {
-            dir = _rb.linearVelocity.normalized;
+            dir = MovementInput.normalized;
         }
         
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
@@ -219,6 +240,8 @@ public class PlayerController : MonoBehaviour
     void StartReload()
     {
         if (_boltInChamber) return;
+        // no bolts left
+        if (_currentBoltsHeld.Values.All(e => !e)) return;
         
         _reloadStart = Time.time;
         _isReloading = true;
@@ -243,7 +266,7 @@ public class PlayerController : MonoBehaviour
     
     void ShootBolt()
     {
-        if (!ReadyToShoot) return;
+        if (!IsAiming) return;
         
         BoltType type = GetBoltTypeToShoot();
 
@@ -262,7 +285,9 @@ public class PlayerController : MonoBehaviour
         PlayerAudio.PlayReleaseCrossbow();
         
         // Animation
-        _crossbowAnimator.SetTrigger(ShootTrigger);
+        Debug.Log("SHOT");
+        _crossbowAnimator.SetTrigger(ShootCrossbowTrigger);
+        _characterAnimator.SetTrigger(ShotCharacterTrigger);
     }
 
     BoltType GetBoltTypeToShoot()
