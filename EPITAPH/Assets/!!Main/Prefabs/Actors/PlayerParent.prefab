@@ -96,6 +96,7 @@ MonoBehaviour:
   _bloodlineConnection: {fileID: 3944289762324200595}
   _cameraFollow: {fileID: 6711845830664808249}
   _cameraAimOffset: 2.5
+  PADScriptableObject: {fileID: 11400000, guid: 97171c05725167e438dded62167c2289, type: 2}
 --- !u!50 &7293642660323857259
 Rigidbody2D:
   serializedVersion: 5
