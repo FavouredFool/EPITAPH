@@ -26,6 +26,13 @@ MonoBehaviour:
       Data3: 76965517
       Data4: 63472518
     Path: event:/SFX/Player/Crossbow/Crossbow Lock
+  releaseEvent:
+    Guid:
+      Data1: -1404146657
+      Data2: 1139287047
+      Data3: 776208791
+      Data4: 1542797747
+    Path: event:/SFX/Player/Crossbow/CrossbowRelease
   hitMeat:
     Guid:
       Data1: 551514837
