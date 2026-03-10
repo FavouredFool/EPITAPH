@@ -11,10 +11,15 @@ public class BoltController : MonoBehaviour
     [SerializeField] Collider2D _hitbox;
     [SerializeField] Collider2D _pickupBox;
 
+    [SerializeField] LineRenderer _lineRenderer;
+    [SerializeField] Transform _endPoint;
+
     public Rigidbody2D Rb2D { get; set; }
+    public Transform BloodpointPlayer { get; set; }
     Rigidbody _rb3D;
 
     BoltType _boltType;
+    
     
     public BoltType BoltType
     {
@@ -38,6 +43,19 @@ public class BoltController : MonoBehaviour
     void Start()
     {
         Rb2D.AddForce(transform.up * _shootSpeed, ForceMode2D.Impulse);
+    }
+
+    void LateUpdate()
+    {
+        _lineRenderer.SetPosition(0, _endPoint.position);
+        
+        Vector3 playerPos = _lineRenderer.GetPosition(1);
+        Vector2 position = BloodpointPlayer.position;
+        
+        playerPos.x = position.x;
+        playerPos.y = position.y;
+        
+        _lineRenderer.SetPosition(1, playerPos);
     }
 
     void OnTriggerEnter2D(Collider2D other)

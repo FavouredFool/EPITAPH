@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform _instantiationParent;
     [SerializeField] BoltController _projectileBlueprint;
     [SerializeField, Range(0, 4)] float _spawnDist;
+    [SerializeField] Transform _bloodlineConnection;
     
     [Header("Cam")]
     [SerializeField] Transform _cameraFollow;
@@ -171,6 +172,7 @@ public class PlayerController : MonoBehaviour
         
         BoltController bolt = Instantiate(_projectileBlueprint, transform.position + transform.forward * _spawnDist, transform.rotation, _instantiationParent);
         bolt.BoltType = type;
+        bolt.BloodpointPlayer = _bloodlineConnection;
         
         Knockback(-transform.up * _knockbackStrength);
     }
