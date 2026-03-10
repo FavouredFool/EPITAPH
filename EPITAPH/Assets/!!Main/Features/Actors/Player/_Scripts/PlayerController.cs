@@ -30,6 +30,11 @@ public class PlayerController : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] PlayerAudioData PADScriptableObject;
+
+    [Header("Animation")]
+    [SerializeField] Animator _characterAnimator;
+    [SerializeField] Animator _crossbowAnimator;
+    
     
     InputActions _inputActions;
     Rigidbody2D _rb;
@@ -37,8 +42,15 @@ public class PlayerController : MonoBehaviour
     Vector2 MovementInput { get; set; }
     Vector2 RotateInput  { get; set; }
 
+    bool _boltInChamber = true;
     Dictionary<BoltType, bool> _currentBoltsHeld;
-
+    
+    static readonly int ShootTrigger = Animator.StringToHash("Shoot");
+    static readonly int StartReloadTrigger = Animator.StringToHash("StartReload");
+    static readonly int InterruptReloadTrigger = Animator.StringToHash("InterruptReload");
+    static readonly int InstantReloadTrigger = Animator.StringToHash("InstantReload");
+    
+    
     public Vector2 AimAssistedLookDirection
     {
         get
@@ -55,7 +67,7 @@ public class PlayerController : MonoBehaviour
     Vector2 _movementVelocity;
     Vector2 _knockbackVelocity;
     
-    public bool ReadyToShoot => RotateInput.magnitude > _moveLockThreshold;
+    public bool ReadyToShoot => RotateInput.magnitude > _moveLockThreshold && _boltInChamber;
     
     void Awake()
     {
@@ -73,6 +85,9 @@ public class PlayerController : MonoBehaviour
         };
 
         PADScriptableObject.Setup(this.gameObject);
+        
+        Assert.IsNotNull(_characterAnimator);
+        Assert.IsNotNull(_crossbowAnimator);
     }
 
     void Start()
@@ -84,11 +99,16 @@ public class PlayerController : MonoBehaviour
     void OnEnable()
     {
         _inputActions.Player.Shoot.performed += ShootBoltInput;
+        _inputActions.Player.Reload.started += ReloadInputStart;
+        _inputActions.Player.Reload.canceled += ReloadInputStop;
     }
     
     void OnDisable()
     {
         _inputActions.Player.Shoot.performed -= ShootBoltInput;
+        _inputActions.Player.Reload.started -= ReloadInputStart;
+        _inputActions.Player.Reload.canceled -= ReloadInputStop;
+        
     }
 
     void Update()
@@ -161,18 +181,39 @@ public class PlayerController : MonoBehaviour
     
     void ShootBoltInput(InputAction.CallbackContext ctx)
     {
-        if (!ReadyToShoot) return;
-        
         ShootBolt();
+    }
+
+    void ReloadInputStart(InputAction.CallbackContext ctx)
+    {
+        StartReload();
+    }
+
+    void ReloadInputStop(InputAction.CallbackContext ctx)
+    {
+        InterruptReload();
+    }
+
+    void StartReload()
+    {
+        
+    }
+
+    void InterruptReload()
+    {
+        
     }
     
     void ShootBolt()
     {
+        if (!ReadyToShoot) return;
+        
         BoltType type = GetBoltTypeToShoot();
 
         if (type == BoltType.NONE) return;
 
         _currentBoltsHeld[type] = false;
+        _boltInChamber = false;
         
         BoltController bolt = Instantiate(_projectileBlueprint, transform.position + transform.forward * _spawnDist, transform.rotation, _instantiationParent);
         bolt.BoltType = type;
@@ -182,6 +223,9 @@ public class PlayerController : MonoBehaviour
 
         // Play Audio
         PlayerAudio.PlayReleaseCrossbow();
+        
+        // Animation
+        _crossbowAnimator.SetTrigger(ShootTrigger);
     }
 
     BoltType GetBoltTypeToShoot()
