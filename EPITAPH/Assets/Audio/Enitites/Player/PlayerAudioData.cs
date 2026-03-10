@@ -5,9 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Player", menuName = "EPITAPH Audio/PlayerAudioData", order = 1)]
 public class PlayerAudioData : ScriptableObject
 {
-    [Header("Weapon")]
+    [Header("Crossbow")]
     [SerializeField] public EventReference chargeEvent;
     [SerializeField] public EventReference lockedEvent;
+    [SerializeField] public EventReference releaseEvent;
+    [Header("Hits")]
     [SerializeField] public EventReference hitMeat;
     [SerializeField] public EventReference hitWall;
 

@@ -8,14 +8,7 @@ public class BeatPuncher : BeatResponderBase
 
     public float strength=0.05f;
 
-
-    protected override void OnDisable()
-    {
-        DOTween.Kill(this);
-        base.OnDisable();
-    }
-
-    public override void BeatTrigger(BeatChanged e)
+    public override void BeatTrigger(EarlyBeatChanged e)
     {
             DOTween.Kill(this,true);
             Sequence seq = DOTween.Sequence(this);

@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 4169391119266236259}
   - component: {fileID: 4493587103197464158}
   - component: {fileID: 2781506772102623786}
+  - component: {fileID: 7954169425161909040}
   m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
@@ -149,6 +150,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeshSortingOrderSetter
   _sortingLayerOrder: 90
+--- !u!210 &7954169425161909040
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1421283867762544039}
+  m_Enabled: 1
+  m_SortingLayerID: -778884729
+  m_SortingLayer: 3
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!1 &5334964444843191086
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,7 +224,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.31072623, w: 0.9504995}
   m_LocalPosition: {x: -4.8, y: 2.9, z: 0}
-  m_LocalScale: {x: 9.075, y: 1, z: 1}
+  m_LocalScale: {x: 16.994022, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1099493953514705716}
@@ -282,7 +296,7 @@ MonoBehaviour:
   m_CastsShadows: 1
   m_SelfShadows: 0
   m_AlphaCutoff: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 00000000cb99adf11d65b305872993d1
   m_ShapePath:
   - {x: -0.055096447, y: -0.5, z: 0}
   - {x: -0.055096447, y: 0.5, z: 0}
@@ -297,8 +311,8 @@ MonoBehaviour:
   m_ShadowMesh:
     m_Mesh: {fileID: 0}
     m_LocalBounds:
-      m_Center: {x: -0.0000076293945, y: 0, z: 0}
-      m_Extent: {x: 0.49999237, y: 0.5, z: 0}
+      m_Center: {x: 0, y: -0.0000076293945, z: 0}
+      m_Extent: {x: 0.5, y: 0.49999237, z: 0}
     m_EdgeProcessing: 1
     m_TrimEdge: 0
     m_FlipX: 0

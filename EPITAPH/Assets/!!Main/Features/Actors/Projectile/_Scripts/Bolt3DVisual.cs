@@ -32,7 +32,7 @@ public class Bolt3DVisual : MonoBehaviour
 
     void SetRotation()  
     {
-        Vector3 velocity = new(_boltController.RB2D.linearVelocity.x, _boltController.RB2D.linearVelocity.y, _rb.linearVelocity.z);
+        Vector3 velocity = new(_boltController.Rb2D.linearVelocity.x, _boltController.Rb2D.linearVelocity.y, _rb.linearVelocity.z);
         Quaternion rotation = Quaternion.FromToRotation(Vector3.up, velocity.normalized);
         _rb.MoveRotation(rotation);
     }

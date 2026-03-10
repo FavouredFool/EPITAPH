@@ -2,6 +2,7 @@ using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Rendering;
 
 public class PlayerAudio : MonoBehaviour
 {
@@ -9,20 +10,26 @@ public class PlayerAudio : MonoBehaviour
 
     EventInstance chargeInstance;
     EventInstance lockedInstance;
+    EventInstance releasedInstance;
 
+    public static PlayerAudio instance;
     
 
     public void Setup()
     {
+        instance = this;
         // Weapon stuff
         chargeInstance = RuntimeManager.CreateInstance(data.chargeEvent);
         chargeInstance.setParameterByName("Charge", 0);
         RuntimeManager.AttachInstanceToGameObject(chargeInstance,gameObject.transform);
 
+        releasedInstance = RuntimeManager.CreateInstance(data.releaseEvent);
+        RuntimeManager.AttachInstanceToGameObject(releasedInstance, gameObject.transform);
+
+
         lockedInstance = RuntimeManager.CreateInstance(data.lockedEvent);
         lockedInstance.setParameterByName("ChargeStep", 1);
-        RuntimeManager.AttachInstanceToGameObject(lockedInstance,gameObject.transform);
-        
+        RuntimeManager.AttachInstanceToGameObject(lockedInstance, gameObject.transform);
     }
 
 
@@ -32,53 +39,64 @@ public class PlayerAudio : MonoBehaviour
     // Method to start the charging sound.
     // Resets Charge state.
     // Starts only a new sound if none is playing
-    public void StartCharging()
+    public static void StartCharging()
     {
-        chargeInstance.setParameterByName("Charge", 0.0f);
+        instance.chargeInstance.setParameterByName("Charge", 0.0f);
         PLAYBACK_STATE state;
-        chargeInstance.getPlaybackState(out state);
+        instance.chargeInstance.getPlaybackState(out state);
         if(state != PLAYBACK_STATE.PLAYING)
         {
-            chargeInstance.start();
+            instance.chargeInstance.start();
         }
     }
 
     // Stops the Charging sound
     // Will allow for fadeout.
-    public void StopCharging()
+    public static void StopCharging()
     {
-        chargeInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        instance.chargeInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
 
     // Sets the Charge (Within a Step)
-    public void SetCharge(float charge)
+    public static void SetCharge(float charge)
     {
-        chargeInstance.setParameterByName("Charge", charge);
+        instance.chargeInstance.setParameterByName("Charge", charge);
     }
 
 
-    public void PlayStepLock(int step)
+    public static void PlayStepLock(int step)
     {
         PLAYBACK_STATE state;
-        lockedInstance.getPlaybackState(out state);
+        instance.lockedInstance.getPlaybackState(out state);
         if (state == PLAYBACK_STATE.PLAYING) 
         {
-            lockedInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            instance.lockedInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         }
 
-        lockedInstance.start();
-        lockedInstance.setParameterByName("ChargeStep", step);
+        instance.lockedInstance.start();
+        instance.lockedInstance.setParameterByName("ChargeStep", step);
 
     }
-
-    public void PlayMeatHit(Vector3 position)
+    public static void PlayReleaseCrossbow()
     {
-        RuntimeManager.PlayOneShot(data.hitMeat, position);
+        PLAYBACK_STATE state;
+        instance.releasedInstance.getPlaybackState(out state);
+        if (state == PLAYBACK_STATE.PLAYING)
+        {
+            instance.releasedInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        }
+
+        instance.releasedInstance.start();
     }
 
-    public void PlayWallHit(Vector3 position)
+    public static void PlayMeatHit(Vector3 position)
     {
-        RuntimeManager.PlayOneShot(data.hitWall, position);
+        RuntimeManager.PlayOneShot(instance.data.hitMeat, position);
+    }
+
+    public static void PlayWallHit(Vector3 position)
+    {
+        RuntimeManager.PlayOneShot(instance.data.hitWall, position);
     }
 }

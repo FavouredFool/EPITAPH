@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6210916519401389345}
   - component: {fileID: 2264037776274591177}
   - component: {fileID: 7953282403750362026}
+  - component: {fileID: 8690753343266135013}
   m_Layer: 0
   m_Name: PlayerCam
   m_TagString: Untagged
@@ -95,3 +96,17 @@ MonoBehaviour:
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
   FollowOffset: {x: 0, y: 0, z: -23}
+--- !u!114 &8690753343266135013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728693276183160117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioListener
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}

@@ -22,11 +22,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform _instantiationParent;
     [SerializeField] BoltController _projectileBlueprint;
     [SerializeField, Range(0, 4)] float _spawnDist;
+    [SerializeField] Transform _bloodlineConnection;
     
     [Header("Cam")]
     [SerializeField] Transform _cameraFollow;
     [SerializeField, Range(0, 10)] float _cameraAimOffset;
-    
+
+    [Header("Audio")]
+    [SerializeField] PlayerAudioData PADScriptableObject;
     
     InputActions _inputActions;
     Rigidbody2D _rb;
@@ -68,6 +71,8 @@ public class PlayerController : MonoBehaviour
             [BoltType.UP] = true,
             [BoltType.RIGHT] = true
         };
+
+        PADScriptableObject.Setup(this.gameObject);
     }
 
     void Start()
@@ -171,8 +176,12 @@ public class PlayerController : MonoBehaviour
         
         BoltController bolt = Instantiate(_projectileBlueprint, transform.position + transform.forward * _spawnDist, transform.rotation, _instantiationParent);
         bolt.BoltType = type;
+        bolt.BloodpointPlayer = _bloodlineConnection;
         
         Knockback(-transform.up * _knockbackStrength);
+
+        // Play Audio
+        PlayerAudio.PlayReleaseCrossbow();
     }
 
     BoltType GetBoltTypeToShoot()
