@@ -84,7 +84,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   _speed: 5
-  _speedAimReduction: 8
+  _speedAimReduction: 4
   _moveLockThreshold: 0.5
   _knockbackDecay: 20
   _aimAssist: {fileID: 0}

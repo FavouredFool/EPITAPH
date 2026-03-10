@@ -9,7 +9,6 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] Transform _target;
     [SerializeField] LayerMask _wallLayers;
-    [SerializeField] LayerMask _hitLayers;
     [SerializeField, UnityEngine.Range(1, 6)] int _maxHp;
     [SerializeField, UnityEngine.Range(0, 20)] float _speed;
     [SerializeField, UnityEngine.Range(1, 20)] float _knockbackDecay;
@@ -120,30 +119,18 @@ public class EnemyController : MonoBehaviour
             {
                 Debug.Log("STAKED");
                 Die();
-                
             }
         }
-        
-        
+    }
+
+    public void EvaluateBoltHit(Vector2 velocity)
+    {
+        Hit(velocity);
+        CheckForStake();
     }
 
     void OnCollisionEnter2D(Collision2D other)
     {
         CheckForStake();
     }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (!LayerUtil.MaskContainsLayer(_hitLayers, other.gameObject.layer)) return;
-        
-        Rigidbody2D rb = other.GetComponentInParent<Rigidbody2D>();
-        Assert.IsNotNull(rb);
-            
-        Hit(rb.linearVelocity);
-        CheckForStake();
-    }
-
-
-    
-
 }

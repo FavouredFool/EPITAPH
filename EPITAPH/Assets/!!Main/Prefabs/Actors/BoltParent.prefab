@@ -156,6 +156,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   _shootSpeed: 150
+  _hitbox: {fileID: 2251670246412952734}
+  _pickupBox: {fileID: 8217312107629525244}
 --- !u!1 &3241902850879481059
 GameObject:
   m_ObjectHideFlags: 0
