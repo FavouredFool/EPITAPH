@@ -24,8 +24,8 @@ public class MenuUIDManager : MonoBehaviour
         _currentMenu=null;
         IsOpen=false;
 
-        _bodyRect.anchoredPosition = new Vector2(-2555, 0);
-        _glowRect.anchoredPosition = new Vector2(-3920, 0);
+        _bodyRect.anchoredPosition = new Vector2(-4585, 0);
+        _glowRect.anchoredPosition = new Vector2(-6000, 0);
 
         _menuObject.SetActive(false);
     }
@@ -61,16 +61,16 @@ public class MenuUIDManager : MonoBehaviour
             if(_currentMenu == null)
                 OpenMenu(_mainMenu);
             
-            seq.Insert(0,_bodyRect.DOAnchorPosX(-555,1).SetEase(Ease.OutCirc));
-            seq.Insert(0,_glowRect.DOAnchorPosX(-1920,1.25f).SetEase(Ease.OutCirc));
+            seq.Insert(0,_bodyRect.DOAnchorPosX(-585,1).SetEase(Ease.OutCirc));
+            seq.Insert(0,_glowRect.DOAnchorPosX(-2000,1.25f).SetEase(Ease.OutCirc));
         }
         else
         {
             _currentMenu.Toggle(false);
             _currentMenu = null;
 
-            seq.Insert(0,_bodyRect.DOAnchorPosX(-2555,0.75f).SetEase(Ease.InSine));
-            seq.Insert(0,_glowRect.DOAnchorPosX(-3920,0.75f).SetEase(Ease.InSine));
+            seq.Insert(0,_bodyRect.DOAnchorPosX(-4585,0.75f).SetEase(Ease.InSine));
+            seq.Insert(0,_glowRect.DOAnchorPosX(-6000,0.75f).SetEase(Ease.InSine));
         }
     }
 
@@ -91,5 +91,16 @@ public class MenuUIDManager : MonoBehaviour
                 Debug.Log("QUIT APPLICATION");
         Application.Quit();
         #endif
+    }
+
+    public void IncrimentVolume(string variableName = "VolumeMaster")
+    {
+        int volume= PlayerPrefs.GetInt(variableName,0);
+
+        volume++;
+        if(volume>=5) volume = 0;
+
+        PlayerPrefs.SetInt(variableName, volume);
+        SignalBus.Fire(new Signal_RefreshVolume(variableName));
     }
 }

@@ -387,6 +387,11 @@ PrefabInstance:
       insertIndex: 2
       addedObject: {fileID: 8741549620355738672}
   m_SourcePrefab: {fileID: 100100000, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
+--- !u!1 &1479317671183617281 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2265147629191745957, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
+  m_PrefabInstance: {fileID: 858213157948185764}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4504074458821206976 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3848699211870895972, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
@@ -409,4 +414,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc27a70ae5a81c24a9c83d0be5707b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuButton_Level
+  _selectionMarker: {fileID: 1479317671183617281}
   _levelText: {fileID: 8169199213930208069}
+  _variableName: 

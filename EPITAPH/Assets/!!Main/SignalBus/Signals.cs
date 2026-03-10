@@ -65,3 +65,10 @@ public struct Hit_Player
         this.PlayerTransform = PlayerTransform;
     }
 }
+public struct Signal_RefreshVolume
+{
+    public string variableName;
+    public Signal_RefreshVolume(string varName)
+    {
+        variableName=varName;
+        Debug.Log(varName+" is "+PlayerPrefs.GetInt(varName));
