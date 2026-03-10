@@ -200,6 +200,8 @@ public class EnemyController : MonoBehaviour
             if (_knockbackVelocity.magnitude > _pinKnockbackMagnitudeThreshold)
             {
                 Debug.Log("STAKED");
+                //Play Wall hit sound
+                PlayerAudio.PlayWallHit(this.transform.position);
                 Die();
             }
         }
