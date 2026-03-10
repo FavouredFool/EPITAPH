@@ -87,9 +87,9 @@ MonoBehaviour:
   _speed: 5
   _speedAimReduction: 4
   _moveLockThreshold: 0.5
-  _knockbackDecay: 20
+  _knockbackDecay: 15
   _aimAssist: {fileID: 0}
-  _knockbackStrength: 2
+  _knockbackStrength: 30
   _instantiationParent: {fileID: 0}
   _projectileBlueprint: {fileID: 3159500885758386700, guid: ab0c37ca8bfc3e04289b07f66f8f1814, type: 3}
   _spawnDist: 0.2

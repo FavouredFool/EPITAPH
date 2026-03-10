@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AimAssistV3 _aimAssist;
     
     [Header("Shooting")]
-    [SerializeField, Range(0, 10)] float _knockbackStrength = 2;
+    [SerializeField, Range(0, 50)] float _knockbackStrength = 2;
     [SerializeField] Transform _instantiationParent;
     [SerializeField] BoltController _projectileBlueprint;
     [SerializeField, Range(0, 4)] float _spawnDist;
