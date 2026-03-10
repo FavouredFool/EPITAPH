@@ -63,8 +63,7 @@ public class EnemyController : MonoBehaviour
         }
         ChaseBehaviourFixedUpdateTick();
 
-        // Translate();
-        //   Rotate();
+        
     }
 
     //remove to state later on 
@@ -120,6 +119,8 @@ public class EnemyController : MonoBehaviour
     public IEnumerator MeleeChaseAttackLoop()
     {
         charging = true;
+        animator.SetBool("charging", true);
+        animator.SetTrigger("startCharge");
         _agent.speed = 0;
 
         yield return new WaitForSeconds(1);
@@ -132,11 +133,22 @@ public class EnemyController : MonoBehaviour
             if (IsTargetInRangeForMelee())
             {
 
+                _agent.speed = 0;
+                animator.SetTrigger("chargeAttack");
+                break;
+                //start attacking 
+
             }
             yield return null;
         }
 
-        yield return new WaitForSeconds(_chargeCooldown);
+        //   yield return new WaitForSeconds(_chargeCooldown);
+
+
+
+        yield return new WaitForSeconds(2);
+
+        animator.SetBool("charging", false);
 
         charging = false;
     }

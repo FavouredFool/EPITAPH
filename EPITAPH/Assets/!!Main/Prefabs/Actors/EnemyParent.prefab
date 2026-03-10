@@ -438,6 +438,12 @@ MonoBehaviour:
   _knockbackResistance: 2.5
   _pinKnockbackMagnitudeThreshold: 0.25
   _deadSprite: {fileID: 7276502925574245455}
+  animator: {fileID: 8439757380821537968}
+  _chargeSpeed: 1
+  _chargeStartRange: 1
+  _chargeAttackRange: 1
+  _chargeDuration: 1
+  _chargeCooldown: 1
 --- !u!195 &6147159875537704608
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -820,5 +826,10 @@ PrefabInstance:
 --- !u!4 &1725321977637865484 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5518057825216685197, guid: 6fe48fe348c21af409d006239212ad86, type: 3}
+  m_PrefabInstance: {fileID: 6585818918267219073}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8439757380821537968 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3334227191000217649, guid: 6fe48fe348c21af409d006239212ad86, type: 3}
   m_PrefabInstance: {fileID: 6585818918267219073}
   m_PrefabAsset: {fileID: 0}
