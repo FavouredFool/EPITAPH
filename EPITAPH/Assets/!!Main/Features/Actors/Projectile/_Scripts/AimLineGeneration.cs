@@ -14,6 +14,8 @@ public class AimLineGeneration : MonoBehaviour
     
     float _offsetAngle = 0;
     float _actualAngle = 0;
+    
+    bool _enabled;
 
     void Awake()
     {
@@ -21,17 +23,40 @@ public class AimLineGeneration : MonoBehaviour
         _lineRenderer.positionCount = 2 + _resolution;
     }
     
-    void Update()
+    void LateUpdate()
     {
         UpdateOffsetAngle();
+        
+        if (_enabled && !_playerController.ReadyToShoot)
+        {
+            _enabled = false;
+        }
+        
+        if (!_enabled && _playerController.ReadyToShoot)
+        {
+            _actualAngle = Vector2.SignedAngle(Vector2.up, _playerController.AimAssistedLookDirection);
+            _actualAngle = _offsetAngle;
+            _enabled = true;
+        }
+        
         RegenerateLine();
+
+        _lineRenderer.enabled = _playerController.ReadyToShoot;
     }
 
     void UpdateOffsetAngle()
     {
         // Should turn this into a windup that i can then resolve with the UI
         _actualAngle = Vector2.SignedAngle(Vector2.up, _playerController.transform.up);
-        _offsetAngle = Mathf.MoveTowardsAngle(_offsetAngle, _actualAngle, _angleDecaySpeed * Time.deltaTime * 100);
+        
+        if (!_playerController.ReadyToShoot)
+        {
+            _offsetAngle = _actualAngle;
+        }
+        else
+        {
+            _offsetAngle = Mathf.MoveTowardsAngle(_offsetAngle, _actualAngle, _angleDecaySpeed * Time.deltaTime * 100);
+        }
     }
 
     void RegenerateLine()

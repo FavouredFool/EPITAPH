@@ -11,7 +11,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] LayerMask _wallLayers;
     [SerializeField] LayerMask _hitLayers;
     [SerializeField, UnityEngine.Range(1, 6)] int _maxHp;
-    [SerializeField, UnityEngine.Range(1, 20)] float _speed;
+    [SerializeField, UnityEngine.Range(0, 20)] float _speed;
     [SerializeField, UnityEngine.Range(1, 20)] float _knockbackDecay;
     [SerializeField, UnityEngine.Range(1, 20)] float _knockbackResistance = 1;
     [SerializeField, UnityEngine.Range(0.01f, 10)] float _pinKnockbackMagnitudeThreshold = 0.1f;
@@ -37,14 +37,15 @@ public class EnemyController : MonoBehaviour
         _agent.updateRotation = false;
         _agent.updateUpAxis = false;
         
+        
         _currentHp = _maxHp;
     }
 
     void Update()
     {
+        _agent.speed = _speed;
         _agent.nextPosition = _rb.position;
         _agent.destination = _target.position;
-
     }
 
     void FixedUpdate()

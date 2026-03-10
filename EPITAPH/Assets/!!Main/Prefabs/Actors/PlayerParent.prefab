@@ -42,7 +42,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3967837825882570733}
   - component: {fileID: 9193680919393893474}
-  - component: {fileID: 4452163614293101704}
   - component: {fileID: 7293642660323857259}
   m_Layer: 6
   m_Name: PlayerParent
@@ -66,6 +65,7 @@ Transform:
   m_Children:
   - {fileID: 8500348783263236695}
   - {fileID: 6832729491387809120}
+  - {fileID: 6711845830664808249}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9193680919393893474
@@ -81,23 +81,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   _speed: 5
+  _speedAimReduction: 8
   _moveLockThreshold: 0.5
   _knockbackDecay: 20
---- !u!114 &4452163614293101704
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2902068242822157332}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46e7de4af964051479854d4c495b4c34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerShooting
-  _knockbackStrength: 10
+  _aimAssist: {fileID: 0}
+  _knockbackStrength: 2
   _instantiationParent: {fileID: 0}
   _projectileBlueprint: {fileID: 3757731019365391340, guid: ab0c37ca8bfc3e04289b07f66f8f1814, type: 3}
+  _spawnDist: 0.2
+  _cameraFollow: {fileID: 6711845830664808249}
+  _cameraAimOffset: 2.5
 --- !u!50 &7293642660323857259
 Rigidbody2D:
   serializedVersion: 5
@@ -125,6 +118,37 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!1 &7861930429062187677
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6711845830664808249}
+  m_Layer: 6
+  m_Name: PlayerCameraFollow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6711845830664808249
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7861930429062187677}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3967837825882570733}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8934039217903088191
 GameObject:
   m_ObjectHideFlags: 0

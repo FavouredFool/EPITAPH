@@ -1,22 +1,52 @@
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
+    [Header("Movement")]
     [SerializeField, Range(1, 20)] float _speed;
+    [SerializeField, Range(1, 20)] float _speedAimReduction;
     [SerializeField, Range(0, 0.95f)] float _moveLockThreshold = 0.3f;
     [SerializeField, UnityEngine.Range(1, 20)] float _knockbackDecay;
+    [SerializeField] AimAssistV3 _aimAssist;
+    
+    [Header("Shooting")]
+    [SerializeField, Range(0, 10)] float _knockbackStrength = 2;
+    [SerializeField] Transform _instantiationParent;
+    [SerializeField] Rigidbody2D _projectileBlueprint;
+    [SerializeField, Range(0, 4)] float _spawnDist;
+    
+    [Header("Cam")]
+    [SerializeField] Transform _cameraFollow;
+    [SerializeField, Range(0, 10)] float _cameraAimOffset;
+    
     
     InputActions _inputActions;
     Rigidbody2D _rb;
 
-    Vector2 _movementInput;
-    Vector2 _rotateInput;
-    
+    Vector2 MovementInput { get; set; }
+    Vector2 RotateInput  { get; set; }
+
+    public Vector2 AimAssistedLookDirection
+    {
+        get
+        {
+            Vector2 rawAimDir = RotateInput.normalized;
+            
+            float angle = Mathf.Atan2(rawAimDir.y, rawAimDir.x) * Mathf.Rad2Deg - 90;
+            float assistedAngle = _aimAssist.GetAssistedAngle(angle, transform.position);
+            
+            return Quaternion.Euler(0, 0, assistedAngle) * Vector2.up;
+        }
+    }
+
     Vector2 _movementVelocity;
     Vector2 _knockbackVelocity;
+    
+    public bool ReadyToShoot => RotateInput.magnitude > _moveLockThreshold;
     
     void Awake()
     {
@@ -25,11 +55,24 @@ public class PlayerController : MonoBehaviour
 
         _rb = GetComponent<Rigidbody2D>();
     }
+    
+    
+    void OnEnable()
+    {
+        _inputActions.Player.Shoot.performed += ShootBoltInput;
+    }
+    
+    void OnDisable()
+    {
+        _inputActions.Player.Shoot.performed -= ShootBoltInput;
+    }
 
     void Update()
     {
-        _movementInput = _inputActions.Player.Movement.ReadValue<Vector2>();
-        _rotateInput = _inputActions.Player.Look.ReadValue<Vector2>();
+        MovementInput = _inputActions.Player.Movement.ReadValue<Vector2>();
+        RotateInput = _inputActions.Player.Look.ReadValue<Vector2>();
+        
+        CameraPos();
     }
 
     void FixedUpdate()
@@ -38,16 +81,29 @@ public class PlayerController : MonoBehaviour
         Rotation();
     }
 
-    void Translation()
+    void CameraPos()
     {
-        // movement
-        if (_rotateInput.sqrMagnitude > _moveLockThreshold)
+        if (ReadyToShoot)
         {
-            _movementVelocity = Vector2.zero;
+            _cameraFollow.localPosition = Vector3.up * _cameraAimOffset;
         }
         else
         {
-            _movementVelocity = _movementInput * _speed;
+            _cameraFollow.localPosition = Vector3.zero;
+        }
+    }
+
+    void Translation()
+    {
+        // movement
+        if (ReadyToShoot)
+        {
+            //_movementVelocity = Vector2.zero;
+            _movementVelocity = MovementInput * _speed / _speedAimReduction;
+        }
+        else
+        {
+            _movementVelocity = MovementInput * _speed;
         }
         
         // knockback
@@ -61,9 +117,9 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 dir = transform.up;
         
-        if (_rotateInput.sqrMagnitude > _moveLockThreshold)
+        if (ReadyToShoot)
         {
-            dir = _rotateInput.normalized;
+            dir = AimAssistedLookDirection;
         }
         else if (_rb.linearVelocity.sqrMagnitude > 0.01)
         {
@@ -77,5 +133,30 @@ public class PlayerController : MonoBehaviour
     public void Knockback(Vector2 velocity)
     {
         _knockbackVelocity += velocity;
+    }
+    
+    void ShootBoltInput(InputAction.CallbackContext ctx)
+    {
+        if (!ReadyToShoot) return;
+        
+        ShootBolt();
+    }
+    
+    void ShootBolt()
+    {
+        Instantiate(_projectileBlueprint, transform.position + transform.forward * _spawnDist, transform.rotation, _instantiationParent);
+        
+        Knockback(-transform.up * _knockbackStrength);
+    }
+
+    void OnDrawGizmos()
+    {
+        if (!Application.isPlaying) return;
+        
+        //Gizmos.color = Color.yellow;
+        //Gizmos.DrawLine(transform.position, (Vector2)transform.position + RotateInput.normalized);
+        //
+        //Gizmos.color = Color.green;
+        //Gizmos.DrawLine(transform.position, (Vector2)transform.position + AimAssistedLookDirection);
     }
 }
