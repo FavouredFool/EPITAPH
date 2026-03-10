@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 00000000cb99adf11d65b305
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 1
@@ -429,15 +429,18 @@ MonoBehaviour:
   _wallLayers:
     serializedVersion: 2
     m_Bits: 1024
-  _hitLayers:
-    serializedVersion: 2
-    m_Bits: 256
   _maxHp: 5
   _speed: 0
   _knockbackDecay: 15
   _knockbackResistance: 2.5
   _pinKnockbackMagnitudeThreshold: 0.25
   _deadSprite: {fileID: 7276502925574245455}
+  animator: {fileID: 0}
+  _chargeSpeed: 1
+  _chargeStartRange: 1
+  _chargeAttackRange: 1
+  _chargeDuration: 1
+  _chargeCooldown: 1
 --- !u!195 &6147159875537704608
 NavMeshAgent:
   m_ObjectHideFlags: 0
