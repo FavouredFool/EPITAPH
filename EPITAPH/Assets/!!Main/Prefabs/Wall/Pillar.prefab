@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2651094560478904621}
   - component: {fileID: 7953150419171860310}
   - component: {fileID: 4149259377803901988}
+  - component: {fileID: 6185065802398522570}
   m_Layer: 10
   m_Name: Pillar
   m_TagString: Untagged
@@ -117,6 +118,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeshSortingOrderSetter
   _sortingLayerOrder: 100
+--- !u!210 &6185065802398522570
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2841597894823978006}
+  m_Enabled: 1
+  m_SortingLayerID: -778884729
+  m_SortingLayer: 3
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!1 &5254054764081046267
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,7 +286,7 @@ MonoBehaviour:
   m_CastsShadows: 1
   m_SelfShadows: 0
   m_AlphaCutoff: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: cb99adf11d65b305
   m_ShapePath:
   - {x: -0.5, y: -0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
