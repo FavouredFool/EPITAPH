@@ -46,7 +46,6 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
-        Invoke("KnockbackTest", 3);
     }
     void Update()
     {
@@ -55,11 +54,7 @@ public class EnemyController : MonoBehaviour
     }
 
 
-    [ContextMenu("test knockback")]
-    public void KnockbackTest()
-    {
-        ApplyKnockback(UnityEngine.Random.insideUnitCircle.normalized, 10);
-    }
+    
 
     public void ApplyKnockback(Vector2 direction,float intensity)
     {
@@ -135,10 +130,11 @@ public class EnemyController : MonoBehaviour
     {
         charging = true;
 
+
+        _agent.destination = (_target.transform.position-transform.position).normalized*500;
         bool attacked = false;
         animator.SetBool("charging", true);
         animator.SetTrigger("startCharge");
-           // _agent.ResetPath();
         _agent.speed = 0;
 
         yield return new WaitForSeconds(1);
@@ -160,6 +156,7 @@ public class EnemyController : MonoBehaviour
 
             if(Vector2.Distance(transform.position, _agent.destination) < 0.5f)
             {
+                Debug.Log("path cut short");
                 _agent.ResetPath();
                 _agent.speed = 0;
                 animator.SetTrigger("chargeAttack");
