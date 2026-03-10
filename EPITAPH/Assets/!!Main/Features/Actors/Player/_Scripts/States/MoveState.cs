@@ -9,7 +9,6 @@ public class MoveState : VampireBaseState
 
     public override void OnEnter()
     {
-        _ctx.InputActions.Player.Shoot.performed += _ctx.PlayerController.ShootBoltInput;
         _ctx.InputActions.Player.Reload.performed += _ctx.PlayerController.ReloadInputStart;
         
         _ctx.InputActions.Player.LungeDown.performed += _ctx.PlayerController.LungeDownInput;
@@ -17,7 +16,7 @@ public class MoveState : VampireBaseState
         _ctx.InputActions.Player.LungeUp.performed += _ctx.PlayerController.LungeUpInput;
         _ctx.InputActions.Player.LungeRight.performed += _ctx.PlayerController.LungeRightInput;
         
-        _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsMovingBool, true);
+        _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsMovingBoolAnim, true);
     }
 
     public override void Update()
@@ -42,7 +41,6 @@ public class MoveState : VampireBaseState
 
     public override void OnExit()
     {
-        _ctx.InputActions.Player.Shoot.performed -= _ctx.PlayerController.ShootBoltInput;
         _ctx.InputActions.Player.Reload.performed -= _ctx.PlayerController.ReloadInputStart;
         
         _ctx.InputActions.Player.LungeDown.performed -= _ctx.PlayerController.LungeDownInput;
@@ -50,6 +48,6 @@ public class MoveState : VampireBaseState
         _ctx.InputActions.Player.LungeUp.performed -= _ctx.PlayerController.LungeUpInput;
         _ctx.InputActions.Player.LungeRight.performed -= _ctx.PlayerController.LungeRightInput;
         
-        _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsMovingBool, false);
+        _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsMovingBoolAnim, false);
     }
 }

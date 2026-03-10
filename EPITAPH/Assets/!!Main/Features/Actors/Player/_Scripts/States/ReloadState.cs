@@ -13,7 +13,7 @@ public class ReloadState : VampireBaseState
     public override void OnEnter()
     {
         _ctx.InputActions.Player.Reload.canceled += ReloadInputStop;
-        _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsReloadingBool, true);
+        _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsReloadingBoolAnim, true);
         
         _reloadStart = Time.time;
         _ctx.PlayerController.CrossboxAnimator.SetTrigger(PlayerController.StartReloadTriggerAnim);
@@ -39,7 +39,7 @@ public class ReloadState : VampireBaseState
     public override void OnExit()
     {
         _ctx.InputActions.Player.Reload.canceled -= ReloadInputStop;
-        _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsReloadingBool, false);
+        _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsReloadingBoolAnim, false);
     }
     
     public void ReloadInputStop(InputAction.CallbackContext ctx)

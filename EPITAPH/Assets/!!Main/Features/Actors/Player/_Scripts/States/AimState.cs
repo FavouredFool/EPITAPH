@@ -19,8 +19,8 @@ public class AimState : VampireBaseState
         _ctx.InputActions.Player.LungeRight.performed += _ctx.PlayerController.LungeRightInput;
 
         _ctx.PlayerController.SetCameraFollow(true);
-        _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsAimingBool, true);
-        _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsMovingBool, true);
+        _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsAimingBoolAnim, true);
+        _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsMovingBoolAnim, true);
     }
 
     public override void Update()
@@ -49,7 +49,7 @@ public class AimState : VampireBaseState
         _ctx.InputActions.Player.LungeRight.performed -= _ctx.PlayerController.LungeRightInput;
         
         _ctx.PlayerController.SetCameraFollow(false);
-        _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsAimingBool, false);
-        _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsMovingBool, false);
+        _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsAimingBoolAnim, false);
+        _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsMovingBoolAnim, false);
     }
 }

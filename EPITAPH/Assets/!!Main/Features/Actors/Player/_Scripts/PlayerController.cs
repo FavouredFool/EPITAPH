@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
     
     // Bolts
     public bool BoltInChamber { get; set; } = true;
-    Dictionary<BoltType, bool> _currentBoltsHeld;
+    public Dictionary<BoltType, bool> CurrentBoltsHeld { get; private set; }
 
     // State Machine
     public StateMachine StateMachine { get; set; }
@@ -71,17 +71,17 @@ public class PlayerController : MonoBehaviour
     
     // Hashes
     // Crossbow
-    public static readonly int ShootCrossbowTrigger = Animator.StringToHash("Shoot");
+    public static readonly int ShootCrossbowTriggerAnim = Animator.StringToHash("Shoot");
     public static readonly int StartReloadTriggerAnim = Animator.StringToHash("StartReload");
     public static readonly int InterruptReloadTriggerAnim = Animator.StringToHash("InterruptReload");
     public static readonly int FinishReloadTriggerAnim = Animator.StringToHash("FinishReload");
     
     // Player
-    public static readonly int IsMovingBool = Animator.StringToHash("IsMoving");
-    public static readonly int IsAimingBool = Animator.StringToHash("IsAiming");
-    public static readonly int IsReloadingBool = Animator.StringToHash("IsReloading");
-    public static readonly int IsLungingTrigger = Animator.StringToHash("IsLunging");
-    public static readonly int ShotCharacterTrigger = Animator.StringToHash("Shot");
+    public static readonly int IsMovingBoolAnim = Animator.StringToHash("IsMoving");
+    public static readonly int IsAimingBoolAnim = Animator.StringToHash("IsAiming");
+    public static readonly int IsReloadingBoolAnim = Animator.StringToHash("IsReloading");
+    public static readonly int IsLungingTriggerAnim = Animator.StringToHash("IsLunging");
+    public static readonly int ShotCharacterTriggerAnim = Animator.StringToHash("Shot");
     
 
     public Vector2 AimAssistedLookDirection
@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour
 
         _rb = GetComponent<Rigidbody2D>();
 
-        _currentBoltsHeld = new Dictionary<BoltType, bool>
+        CurrentBoltsHeld = new Dictionary<BoltType, bool>
         {
             [BoltType.DOWN] = true,
             [BoltType.LEFT] = true,
@@ -174,6 +174,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         StateMachine.Update();
+        Debug.Log(StateMachine.CurrentState);
     }
     
     void FixedUpdate()
@@ -258,7 +259,7 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("start lunge to " + boltType);
 
-        _characterAnimator.SetTrigger(IsLungingTrigger);
+        _characterAnimator.SetTrigger(IsLungingTriggerAnim);
         
         
         // Set state machine trigger
@@ -267,31 +268,15 @@ public class PlayerController : MonoBehaviour
     public void ShootBolt()
     {
         BoltType type = GetBoltTypeToShoot();
-
         if (type == BoltType.NONE) return;
 
-        _currentBoltsHeld[type] = false;
-        BoltInChamber = false;
-        
-        BoltController bolt = Instantiate(_projectileBlueprint, transform.position + transform.forward * _spawnDist, transform.rotation, _instantiationParent);
-        bolt.BoltType = type;
-        bolt.BloodpointPlayer = _bloodlineConnection;
-        
-        Knockback(-transform.up);
-
-        // Play Audio
-        PlayerAudio.PlayReleaseCrossbow();
-        
-        // Animation
-        Debug.Log("SHOT");
-        CrossboxAnimator.SetTrigger(PlayerController.ShootCrossbowTrigger);
-        CharacterAnimator.SetTrigger(PlayerController.ShotCharacterTrigger);
+        ShootTrigger.Trigger();
     }
     
     public void StartReload()
     {
         if (BoltInChamber) return;
-        if (_currentBoltsHeld.Values.All(e => !e)) return;
+        if (CurrentBoltsHeld.Values.All(e => !e)) return;
         
         StartReloadTrigger.Trigger();
     }
@@ -299,7 +284,7 @@ public class PlayerController : MonoBehaviour
 
     public BoltType GetBoltTypeToShoot()
     {
-        foreach (var kv in _currentBoltsHeld.Where(kv => kv.Value))
+        foreach (var kv in CurrentBoltsHeld.Where(kv => kv.Value))
         {
             return kv.Key;
         }
@@ -309,7 +294,7 @@ public class PlayerController : MonoBehaviour
 
     public void PickupBolt(BoltController bolt)
     {
-        _currentBoltsHeld[bolt.BoltType] = true;
+        CurrentBoltsHeld[bolt.BoltType] = true;
 
         Destroy(bolt.gameObject);
     }

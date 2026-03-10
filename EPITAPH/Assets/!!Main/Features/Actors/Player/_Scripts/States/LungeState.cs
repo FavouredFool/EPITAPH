@@ -10,7 +10,7 @@ public class LungeState : VampireBaseState
     public override void OnEnter()
     {
         //Debug.Log("start lunge to " + boltType);
-        _ctx.PlayerController.CharacterAnimator.SetTrigger(PlayerController.IsLungingTrigger);
+        _ctx.PlayerController.CharacterAnimator.SetTrigger(PlayerController.IsLungingTriggerAnim);
     }
 
     public override void Update()
