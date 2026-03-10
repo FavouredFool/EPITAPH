@@ -96,11 +96,11 @@ public class MenuUIDManager : MonoBehaviour
     public void IncrimentVolume(string variableName = "VolumeMaster")
     {
         int volume= PlayerPrefs.GetInt(variableName,0);
-
+        
         volume++;
         if(volume>=5) volume = 0;
 
         PlayerPrefs.SetInt(variableName, volume);
-        SignalBus.Fire(new Signal_RefreshVolume(variableName));
+        AudioManager.SetVolumeLevel(variableName, volume);
     }
 }
