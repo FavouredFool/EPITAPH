@@ -2,13 +2,21 @@ using UnityEngine;
 
 public class HealthUID : MonoBehaviour
 {
-    [SerializeField] PlayerVariables _playerVariables;
     [SerializeField] HealthMarker[] _healthMarkers;
 
-    public void RefreshUID()
+    void OnEnable()
     {
-        float value= _playerVariables.Health;
-        float max= _playerVariables.HealthMax;
+        SignalBus.Subscribe<Signal_RefreshUI_Health>(RefreshUID);
+    }
+    void OnDisable()
+    {
+        SignalBus.Unsubscribe<Signal_RefreshUI_Health>(RefreshUID);
+    }
+
+    public void RefreshUID(Signal_RefreshUI_Health signal)    
+    {
+        float value= signal.variables.Health;
+        float max= signal.variables.HealthMax;
 
         for(int i=0; i<_healthMarkers.Length; i++)
         {

@@ -21,6 +21,7 @@ public class PlayerVariables : ScriptableObject
         set
         {
             _health=Mathf.Clamp(value,0,_healthMax);
+            SignalBus.Fire(new Signal_RefreshUI_Health(this));
         }
     }
     public float Charge
@@ -29,6 +30,7 @@ public class PlayerVariables : ScriptableObject
         set
         {
             _charge=Mathf.Clamp(value,0,_chargeMax);
+            SignalBus.Fire(new Signal_RefreshUI_Charge(this));
         }
     }
     public int Ammo
@@ -37,6 +39,7 @@ public class PlayerVariables : ScriptableObject
         set
         {
             _ammo=Mathf.Clamp(value,0,_ammoMax);
+            SignalBus.Fire(new Signal_RefreshUI_Ammo(this));
         }
     }
     
@@ -44,10 +47,28 @@ public class PlayerVariables : ScriptableObject
     public float ChargeMax=>_chargeMax;
     public int AmmoMax=>_ammoMax;
 
-    public void Heal() => Heal(_healthMax);
+    public void HealMax() => Heal(HealthMax);
     public void Heal(int value)
     {
-        Health+=value;
+        Health= Mathf.Clamp(Health+value,0,HealthMax);
     }
 
+    //Debug
+    [ContextMenu("Damage health Test")]
+    public void DamageTest()
+    {
+        Health -= 1;
+    }
+    [ContextMenu("Heal Health Test")] public void HealTest() => HealMax();
+
+    [ContextMenu("Shoot Ammo Test")]
+    public void ShootTest()
+    {
+        Ammo -= 1;
+    }
+    [ContextMenu("Retrieve Ammo Test")]
+    public void RetrieveTest()
+    {
+        Ammo += 1;
+    }
 }

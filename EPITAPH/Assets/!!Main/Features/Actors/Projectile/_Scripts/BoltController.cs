@@ -88,6 +88,8 @@ public class BoltController : MonoBehaviour
                 enemy.EvaluateBoltHit(velocity);
             }
         }
+
+        SignalBus.Fire(new Signal_ShowBoltMarker(transform,_boltType,true,false));
     }
 }
 
