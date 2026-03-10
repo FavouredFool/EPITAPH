@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
     float _reloadStart = float.PositiveInfinity;
 
     bool _isReloading = false;
+    bool _isLunging = false;
 
     bool _boltInChamber = true;
     Dictionary<BoltType, bool> _currentBoltsHeld;
@@ -61,9 +62,10 @@ public class PlayerController : MonoBehaviour
     static readonly int IsMovingBool = Animator.StringToHash("IsMoving");
     static readonly int IsAimingBool = Animator.StringToHash("IsAiming");
     static readonly int IsReloadingBool = Animator.StringToHash("IsReloading");
+    static readonly int IsLungingTrigger = Animator.StringToHash("IsLunging");
     static readonly int ShotCharacterTrigger = Animator.StringToHash("Shot");
     
-    
+
     public Vector2 AimAssistedLookDirection
     {
         get
@@ -118,6 +120,11 @@ public class PlayerController : MonoBehaviour
         _inputActions.Player.Shoot.performed += ShootBoltInput;
         _inputActions.Player.Reload.performed += ReloadInputStart;
         _inputActions.Player.Reload.canceled += ReloadInputStop;
+        
+        _inputActions.Player.LungeDown.performed += LungeDownInput;
+        _inputActions.Player.LungeLeft.performed += LungeLeftInput;
+        _inputActions.Player.LungeUp.performed += LungeUpInput;
+        _inputActions.Player.LungeRight.performed += LungeRightInput;
     }
     
     void OnDisable()
@@ -125,6 +132,11 @@ public class PlayerController : MonoBehaviour
         _inputActions.Player.Shoot.performed -= ShootBoltInput;
         _inputActions.Player.Reload.performed -= ReloadInputStart;
         _inputActions.Player.Reload.canceled -= ReloadInputStop;
+        
+        _inputActions.Player.LungeDown.performed -= LungeDownInput;
+        _inputActions.Player.LungeLeft.performed -= LungeLeftInput;
+        _inputActions.Player.LungeUp.performed -= LungeUpInput;
+        _inputActions.Player.LungeRight.performed -= LungeRightInput;
     }
 
     void Update()
@@ -235,6 +247,36 @@ public class PlayerController : MonoBehaviour
     void ReloadInputStop(InputAction.CallbackContext ctx)
     {
         InterruptReload();
+    }
+
+    void LungeRightInput(InputAction.CallbackContext ctx)
+    {
+        LungeToBolt(BoltType.RIGHT);
+    }
+    
+    void LungeDownInput(InputAction.CallbackContext ctx)
+    {
+        LungeToBolt(BoltType.DOWN);
+    }
+    
+    void LungeLeftInput(InputAction.CallbackContext ctx)
+    {
+        LungeToBolt(BoltType.LEFT);
+    }
+    
+    void LungeUpInput(InputAction.CallbackContext ctx)
+    {
+        LungeToBolt(BoltType.UP);
+    }
+
+    void LungeToBolt(BoltType boltType)
+    {
+        if (_isReloading) return;
+        
+        Debug.Log("start lunge to " + boltType);
+
+        _isLunging = true;
+        _characterAnimator.SetTrigger(IsLungingTrigger);
     }
 
     void StartReload()
