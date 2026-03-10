@@ -50,6 +50,7 @@ public class EnemyController : MonoBehaviour
     {
 
         ChaseBehaviourUpdateTick();
+        _agent.nextPosition = transform.position;
         //CurrentState.UpdateTick();
 
     }
@@ -75,6 +76,7 @@ public class EnemyController : MonoBehaviour
         //m_Agent.steeringTarget;
         // movement
         _movementVelocity = _agent.desiredVelocity;
+       // _agent.Move(Vector3.zero);
 
         // knockback
         _knockbackVelocity *= Mathf.Exp(-_knockbackDecay * Time.deltaTime);
@@ -85,7 +87,8 @@ public class EnemyController : MonoBehaviour
 
     void Rotate()
     {
-        Vector2 dir = _rb.linearVelocity.normalized;
+        Vector2 dir = _rb.linearVelocity;
+        dir.Normalize();
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
         _rb.MoveRotation(Quaternion.Euler(0f, 0f, angle));
     }
@@ -101,7 +104,11 @@ public class EnemyController : MonoBehaviour
 
     public void ChaseBehaviourUpdateTick()
     {
+
+        if (!charging) { 
         _agent.destination = _target.position;
+
+        }
     }
 
     public void ChaseBehaviourFixedUpdateTick()
@@ -112,11 +119,14 @@ public class EnemyController : MonoBehaviour
         }
        
             Translate();
-            Rotate();
+     
+           Rotate();
+
     }
 
     public IEnumerator MeleeChaseAttackLoop()
     {
+        bool attacked = false;
         charging = true;
         animator.SetBool("charging", true);
         animator.SetTrigger("startCharge");
@@ -126,6 +136,7 @@ public class EnemyController : MonoBehaviour
         _agent.speed = _chargeSpeed;
 
         float timer = 0;
+       
         while (timer < _chargeDuration)
         {
             timer += Time.deltaTime;
@@ -134,11 +145,19 @@ public class EnemyController : MonoBehaviour
 
                 _agent.speed = 0;
                 animator.SetTrigger("chargeAttack");
+                attacked = true;
                 break;
                 //start attacking 
 
             }
             yield return null;
+        }
+
+
+        if (!attacked)
+        {
+
+        animator.SetTrigger("chargeAttack");
         }
 
         //   yield return new WaitForSeconds(_chargeCooldown);
@@ -148,6 +167,7 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(2);
 
         animator.SetBool("charging", false);
+        _agent.speed = _speed;
 
         charging = false;
     }
