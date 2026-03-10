@@ -18,14 +18,14 @@ MonoBehaviour:
       Data2: 1196753807
       Data3: 1798768264
       Data4: -1896593394
-    Path: event:/SFX/Player/Crossbow Charging
+    Path: event:/SFX/Player/Crossbow/Crossbow Charging
   lockedEvent:
     Guid:
       Data1: -1449765308
       Data2: 1121381524
       Data3: 76965517
       Data4: 63472518
-    Path: event:/SFX/Player/Crossbow Lock
+    Path: event:/SFX/Player/Crossbow/Crossbow Lock
   hitMeat:
     Guid:
       Data1: 551514837

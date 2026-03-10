@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="MixerGroup" id="{d05530a1-bd1f-459e-85d0-aa29700452e1}">
+		<property name="name">
+			<value>Crossbow</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{dea95f22-5952-4dfb-8a9b-6c90afe6d352}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{0dc1cf9f-26dd-49c5-a82d-c9fbb1a277a4}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{898c5c94-e1e9-4d97-b276-f6323be338d7}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{dea95f22-5952-4dfb-8a9b-6c90afe6d352}">
+		<relationship name="effects">
+			<destination>{03dd793e-fa09-4d27-a31e-ffeadb3e37b9}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{0dc1cf9f-26dd-49c5-a82d-c9fbb1a277a4}" />
+	<object class="MixerBusFader" id="{03dd793e-fa09-4d27-a31e-ffeadb3e37b9}" />
+</objects>

@@ -3,18 +3,18 @@ using UnityEngine;
 public class PlayerTest : MonoBehaviour
 {
     public PlayerAudioData data;
-    PlayerAudio pa;
+    
 
     private void Awake()
     {
-        pa =data.Setup(gameObject);
+        data.Setup(gameObject);
          
     }
 
     public void PlayStep(float step)
     {
         Debug.Log((int)step);
-        pa.PlayStepLock((int)step);
+        PlayerAudio.PlayStepLock((int)step);
         
     }
 
@@ -32,17 +32,17 @@ public class PlayerTest : MonoBehaviour
 
     public void StartChage()
     {
-        pa.StartCharging();
+        PlayerAudio.StartCharging();
     }
 
     public void StopCharging()
     {
-        pa.StopCharging();
+        PlayerAudio.StopCharging();
     }
 
     public void SetCharge(float value)
     {
-        pa.SetCharge(value);
+        PlayerAudio.SetCharge(value);
     }
 
     public void TestSetting(float val)
