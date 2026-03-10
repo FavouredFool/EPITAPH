@@ -43,7 +43,7 @@ Animator:
   m_GameObject: {fileID: 5221058555114793284}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0188b86b11be0bd44893e9c0de03ca9c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -305,6 +305,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4943131292672370264, guid: db28c9c1d9b16d743979cc04571dd033, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 93.68799
+      objectReference: {fileID: 0}
+    - target: {fileID: -4943131292672370264, guid: db28c9c1d9b16d743979cc04571dd033, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 78.768
+      objectReference: {fileID: 0}
+    - target: {fileID: -4943131292672370264, guid: db28c9c1d9b16d743979cc04571dd033, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -35.752014
+      objectReference: {fileID: 0}
     - target: {fileID: -4128383740851021839, guid: db28c9c1d9b16d743979cc04571dd033, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -329,9 +341,45 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2295283828581662974, guid: db28c9c1d9b16d743979cc04571dd033, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -7.694
+      objectReference: {fileID: 0}
+    - target: {fileID: -2295283828581662974, guid: db28c9c1d9b16d743979cc04571dd033, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 73.779
+      objectReference: {fileID: 0}
+    - target: {fileID: -2295283828581662974, guid: db28c9c1d9b16d743979cc04571dd033, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -24.713
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: db28c9c1d9b16d743979cc04571dd033, type: 3}
       propertyPath: m_Name
       value: Player_Dress
+      objectReference: {fileID: 0}
+    - target: {fileID: 3164982295968437048, guid: db28c9c1d9b16d743979cc04571dd033, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 93.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 3164982295968437048, guid: db28c9c1d9b16d743979cc04571dd033, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -80.43399
+      objectReference: {fileID: 0}
+    - target: {fileID: 3164982295968437048, guid: db28c9c1d9b16d743979cc04571dd033, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 33.938995
+      objectReference: {fileID: 0}
+    - target: {fileID: 3592269375311000045, guid: db28c9c1d9b16d743979cc04571dd033, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 30.968
+      objectReference: {fileID: 0}
+    - target: {fileID: 3592269375311000045, guid: db28c9c1d9b16d743979cc04571dd033, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -30.081
+      objectReference: {fileID: 0}
+    - target: {fileID: 3592269375311000045, guid: db28c9c1d9b16d743979cc04571dd033, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 163.403
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -340,6 +388,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -4258411891960909470, guid: db28c9c1d9b16d743979cc04571dd033, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1977731805920957180}
+    - targetCorrespondingSourceObject: {fileID: -4258411891960909470, guid: db28c9c1d9b16d743979cc04571dd033, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5277221548931579472}
   m_SourcePrefab: {fileID: 100100000, guid: db28c9c1d9b16d743979cc04571dd033, type: 3}
 --- !u!4 &263501159123698578 stripped
 Transform:
@@ -364,16 +415,74 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: EZhex1991.EZSoftBone::EZhex1991.EZSoftBone.EZSoftBone
   m_RootBones:
+  - {fileID: 4321232538030665474}
+  m_EndBones:
+  - {fileID: 263501159123698578}
+  m_Material: {fileID: 11400000, guid: 058b0588808452a4b9de859d7d823542, type: 2}
+  m_StartDepth: 0
+  m_SiblingConstraints: 0
+  m_ClosedSiblings: 0
+  m_SiblingRotationConstraints: 1
+  m_LengthUnification: 0
+  m_CollisionLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  m_ExtraColliders: []
+  m_Radius: 0
+  m_RadiusCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_DeltaTimeMode: 0
+  m_ConstantDeltaTime: 0.03
+  m_Iterations: 1
+  m_SleepThreshold: 0.005
+  m_GravityAligner: {fileID: 0}
+  m_Gravity: {x: 0, y: 0, z: 0}
+  m_ForceModule: {fileID: 0}
+  m_ForceScale: 1
+  m_SimulateSpace: {fileID: 0}
+--- !u!114 &5277221548931579472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2250266474520469858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aa2b9bccfefda549bd1cf67fd922ad8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: EZhex1991.EZSoftBone::EZhex1991.EZSoftBone.EZSoftBone
+  m_RootBones:
   - {fileID: 8084488259058844472}
   - {fileID: 6970413177149901224}
-  - {fileID: 4321232538030665474}
   - {fileID: 7640308849746944493}
   m_EndBones:
   - {fileID: 7599996484626993226}
   - {fileID: 5994900599123066754}
-  - {fileID: 263501159123698578}
   - {fileID: 6003077583817105390}
-  m_Material: {fileID: 11400000, guid: 058b0588808452a4b9de859d7d823542, type: 2}
+  m_Material: {fileID: 11400000, guid: ce02265f3c7c47d42a8bd85329838232, type: 2}
   m_StartDepth: 0
   m_SiblingConstraints: 0
   m_ClosedSiblings: 0
