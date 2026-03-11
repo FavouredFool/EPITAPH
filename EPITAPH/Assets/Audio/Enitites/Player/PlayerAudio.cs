@@ -12,6 +12,8 @@ public class PlayerAudio : MonoBehaviour
     EventInstance lockedInstance;
     EventInstance releasedInstance;
 
+    EventInstance lungeInstance;
+
     public static PlayerAudio instance;
     
 
@@ -30,6 +32,10 @@ public class PlayerAudio : MonoBehaviour
         lockedInstance = RuntimeManager.CreateInstance(data.lockedEvent);
         lockedInstance.setParameterByName("ChargeStep", 1);
         RuntimeManager.AttachInstanceToGameObject(lockedInstance, gameObject);
+
+        lungeInstance = RuntimeManager.CreateInstance(data.lunge);
+        RuntimeManager.AttachInstanceToGameObject(lungeInstance, gameObject);
+
     }
 
 
@@ -109,5 +115,18 @@ public class PlayerAudio : MonoBehaviour
     public static void PlayWallHit(Vector3 position)
     {
         RuntimeManager.PlayOneShot(instance.data.hitWall, position);
+    }
+
+    public static void PlayLunge()
+    {
+        PLAYBACK_STATE state;
+        instance.lungeInstance.getPlaybackState(out state);
+        if (state == PLAYBACK_STATE.PLAYING)
+        {
+            instance.lungeInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        }
+        RuntimeManager.AttachInstanceToGameObject(instance.lungeInstance, instance.gameObject, instance.gameObject.GetComponent<Rigidbody2D>());
+
+        instance.lungeInstance.start();
     }
 }

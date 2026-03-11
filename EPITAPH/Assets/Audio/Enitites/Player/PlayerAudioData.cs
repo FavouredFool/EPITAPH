@@ -12,6 +12,8 @@ public class PlayerAudioData : ScriptableObject
     [Header("Hits")]
     [SerializeField] public EventReference hitMeat;
     [SerializeField] public EventReference hitWall;
+    [Header("Movement")]
+    [SerializeField] public EventReference lunge;   
 
     public PlayerAudio Setup(GameObject go)
     {

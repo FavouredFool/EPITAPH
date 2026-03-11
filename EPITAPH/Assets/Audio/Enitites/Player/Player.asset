@@ -47,3 +47,10 @@ MonoBehaviour:
       Data3: 1358742182
       Data4: -369695082
     Path: event:/SFX/Player/Hits/WallHit
+  lunge:
+    Guid:
+      Data1: -1378298616
+      Data2: 1267968127
+      Data3: 2065848713
+      Data4: 1820386780
+    Path: event:/SFX/Player/Dash
