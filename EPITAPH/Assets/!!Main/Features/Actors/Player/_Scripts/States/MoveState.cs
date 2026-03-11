@@ -11,11 +11,6 @@ public class MoveState : VampireBaseState
     {
         _ctx.InputActions.Player.Reload.performed += _ctx.PlayerController.ReloadInputStart;
         
-        _ctx.InputActions.Player.LungeDown.performed += _ctx.PlayerController.LungeDownInput;
-        _ctx.InputActions.Player.LungeLeft.performed += _ctx.PlayerController.LungeLeftInput;
-        _ctx.InputActions.Player.LungeUp.performed += _ctx.PlayerController.LungeUpInput;
-        _ctx.InputActions.Player.LungeRight.performed += _ctx.PlayerController.LungeRightInput;
-        
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsMovingBoolAnim, true);
     }
 
@@ -42,11 +37,6 @@ public class MoveState : VampireBaseState
     public override void OnExit()
     {
         _ctx.InputActions.Player.Reload.performed -= _ctx.PlayerController.ReloadInputStart;
-        
-        _ctx.InputActions.Player.LungeDown.performed -= _ctx.PlayerController.LungeDownInput;
-        _ctx.InputActions.Player.LungeLeft.performed -= _ctx.PlayerController.LungeLeftInput;
-        _ctx.InputActions.Player.LungeUp.performed -= _ctx.PlayerController.LungeUpInput;
-        _ctx.InputActions.Player.LungeRight.performed -= _ctx.PlayerController.LungeRightInput;
         
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsMovingBoolAnim, false);
     }

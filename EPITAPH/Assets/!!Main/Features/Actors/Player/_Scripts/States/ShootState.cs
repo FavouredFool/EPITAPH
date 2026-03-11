@@ -13,7 +13,7 @@ public class ShootState : VampireBaseState
         
         BoltController bolt = Object.Instantiate(_ctx.PlayerController.ProjectileBlueprint, _ctx.PlayerController.transform.position + _ctx.PlayerController.transform.forward * _ctx.PlayerController.SpawnDist, _ctx.PlayerController.transform.rotation, _ctx.PlayerController.InstantiationParent);
         bolt.BoltType = type;
-        bolt.BloodpointPlayer = _ctx.PlayerController.BloodlineConnection;
+        bolt.Player = _ctx.PlayerController;
         
         _ctx.PlayerController.CurrentBoltsHeld[type] = bolt;
         _ctx.PlayerController.BoltInChamber = false;

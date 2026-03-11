@@ -14,16 +14,24 @@ public class BoltController : MonoBehaviour
 
     [SerializeField] Gradient _mainGradient;
     [SerializeField] Gradient _blockedGradient;
+    [SerializeField] Gradient _activatableGradient;
     [SerializeField] LineRenderer _lineRenderer;
     [SerializeField] Transform _endPoint;
-
+    
     public Rigidbody2D Rb2D { get; set; }
-    public Transform BloodpointPlayer { get; set; }
+    public PlayerController Player { get; set; }
     Rigidbody _rb3D;
 
     BoltType _boltType;
 
-    public bool IsLungeable { get; set; }
+    float _baseWidth;
+
+    public bool IsActivatable => IsSelected && IsLineOfSight && HasHitSomething;
+    
+    public bool IsSelected { get; set; }
+    
+    public bool IsLineOfSight { get; set; }
+    public bool HasHitSomething { get; set; } = false;
     
     public BoltType BoltType
     {
@@ -42,6 +50,9 @@ public class BoltController : MonoBehaviour
 
         _hitbox.enabled = true;
         _pickupBox.enabled = false;
+
+        _baseWidth = _lineRenderer.startWidth;
+        _lineRenderer.endWidth = _baseWidth;
     }
 
     void Start()
@@ -51,7 +62,7 @@ public class BoltController : MonoBehaviour
 
     void Update()
     {
-        IsLungeable = TestLungeable();
+        IsLineOfSight = TestLineOfSight();
     }
 
     void LateUpdate()
@@ -59,14 +70,25 @@ public class BoltController : MonoBehaviour
         _lineRenderer.SetPosition(0, _endPoint.position);
         
         Vector3 playerPos = _lineRenderer.GetPosition(1);
-        Vector2 position = BloodpointPlayer.position;
+        Vector2 position = Player.BloodlineConnection.position;
         
         playerPos.x = position.x;
         playerPos.y = position.y;
         
         _lineRenderer.SetPosition(1, playerPos);
         
-        _lineRenderer.colorGradient = IsLungeable ? _mainGradient : _blockedGradient;
+        if (IsActivatable)
+        {
+            _lineRenderer.colorGradient = _activatableGradient;
+            _lineRenderer.startWidth = _baseWidth*3;
+            _lineRenderer.endWidth = _baseWidth*3;
+        }
+        else
+        {
+            _lineRenderer.colorGradient = IsLineOfSight ? _mainGradient : _blockedGradient;
+            _lineRenderer.startWidth = _baseWidth;
+            _lineRenderer.endWidth = _baseWidth;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -86,6 +108,8 @@ public class BoltController : MonoBehaviour
         
         _hitbox.enabled = false;
         _pickupBox.enabled = true;
+
+        HasHitSomething = true;
         
 		if (other != null)
         {
@@ -103,11 +127,11 @@ public class BoltController : MonoBehaviour
         SignalBus.Fire(new Signal_ShowBoltMarker(transform,_boltType,true,false));
     }
 
-    public bool TestLungeable()
+    public bool TestLineOfSight()
     {
-        Vector2 diff = BloodpointPlayer.position - _endPoint.position;
+        // only if there is a clear line of sight to the enemy
+        Vector2 diff = Player.BloodlineConnection.position - _endPoint.position;
         RaycastHit2D hit = Physics2D.Raycast(_endPoint.position, diff.normalized, diff.magnitude, _blockLayers);
-        
         return hit.collider == null;
     }
 }
