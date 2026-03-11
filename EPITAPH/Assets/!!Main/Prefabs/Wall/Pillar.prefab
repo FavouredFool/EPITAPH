@@ -69,7 +69,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6c6b34663063d004c90c2235565a9426, type: 2}
+  - {fileID: -876546973899608171, guid: caa022fe079d4c74baaac6ecb2505856, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -127,7 +127,7 @@ SortingGroup:
   m_GameObject: {fileID: 2841597894823978006}
   m_Enabled: 1
   m_SortingLayerID: -778884729
-  m_SortingLayer: 3
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_SortAtRoot: 0
   m_Sort3DAs2D: 0
