@@ -536,7 +536,7 @@ MonoBehaviour:
   _knockbackResistance: 2.5
   _pinKnockbackMagnitudeThreshold: 0.25
   _deadSprite: {fileID: 7276502925574245455}
-  animator: {fileID: 8439757380821537968}
+  <Animator>k__BackingField: {fileID: 8439757380821537968}
   _chargeSpeed: 10.79
   _chargeStartRange: 2.44
   _chargeAttackRange: 1.76

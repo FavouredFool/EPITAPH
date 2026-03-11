@@ -8,6 +8,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Rigidbody2D), typeof(NavMeshAgent))]
 public class EnemyController : MonoBehaviour
 {
+   
     [SerializeField] Transform _target;
     [SerializeField] LayerMask _wallLayers;
     [SerializeField, UnityEngine.Range(1, 6)] int _maxHp;
@@ -17,22 +18,30 @@ public class EnemyController : MonoBehaviour
     [SerializeField, UnityEngine.Range(0.01f, 10)] float _pinKnockbackMagnitudeThreshold = 0.1f;
     [SerializeField] GameObject _deadSprite;
 
-    Rigidbody2D _rb;
-    int _currentHp;
+    public float KnockbackDecay => _knockbackDecay;
+    
+    public Rigidbody2D Rb { get; set; }
+    public int CurrentHp { get; set; }
 
     Vector2 _movementVelocity;
-    Vector2 _knockbackVelocity;
-
-    bool _isDead;
+    public Vector2 KnockbackVelocity { get; set; }
 
     NavMeshAgent _agent;
 
-    public Animator animator;
-    public EnemyState CurrentState { get; private set; }
+    [field: SerializeField] public Animator Animator { get; set; }
+    
+    public StateMachine StateMachine { get; set; }
+    
+    public TriggerPredicate StakedTrigger { get; private set; }
+    public TriggerPredicate NormalDeathTrigger { get; private set; }
+    public TriggerPredicate EnterKnockback { get; private set; }
+    public TriggerPredicate ExitKnockback { get; private set; }
 
+    public Vector2 LatestHitVelocity { get; private set; }
+    
     void Awake()
     {
-        _rb = GetComponent<Rigidbody2D>();
+        Rb = GetComponent<Rigidbody2D>();
         _target = FindFirstObjectByType<PlayerController>().transform;
         _agent = GetComponent<NavMeshAgent>();
 
@@ -41,58 +50,81 @@ public class EnemyController : MonoBehaviour
         _agent.updateUpAxis = false;
         _agent.speed = _speed;
 
-        _currentHp = _maxHp;
+        CurrentHp = _maxHp;
+        
+        InitStateMachine();
+    }
+    
+    void InitStateMachine()
+    {
+        StateMachine = new StateMachine();
+        
+        EnemyStateContext ctx = new(this);
+        
+        EverythingState everythingState = new(ctx);
+        HitAndKnockbackedState hitAndKnockbackedState = new(ctx);
+        NormalDeathState normalDeathState = new(ctx);
+        StakedState stakedState = new(ctx);
+
+        EnterKnockback = new TriggerPredicate();
+        ExitKnockback = new TriggerPredicate();
+        StakedTrigger = new TriggerPredicate();
+        NormalDeathTrigger = new TriggerPredicate();
+        
+        At(everythingState, hitAndKnockbackedState, EnterKnockback);
+        At(hitAndKnockbackedState, everythingState, ExitKnockback);
+        
+        At(hitAndKnockbackedState, normalDeathState, NormalDeathTrigger);
+        At(hitAndKnockbackedState, stakedState, StakedTrigger);
+        
+        StateMachine.SetState(everythingState);
+    }
+    
+    void At(IState from, IState to, IStatePredicate condition) =>
+        StateMachine.AddTransition(from, to, condition);
+    
+    void Any(IState to, IStatePredicate condition) =>
+        StateMachine.AddAnyTransition(to, condition);
+    
+    
+    // please dont add anything here, use methods below
+    void Update()
+    {
+        StateMachine.Update();
     }
 
-    private void Start()
+    // please dont add anything here, use methods below
+    void FixedUpdate()
     {
+        StateMachine.FixedUpdate();
     }
-    void Update()
+    
+    public void EverythingUpdate()
     {
         ChaseBehaviourUpdateTick();
         _agent.nextPosition = transform.position;
     }
-
-
     
-
-    public void ApplyKnockback(Vector2 direction,float intensity)
+    public void EverythingFixedUpdate()
     {
-       
-
-    }
-    void FixedUpdate()
-    {
-        if (_isDead)
-        {
-            _rb.linearVelocity = Vector3.zero;
-            return;
-        }
         ChaseBehaviourFixedUpdateTick();
+        _agent.nextPosition = transform.position;
     }
-
-    void Translate()
+    
+    
+    void TranslateMovement()
     {
         _movementVelocity = _agent.desiredVelocity;
-        _knockbackVelocity *= Mathf.Exp(-_knockbackDecay * Time.fixedDeltaTime);
-        if(_knockbackVelocity.magnitude < 0.01f)
-        {
-            _rb.linearVelocity = _movementVelocity;
-        }
-        else
-        {
-            _rb.linearVelocity = _knockbackVelocity;
-
-        }
+        Rb.linearVelocity = _movementVelocity;
     }
 
     void Rotate()
     {
         if (_agent.speed == 0) return;
-        Vector2 dir = _rb.linearVelocity;
+        Vector2 dir = Rb.linearVelocity;
         dir.Normalize();
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
-        _rb.MoveRotation(Quaternion.Euler(0f, 0f, angle));
+        Rb.MoveRotation(Quaternion.Euler(0f, 0f, angle));
     }
 
     #region ChaseBehaviour
@@ -110,13 +142,13 @@ public class EnemyController : MonoBehaviour
     public void ChaseBehaviourUpdateTick()
     {
        
-            if (_rb.linearVelocity.magnitude > 0.1f)
-            {
-            animator.SetBool("walking", true);
+        if (Rb.linearVelocity.magnitude > 0.1f)
+        {
+            Animator.SetBool("walking", true);
         }
         else
         {
-            animator.SetBool("walking", false);
+            Animator.SetBool("walking", false);
         }
 
 
@@ -142,9 +174,8 @@ public class EnemyController : MonoBehaviour
 
         if (!charging && !attacking)
         {
-            Translate();
+            TranslateMovement();
             Rotate();
-
         }
 
     }
@@ -152,9 +183,9 @@ public class EnemyController : MonoBehaviour
     public IEnumerator NormalAttackLoop()
     {
         attacking = true;
-        _rb.linearVelocity = Vector2.zero;
+        Rb.linearVelocity = Vector2.zero;
         yield return new WaitForSeconds(0.2f);
-        animator.SetTrigger("attack");
+        Animator.SetTrigger("attack");
         yield return new WaitForSeconds(1);
         attacking = false;
     }
@@ -166,16 +197,16 @@ public class EnemyController : MonoBehaviour
 
         //_agent.destination = (_target.transform.position-transform.position).normalized*500;
         bool attacked = false;
-        animator.SetBool("charging", true);
-        animator.SetTrigger("startCharge");
+        Animator.SetBool("charging", true);
+        Animator.SetTrigger("startCharge");
         _agent.speed = 0;
-        _rb.linearVelocity = Vector2.zero;
+        Rb.linearVelocity = Vector2.zero;
 
 
         Vector2 decidedMovementVelocity = (_target.transform.position - transform.position).normalized * _chargeSpeed;
         yield return new WaitForSeconds(1);
         _agent.speed = _chargeSpeed;
-        _rb.linearVelocity = decidedMovementVelocity;
+        Rb.linearVelocity = decidedMovementVelocity;
 
         float timer = 0;
 
@@ -186,9 +217,9 @@ public class EnemyController : MonoBehaviour
             {
                 _agent.ResetPath();
                 _agent.speed = 0;
-                _rb.linearVelocity = Vector2.zero;
+                Rb.linearVelocity = Vector2.zero;
 
-                animator.SetTrigger("chargeAttack");
+                Animator.SetTrigger("chargeAttack");
                 attacked = true;
                 break;
             }
@@ -215,16 +246,16 @@ public class EnemyController : MonoBehaviour
         {
             _agent.ResetPath();
             _agent.speed = 0;
-            _rb.linearVelocity = Vector2.zero;
+            Rb.linearVelocity = Vector2.zero;
 
-            animator.SetTrigger("chargeAttack");
+            Animator.SetTrigger("chargeAttack");
             attacked = true;
         }
 
         yield return new WaitForSeconds(1);
-        animator.SetBool("charging", false);
+        Animator.SetBool("charging", false);
         _agent.speed = _speed;
-        _rb.linearVelocity = Vector2.zero;
+        Rb.linearVelocity = Vector2.zero;
 
         charging = false;
         _lastChargeTime = Time.time;
@@ -260,29 +291,19 @@ public class EnemyController : MonoBehaviour
 
     public void Hit(Vector2 velocity)
     {
-        _currentHp -= 1;
-        PlayerAudio.PlayMeatHit(this.transform.position);
-
-        if (_currentHp <= 0)
-        {
-            Die();
-            return;
-        }
-        SignalBus.Fire(new Hit_Enemy(_rb.position));
-        
-        Knockback(velocity);
+        LatestHitVelocity = velocity;
+        EnterKnockback.Trigger();
     }
  
-    void Die()
+    public void Die()
     {
         _deadSprite.SetActive(true);
-        _isDead = true;
     }
 
-    void Knockback(Vector2 velocity)
+    public void Knockback(Vector2 velocity)
     {
-        _knockbackVelocity += velocity / _knockbackResistance;
-        _rb.linearVelocity = _knockbackVelocity;
+        KnockbackVelocity += velocity / _knockbackResistance;
+        Rb.linearVelocity = KnockbackVelocity;
         StopAllCoroutines();
         charging = false;
         attacking = false;
@@ -291,15 +312,11 @@ public class EnemyController : MonoBehaviour
     void CheckForStake()
     {
         Collider2D[] contacts = new Collider2D[12];
-        _rb.GetContacts(ContactFilter2D.noFilter, contacts);
+        Rb.GetContacts(ContactFilter2D.noFilter, contacts);
 
         if (contacts.Any(e => e != null && LayerUtil.MaskContainsLayer(_wallLayers, e.gameObject.layer)))
         {
-            if (_knockbackVelocity.magnitude > _pinKnockbackMagnitudeThreshold)
-            {
-                PlayerAudio.PlayWallHit(this.transform.position);
-                Die();
-            }
+            StakedTrigger.Trigger();
         }
     }
 
@@ -311,6 +328,19 @@ public class EnemyController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        CheckForStake();
+        if (StateMachine.CurrentState is HitAndKnockbackedState)
+        {
+            CheckForStake();
+        }
+    }
+}
+
+public struct EnemyStateContext
+{
+    public EnemyController EnemyController { get; set; }
+
+    public EnemyStateContext(EnemyController enemyController)
+    {
+        EnemyController = enemyController;
     }
 }
