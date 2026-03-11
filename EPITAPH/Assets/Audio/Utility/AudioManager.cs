@@ -13,10 +13,8 @@ public static class AudioManager
     private static float _musicVolume;
     private static float _ambienceVolume;
 
+     static String[] _variableNames = {"VolumeMaster","VolumeMusic","VolumeGame"};
 
-    // filepath to save the audio settings
-    static string AudioSaveFile
-    => Path.Combine(Application.persistentDataPath, "AudioSettings.json");
 
 
     // Volume Controls:
@@ -56,6 +54,26 @@ public static class AudioManager
 
     }
 
+    public static void SetVolumeLevel(string variableName, int value)
+    {
+        switch (variableName)
+        {
+            case "VolumeMaster":
+                MasterVolume = (float)value/4.0f;
+                return;
+            case "VolumeMusic":
+                MusicVolume= (float)value / 4.0f;
+                return;
+            case "VolumeGame":
+                SFXVolume = (float)value / 4.0f;
+                return;
+            default:
+                return;
+
+        }
+    }
+
+
     public static float MusicVolume
     {
         get 
@@ -88,28 +106,22 @@ public static class AudioManager
         }
     }
 
+    public static string[] VariableNames { get => _variableNames;}
+
     public static void LoadSettings()
     {
-        var audioSettings = new AudioSettings();
-        try
-        {
-            var json = File.ReadAllText(AudioSaveFile);
-            
-            JsonUtility.FromJsonOverwrite(json, audioSettings);
-
-        }
-        catch
-        {
-        }
-        audioSettings.Deserialize();
+        _masterVolume = ((float)PlayerPrefs.GetInt(_variableNames[0]))/4.0f;
+        _SFXVolume = ((float)PlayerPrefs.GetInt(_variableNames[1]))/4.0f;
+        _musicVolume = ((float)PlayerPrefs.GetInt(_variableNames[2]))/4.0f;
     }
 
     public static void SaveSettings()
     {
-        var audioSettings = new AudioSettings();
-        audioSettings.Serialize();
-        var json = JsonUtility.ToJson(audioSettings); ;
-        File.WriteAllText(AudioSaveFile, json);    
+        Debug.Log($"{(int)(_masterVolume * 4.0f)},{_masterVolume}");
+        PlayerPrefs.SetInt(_variableNames[0], (int)(_masterVolume* 4.0f));
+        PlayerPrefs.SetInt(_variableNames[1], (int)(_musicVolume* 4.0f));
+        PlayerPrefs.SetInt(_variableNames[2], (int)(_SFXVolume* 4.0f));
+        
     }
 }
 

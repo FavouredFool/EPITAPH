@@ -12,6 +12,8 @@ public class PlayerAudio : MonoBehaviour
     EventInstance lockedInstance;
     EventInstance releasedInstance;
 
+    EventInstance lungeInstance;
+
     public static PlayerAudio instance;
     
 
@@ -21,15 +23,19 @@ public class PlayerAudio : MonoBehaviour
         // Weapon stuff
         chargeInstance = RuntimeManager.CreateInstance(data.chargeEvent);
         chargeInstance.setParameterByName("Charge", 0);
-        RuntimeManager.AttachInstanceToGameObject(chargeInstance,gameObject.transform);
+        RuntimeManager.AttachInstanceToGameObject(chargeInstance,gameObject,gameObject.GetComponent<Rigidbody2D>());
 
         releasedInstance = RuntimeManager.CreateInstance(data.releaseEvent);
-        RuntimeManager.AttachInstanceToGameObject(releasedInstance, gameObject.transform);
+        RuntimeManager.AttachInstanceToGameObject(releasedInstance, gameObject);
 
 
         lockedInstance = RuntimeManager.CreateInstance(data.lockedEvent);
         lockedInstance.setParameterByName("ChargeStep", 1);
-        RuntimeManager.AttachInstanceToGameObject(lockedInstance, gameObject.transform);
+        RuntimeManager.AttachInstanceToGameObject(lockedInstance, gameObject);
+
+        lungeInstance = RuntimeManager.CreateInstance(data.lunge);
+        RuntimeManager.AttachInstanceToGameObject(lungeInstance, gameObject);
+
     }
 
 
@@ -44,10 +50,13 @@ public class PlayerAudio : MonoBehaviour
         instance.chargeInstance.setParameterByName("Charge", 0.0f);
         PLAYBACK_STATE state;
         instance.chargeInstance.getPlaybackState(out state);
+
         if(state != PLAYBACK_STATE.PLAYING)
         {
             instance.chargeInstance.start();
         }
+        RuntimeManager.AttachInstanceToGameObject(instance.chargeInstance, instance.gameObject, instance.gameObject.GetComponent<Rigidbody2D>());
+
     }
 
     // Stops the Charging sound
@@ -61,7 +70,13 @@ public class PlayerAudio : MonoBehaviour
     // Sets the Charge (Within a Step)
     public static void SetCharge(float charge)
     {
+
         instance.chargeInstance.setParameterByName("Charge", charge);
+        float dist;
+        FMOD.RESULT wtf = instance.chargeInstance.getParameterByName("Elevation", out dist);
+        Debug.Log(wtf);
+        Debug.Log($"Charging:\n x:{dist}");
+        Debug.Log(instance.gameObject.transform.position);
     }
 
 
@@ -73,6 +88,7 @@ public class PlayerAudio : MonoBehaviour
         {
             instance.lockedInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         }
+        RuntimeManager.AttachInstanceToGameObject(instance.lockedInstance, instance.gameObject, instance.gameObject.GetComponent<Rigidbody2D>());
 
         instance.lockedInstance.start();
         instance.lockedInstance.setParameterByName("ChargeStep", step);
@@ -86,6 +102,7 @@ public class PlayerAudio : MonoBehaviour
         {
             instance.releasedInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         }
+        RuntimeManager.AttachInstanceToGameObject(instance.releasedInstance, instance.gameObject, instance.gameObject.GetComponent<Rigidbody2D>());
 
         instance.releasedInstance.start();
     }
@@ -98,5 +115,18 @@ public class PlayerAudio : MonoBehaviour
     public static void PlayWallHit(Vector3 position)
     {
         RuntimeManager.PlayOneShot(instance.data.hitWall, position);
+    }
+
+    public static void PlayLunge()
+    {
+        PLAYBACK_STATE state;
+        instance.lungeInstance.getPlaybackState(out state);
+        if (state == PLAYBACK_STATE.PLAYING)
+        {
+            instance.lungeInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        }
+        RuntimeManager.AttachInstanceToGameObject(instance.lungeInstance, instance.gameObject, instance.gameObject.GetComponent<Rigidbody2D>());
+
+        instance.lungeInstance.start();
     }
 }
