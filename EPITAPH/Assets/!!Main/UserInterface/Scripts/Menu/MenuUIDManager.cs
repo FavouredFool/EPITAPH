@@ -55,8 +55,9 @@ public class MenuUIDManager : MonoBehaviour
         IsOpen = on;
         _menuObject.SetActive(IsOpen);
 
-        DOTween.Kill(this,true);
+        DOTween.Kill(this);
         Sequence seq= DOTween.Sequence(this);
+        seq.SetUpdate(true);
 
         if (IsOpen)
         {
