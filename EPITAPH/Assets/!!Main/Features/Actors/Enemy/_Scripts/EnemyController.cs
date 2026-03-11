@@ -17,6 +17,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField, UnityEngine.Range(1, 20)] float _knockbackResistance = 1;
     //[field: SerializeField, UnityEngine.Range(1, 20)] public float FinalCollapsePush { get; set; } = 1;
 
+    [Header("3D Stuff")]
+    [field: SerializeField] public Transform BoltBone { get; set; }
 
     [field: SerializeField, UnityEngine.Range(0.01f, 100)] public float KnockbackMagnitudeThreshold { get; set; } = 1f;
     [SerializeField] GameObject _deadSprite;
