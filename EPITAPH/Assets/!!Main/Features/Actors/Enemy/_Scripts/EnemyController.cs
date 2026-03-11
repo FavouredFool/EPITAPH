@@ -235,13 +235,11 @@ public class EnemyController : MonoBehaviour
 
     public void Attack(float attackRadius)
     {
-
         Physics2D.CircleCastAll(transform.position, attackRadius, Vector2.zero).ToList().ForEach(e =>
         {
-           if(e.transform.TryGetComponent<PlayerController>(out var player))
+            if(e.transform.TryGetComponent<PlayerController>(out var player))
             {
-                Debug.Log("damaging player");
-              //  player.Hit((player.transform.position - transform.position).normalized * 5);
+                player.Hit((player.transform.position - transform.position).normalized);
             }
         });
     }
