@@ -102,11 +102,11 @@ public class EnemyController : MonoBehaviour
     bool attacking = false;
     float _lastChargeTime = -Mathf.Infinity;
 
-    [SerializeField, UnityEngine.Range(1, 15)] float _chargeSpeed;
-    [SerializeField, UnityEngine.Range(1, 15)] float _chargeStartRange;
-    [SerializeField, UnityEngine.Range(1, 15)] float _chargeAttackRange;
-    [SerializeField, UnityEngine.Range(1, 15)] float _chargeDuration;
-    [SerializeField, UnityEngine.Range(1, 15)] float _chargeCooldown;
+    [SerializeField, UnityEngine.Range(0, 15)] float _chargeSpeed;
+    [SerializeField, UnityEngine.Range(0, 15)] float _chargeStartRange;
+    [SerializeField, UnityEngine.Range(0, 15)] float _chargeAttackRange;
+    [SerializeField, UnityEngine.Range(0, 15)] float _chargeDuration;
+    [SerializeField, UnityEngine.Range(0, 15)] float _chargeCooldown;
 
     public void ChaseBehaviourUpdateTick()
     {
