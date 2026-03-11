@@ -394,7 +394,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7330901085573960058}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
@@ -437,10 +437,10 @@ MonoBehaviour:
   _deadSprite: {fileID: 7276502925574245455}
   animator: {fileID: 8439757380821537968}
   _chargeSpeed: 10.79
-  _chargeStartRange: 5.07
-  _chargeAttackRange: 1.41
-  _chargeDuration: 1.58
-  _chargeCooldown: 1
+  _chargeStartRange: 4.15
+  _chargeAttackRange: 1.35
+  _chargeDuration: 0.52
+  _chargeCooldown: 15
 --- !u!195 &6147159875537704608
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -818,8 +818,28 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5439692578283748525, guid: 6fe48fe348c21af409d006239212ad86, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7110988848833205158}
   m_SourcePrefab: {fileID: 100100000, guid: 6fe48fe348c21af409d006239212ad86, type: 3}
+--- !u!1 &1159726373442621484 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5439692578283748525, guid: 6fe48fe348c21af409d006239212ad86, type: 3}
+  m_PrefabInstance: {fileID: 6585818918267219073}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7110988848833205158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159726373442621484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f230f0241588b8c42a6137fd8ddbb044, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackAnimationEvent
 --- !u!4 &1725321977637865484 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5518057825216685197, guid: 6fe48fe348c21af409d006239212ad86, type: 3}
