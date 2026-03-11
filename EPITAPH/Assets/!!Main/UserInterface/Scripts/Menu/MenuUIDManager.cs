@@ -81,7 +81,7 @@ public class MenuUIDManager : MonoBehaviour
     public void StartGame()
     {
         Debug.Log("START GAME");
-        SceneManager.LoadScene("_GameBase");
+        SceneManager.LoadScene("0_Tutorial");
     }
     public void QuitGame()
     {

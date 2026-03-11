@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ProgressionVariables", menuName = "Scriptable Objects/ProgressionVariables")]
@@ -5,7 +6,7 @@ public class ProgressionVariables : ScriptableObject
 {
     [SerializeField] int _level;
 
-    [SerializeField] string[] _levelSceneNames;
+    [SerializeField] List<string> _levelSceneNames;
 
 
     public int Level
@@ -13,8 +14,14 @@ public class ProgressionVariables : ScriptableObject
         get => _level;
         set
         {
-            _level = Mathf.Clamp(value, 0, _levelSceneNames.Length);
+            _level = Mathf.Clamp(value, 0, _levelSceneNames.Count);
         }
     }
     public string LevelName => _levelSceneNames[Level];
+
+    public void SetLevel(string name)
+    {
+        _level = _levelSceneNames.IndexOf(name);
+    }
+    
 }
