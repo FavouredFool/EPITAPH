@@ -150,6 +150,142 @@ Transform:
   - {fileID: 8946898142820209182}
   m_Father: {fileID: 8500348783263236695}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1178007810548474000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5191344629938123215}
+  - component: {fileID: 5073509689141753427}
+  m_Layer: 6
+  m_Name: HurtboxAndCollision
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5191344629938123215
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178007810548474000}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6832729491387809120}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &5073509689141753427
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178007810548474000}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.09000003, y: -0.08461654}
+  m_Radius: 0.70410264
+--- !u!1 &1382932884797073409
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3545262769032154287}
+  - component: {fileID: 8497733251553354946}
+  m_Layer: 13
+  m_Name: WallCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3545262769032154287
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382932884797073409}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6832729491387809120}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &8497733251553354946
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382932884797073409}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.09000003, y: -0.08461654}
+  m_Radius: 0.70410264
 --- !u!1 &2249603242363543435
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,7 +379,7 @@ MonoBehaviour:
   <BatTime>k__BackingField: 1.5
   <Visual3DMesh>k__BackingField: {fileID: 36141211466067002}
   <VFXObject>k__BackingField: {fileID: 1174812970023929490}
-  <Collider>k__BackingField: {fileID: 9172875970443336580}
+  <Collider>k__BackingField: {fileID: 5073509689141753427}
   <KnockbackStrength>k__BackingField: 1
   _speed: 5
   _speedAimReduction: 3
@@ -261,6 +397,7 @@ MonoBehaviour:
   PADScriptableObject: {fileID: 11400000, guid: 97171c05725167e438dded62167c2289, type: 2}
   _characterAnimator: {fileID: 507660546181610574}
   _crossbowAnimator: {fileID: 4327648699261966165}
+  _maxActivateAngle: 40
   <LungeSpeed>k__BackingField: 40
   <LungeAcceleration>k__BackingField: 160
   <LungePower>k__BackingField: 4
@@ -364,7 +501,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6832729491387809120}
-  - component: {fileID: 9172875970443336580}
   - component: {fileID: 7223937281465304360}
   m_Layer: 6
   m_Name: Player2D
@@ -385,45 +521,11 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5191344629938123215}
+  - {fileID: 3545262769032154287}
   m_Father: {fileID: 3967837825882570733}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &9172875970443336580
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8934039217903088191}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: -0.09000003, y: -0.08461654}
-  m_Radius: 0.70410264
 --- !u!114 &7223937281465304360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -452,7 +554,7 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   m_ShapePathHash: 0
   m_InstanceId: 0
-  m_ShadowShape2DComponent: {fileID: 9172875970443336580}
+  m_ShadowShape2DComponent: {fileID: 0}
   m_ShadowShape2DProvider:
     rid: 1465347929378390214
   m_ShadowCastingSource: 2
@@ -470,7 +572,7 @@ MonoBehaviour:
   m_PreviousTrimEdge: 0
   m_PreviousEdgeProcessing: 1
   m_PreviousShadowCastingSource: 2
-  m_PreviousShadowShape2DSource: {fileID: 9172875970443336580}
+  m_PreviousShadowShape2DSource: {fileID: 0}
   references:
     version: 2
     RefIds:
