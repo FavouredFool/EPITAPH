@@ -6,4 +6,10 @@ public class AttackAnimationEvent : MonoBehaviour
     {
         GetComponentInParent<EnemyController>().Attack(2f);
     }
+
+    public void ChargeAttack()
+    {
+        GetComponentInParent<EnemyController>().Attack(2f);
+
+    }
 }
