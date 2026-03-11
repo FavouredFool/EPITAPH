@@ -21,10 +21,8 @@ public class BeatColorChanger : BeatResponderBase
     }
     public override void OnOnBeatEventHappened(BeatChanged e)
     {
-        //Debug.Log("OnBeatChange");
         LightToChange.color = Colors[ColorIndex];
         ColorIndex++;
         ColorIndex = ColorIndex % Colors.Count;
- 
     }
 }

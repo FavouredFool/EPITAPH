@@ -682,10 +682,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: HUDCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 1870053075811706761, guid: 5b9b9f198c512bd4fb0aca1c29f2738a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3305135359757308108, guid: 5b9b9f198c512bd4fb0aca1c29f2738a, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0

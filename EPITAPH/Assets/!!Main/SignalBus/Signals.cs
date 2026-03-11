@@ -79,10 +79,8 @@ public struct Signal_RefreshVolume
 public struct Signal_DialogueToggled
 {
     public bool on;
-    public string nodeName;
-    public Signal_DialogueToggled(string nodeName, bool on)
+    public Signal_DialogueToggled(bool on)
     {
-        this.nodeName = nodeName;
         this.on= on;
     }
 }
