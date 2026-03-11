@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
     [field:SerializeField, Range(1, 200)] public float LungeAcceleration { get; private set; }
     [field: SerializeField, Range(1, 6)] public float LungePower { get; private set; } = 3;
     [field: SerializeField, Range(0, 1)] public float InitalDelay { get; private set; } = 0.1f;
+    [field: SerializeField, Range(0, 30)] public float FailsaveExitTime { get; private set; } = 10f;
     
     public float Speed => _speed;
     public float SpeedAimReduction => _speedAimReduction;
