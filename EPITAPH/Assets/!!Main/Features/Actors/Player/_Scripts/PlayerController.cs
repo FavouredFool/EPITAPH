@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Range(1, 20)] float _speedReloadReduction;
     [SerializeField, Range(0, 0.95f)] float _moveLockThreshold = 0.3f;
     [SerializeField, Range(1, 20)] float _knockbackDecay;
-    [SerializeField] AimAssistV3 _aimAssist;
+    //[SerializeField] AimAssistV3 _aimAssist;
     
     [Header("Shooting")]
     [SerializeField, Range(0, 50)] float _knockbackStrength = 2;
@@ -105,12 +105,14 @@ public class PlayerController : MonoBehaviour
     {
         get
         {
+            // TODO re-add aim assist
             Vector2 rawAimDir = RotateInput.normalized;
+            return rawAimDir;
             
-            float angle = Mathf.Atan2(rawAimDir.y, rawAimDir.x) * Mathf.Rad2Deg - 90;
-            float assistedAngle = _aimAssist.GetAssistedAngle(angle, transform.position);
-            
-            return Quaternion.Euler(0, 0, assistedAngle) * Vector2.up;
+            //float angle = Mathf.Atan2(rawAimDir.y, rawAimDir.x) * Mathf.Rad2Deg - 90;
+            //float assistedAngle = _aimAssist.GetAssistedAngle(angle, transform.position);
+            //
+            //return Quaternion.Euler(0, 0, assistedAngle) * Vector2.up;
         }
     }
 
