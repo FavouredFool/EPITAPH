@@ -38,8 +38,6 @@ public class UserInterfaceController : MonoBehaviour
         if (!_menuManager.IsOpen)
             _menuManager.Toggle(true);
 
-        _yarnManager.IsResponsive = _menuManager.IsOpen;
-
         //The menu must close itself.
     }
 

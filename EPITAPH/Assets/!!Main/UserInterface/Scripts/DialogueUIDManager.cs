@@ -10,8 +10,8 @@ public class DialogueUIDManager : MonoBehaviour
 
     void Awake()
     {
-        _dialogueWindowsRect.anchoredPosition = new Vector2(1250, 0);
-        _cornerRect.anchoredPosition = new Vector2(1000, 0);
+        _dialogueWindowsRect.anchoredPosition = new Vector2(2500, 0);
+        _cornerRect.anchoredPosition = new Vector2(3000, -1125);
     }
 
     void OnEnable()
@@ -29,18 +29,22 @@ public class DialogueUIDManager : MonoBehaviour
         if (IsOpen == on) return;
         IsOpen = on;
 
-        DOTween.Kill(this);
+        //DOTween.Kill(this);
         Sequence seq = DOTween.Sequence(this);
+        seq.SetUpdate(true);
 
-        if (on)
+        if (IsOpen)
         {
-            seq.Insert(0, _dialogueWindowsRect.DOAnchorPosX(-1250,0.75f).SetEase(Ease.OutCirc));
-            seq.Insert(0, _cornerRect.DOAnchorPosX(0,1f).SetEase(Ease.OutCirc));
+            Debug.Log("GO");
+            seq.Insert(0, _dialogueWindowsRect.DOAnchorPosX(0,2f).SetEase(Ease.OutCirc));
+            seq.Insert(0, _cornerRect.DOAnchorPosX(2000,1f).SetEase(Ease.OutCirc));
         }
         else
         {
-            seq.Insert(0, _dialogueWindowsRect.DOAnchorPosX(1250,0.75f).SetEase(Ease.InSine));
-            seq.Insert(0, _cornerRect.DOAnchorPosX(1000,0.5f).SetEase(Ease.InSine));
+                        Debug.Log("NO");
+
+            seq.Insert(0, _dialogueWindowsRect.DOAnchorPosX(2500,1f).SetEase(Ease.InSine));
+            seq.Insert(0, _cornerRect.DOAnchorPosX(3000,0.5f).SetEase(Ease.InSine));
         }
 
         SignalBus.Fire(new Signal_DialogueUIToggled(IsOpen));

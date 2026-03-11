@@ -9,16 +9,15 @@ public class YarnManager : MonoBehaviour
 
     public static bool IsDefaultDialogueContinueActive { get; set; }
 
-    public bool IsResponsive { get; set; }
-
-
     void OnEnable()
     {
+        _dialogueRunner.onDialogueComplete.AddListener(OnEndDialogue);
         SignalBus.Subscribe<Signal_DialogueForceContinue>(ForceContinueDialogue);
         SignalBus.Subscribe<Signal_StartDialogue>(SpinYarn);
     }
     void OnDisable()
     {
+        _dialogueRunner.onDialogueComplete.RemoveListener(OnEndDialogue);
         SignalBus.Unsubscribe<Signal_DialogueForceContinue>(ForceContinueDialogue);
         SignalBus.Unsubscribe<Signal_StartDialogue>(SpinYarn);
     }
@@ -32,9 +31,12 @@ public class YarnManager : MonoBehaviour
             return;
         }
         ToggleDefaultDialogueContinue(true);
-        SignalBus.Fire(new Signal_DialogueToggled(nodeName, true));
+        SignalBus.Fire(new Signal_DialogueToggled( true));
         await _dialogueRunner.StartDialogue(nodeName);
-        SignalBus.Fire(new Signal_DialogueToggled(nodeName, false));
+    }
+    public void OnEndDialogue()
+    {
+        SignalBus.Fire(new Signal_DialogueToggled(false));
     }
 
     [YarnCommand("SetDefaultContinue")] public static void ToggleDefaultDialogueContinue(bool on)
@@ -51,7 +53,7 @@ public class YarnManager : MonoBehaviour
     public void ForceContinueDialogue(Signal_DialogueForceContinue signal) => ContinueDialogue();
     public void InputDefaultContinueDialogue(InputAction.CallbackContext ctx)
     {
-        if(IsDefaultDialogueContinueActive && IsResponsive)
+        if(IsDefaultDialogueContinueActive)
             ContinueDialogue();
     }
 }
