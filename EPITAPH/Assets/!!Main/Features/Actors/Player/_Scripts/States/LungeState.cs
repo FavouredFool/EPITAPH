@@ -4,6 +4,8 @@ public class LungeState : VampireBaseState
 {
     BoltController _lungeBolt;
     float _startDistance;
+
+    float _startLungeTime;
     
     public LungeState(VampireStateContext ctx) : base(ctx)
     {
@@ -16,11 +18,11 @@ public class LungeState : VampireBaseState
         
         // find actual bolt from type
         
-        Debug.Log("start lunge to " + _lungeBolt);
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsLungingBoolAnim, true);
         _ctx.PlayerController.MovementVelocity = Vector2.zero;
 
         _startDistance = (_lungeBolt.Rb2D.position - _ctx.PlayerController.Rb.position).magnitude;
+        _startLungeTime = Time.time;
 
         // TODO add a max lunge time for a breakout when something goes horribly wrong
     }
@@ -33,6 +35,8 @@ public class LungeState : VampireBaseState
     public override void FixedUpdate()
     {
         if (_lungeBolt == null) return;
+
+        if ((Time.time - _startLungeTime) < _ctx.PlayerController.InitalDelay) return;
         
         Vector2 diff = (_lungeBolt.Rb2D.position - _ctx.PlayerController.Rb.position);
         Vector2 dir = diff.normalized;
@@ -44,6 +48,8 @@ public class LungeState : VampireBaseState
             _ctx.PlayerController.MovementVelocity,
             _ctx.PlayerController.LungeSpeed
         );
+        
+        Debug.Log(_ctx.PlayerController.MovementVelocity.magnitude);
 
 
 // linear speed

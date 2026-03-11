@@ -38,9 +38,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Animator _crossbowAnimator;
     
     [Header("Lunge")]
-    [field:SerializeField, Range(1, 50)] public float LungeSpeed { get; private set; }
-    [field:SerializeField, Range(1, 50)] public float LungeAcceleration { get; private set; }
+    [field:SerializeField, Range(1, 100)] public float LungeSpeed { get; private set; }
+    [field:SerializeField, Range(1, 200)] public float LungeAcceleration { get; private set; }
     [field: SerializeField, Range(1, 6)] public float LungePower { get; private set; } = 3;
+    [field: SerializeField, Range(0, 1)] public float InitalDelay { get; private set; } = 0.1f;
     
     public float Speed => _speed;
     public float SpeedAimReduction => _speedAimReduction;
