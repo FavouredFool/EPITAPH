@@ -145,7 +145,6 @@ public class EnemyController : MonoBehaviour
         _rb.linearVelocity = Vector2.zero;
         yield return new WaitForSeconds(0.2f);
         animator.SetTrigger("attack");
-        Attack(0.5f);
         yield return new WaitForSeconds(1);
         attacking = false;
     }
