@@ -1,5 +1,74 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &346381494375623007
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1357737456173268520}
+  - component: {fileID: 2669688092074519299}
+  m_Layer: 14
+  m_Name: LungeCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1357737456173268520
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346381494375623007}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6832729491387809120}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &2669688092074519299
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346381494375623007}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.066066995, y: -0.08451784}
+  m_Size: {x: 2.133388, y: 1.4235352}
+  m_Direction: 1
 --- !u!1 &381551514078586361
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,7 +448,7 @@ MonoBehaviour:
   <BatTime>k__BackingField: 1.5
   <Visual3DMesh>k__BackingField: {fileID: 36141211466067002}
   <VFXObject>k__BackingField: {fileID: 1174812970023929490}
-  <Collider>k__BackingField: {fileID: 5073509689141753427}
+  <MainCollider>k__BackingField: {fileID: 5073509689141753427}
   <KnockbackStrength>k__BackingField: 1
   _speed: 5
   _speedAimReduction: 3
@@ -403,6 +472,8 @@ MonoBehaviour:
   <LungePower>k__BackingField: 4
   <InitalDelay>k__BackingField: 0.15
   <FailsaveExitTime>k__BackingField: 4
+  <LungeCollider>k__BackingField: {fileID: 2669688092074519299}
+  _lungeKnockbackStrength: 50
 --- !u!50 &7293642660323857259
 Rigidbody2D:
   serializedVersion: 5
@@ -524,6 +595,7 @@ Transform:
   m_Children:
   - {fileID: 5191344629938123215}
   - {fileID: 3545262769032154287}
+  - {fileID: 1357737456173268520}
   m_Father: {fileID: 3967837825882570733}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7223937281465304360

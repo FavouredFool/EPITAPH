@@ -15,7 +15,10 @@ public class EnemyController : MonoBehaviour
     [SerializeField, UnityEngine.Range(0, 20)] float _speed;
     [SerializeField, UnityEngine.Range(1, 20)] float _knockbackDecay;
     [SerializeField, UnityEngine.Range(1, 20)] float _knockbackResistance = 1;
-    [SerializeField, UnityEngine.Range(0.01f, 10)] float _pinKnockbackMagnitudeThreshold = 0.1f;
+    //[field: SerializeField, UnityEngine.Range(1, 20)] public float FinalCollapsePush { get; set; } = 1;
+
+
+    [field: SerializeField, UnityEngine.Range(0.01f, 100)] public float KnockbackMagnitudeThreshold { get; set; } = 1f;
     [SerializeField] GameObject _deadSprite;
 
     public float KnockbackDecay => _knockbackDecay;
@@ -37,7 +40,7 @@ public class EnemyController : MonoBehaviour
     public TriggerPredicate EnterKnockback { get; private set; }
     public TriggerPredicate ExitKnockback { get; private set; }
 
-    public Vector2 LatestHitVelocity { get; private set; }
+    public Vector2 LatestHitVelocity { get; set; }
     
     void Awake()
     {
@@ -76,6 +79,8 @@ public class EnemyController : MonoBehaviour
         
         At(hitAndKnockbackedState, normalDeathState, NormalDeathTrigger);
         At(hitAndKnockbackedState, stakedState, StakedTrigger);
+        
+        At(everythingState, normalDeathState, NormalDeathTrigger);
         
         StateMachine.SetState(everythingState);
     }

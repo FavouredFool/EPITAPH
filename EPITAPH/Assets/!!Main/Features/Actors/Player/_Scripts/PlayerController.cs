@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField, Range(0.1f, 10)] public float BatTime { get; set; } = 2f;
     [field: SerializeField] public GameObject Visual3DMesh { get; set; }
     [field: SerializeField] public GameObject VFXObject { get; set; }
-    [field: SerializeField] public Collider2D Collider { get; set; }
+    [field: SerializeField] public Collider2D MainCollider { get; set; }
     [field: SerializeField, Range(0, 10)] public float KnockbackStrength { get; set; }
     
     [Header("Movement")]
@@ -56,6 +56,8 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField, Range(1, 6)] public float LungePower { get; private set; } = 3;
     [field: SerializeField, Range(0, 1)] public float InitalDelay { get; private set; } = 0.1f;
     [field: SerializeField, Range(0, 30)] public float FailsaveExitTime { get; private set; } = 10f;
+    [field: SerializeField] public Collider2D LungeCollider { get; private set; }
+    [SerializeField, Range(0, 200)] float _lungeKnockbackStrength = 100;
     
     public float Speed => _speed;
     public float SpeedAimReduction => _speedAimReduction;
@@ -418,7 +420,27 @@ public class PlayerController : MonoBehaviour
 
         if (LayerUtil.MaskContainsLayer(_hitLayer, other.gameObject.layer))
         {
-            Hit();
+            // I hate guarding like this, but its easy and stuff like this is hard to delegate into the states.
+            // Maybe this will make problems or more states have to get added later.
+            if (StateMachine.CurrentState is not LungeState)
+            {
+                Hit();
+            }
+        }
+        
+        if (other.GetComponentInParent<EnemyController>() is { } enemy)
+        {
+            // same comment as above
+            if (StateMachine.CurrentState is LungeState)
+            {
+                // i opted away from a normal push in favour of an instant kill thing for the lunge
+                
+                Vector2 dir = (enemy.Rb.position - Rb.position).normalized;
+                //enemy.Hit(dir * _lungeKnockbackStrength);
+
+                enemy.LatestHitVelocity = dir * _lungeKnockbackStrength;
+                enemy.NormalDeathTrigger.Trigger();
+            }
         }
     }
 

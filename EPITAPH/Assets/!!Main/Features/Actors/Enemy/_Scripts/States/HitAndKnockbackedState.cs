@@ -15,18 +15,20 @@ public class HitAndKnockbackedState : EnemyBaseState
         _ctx.EnemyController.Animator.SetTrigger(EnterKnockbackedTriggerAnim);
         _ctx.EnemyController.Knockback(_ctx.EnemyController.LatestHitVelocity);
         
-        _ctx.EnemyController.CurrentHp -= 1;
-        
         PlayerAudio.PlayMeatHit(_ctx.EnemyController.transform.position);
         SignalBus.Fire(new Hit_Enemy(_ctx.EnemyController.Rb.position));
     }
 
     public override void Update()
     {
-        if (_ctx.EnemyController.KnockbackVelocity.sqrMagnitude < 0.05)
+        if (_ctx.EnemyController.KnockbackVelocity.magnitude < _ctx.EnemyController.KnockbackMagnitudeThreshold)
         {
+            _ctx.EnemyController.CurrentHp -= 1;
+            
             if (_ctx.EnemyController.CurrentHp <= 0)
             {
+                // final push of corpse
+                _ctx.EnemyController.LatestHitVelocity = _ctx.EnemyController.KnockbackMagnitudeThreshold * _ctx.EnemyController.LatestHitVelocity.normalized;
                 _ctx.EnemyController.Die();
                 _ctx.EnemyController.NormalDeathTrigger.Trigger();
             }
