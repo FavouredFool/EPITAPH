@@ -12,12 +12,12 @@ TagManager:
   - Water
   - UI
   - Player
-  - Enemies
+  - EnemiesCollision
   - EnemyDamagingStuff
   - PlayerDamagingStuff
   - Wall
   - BoltPickup
-  - 
+  - EnemiesHurtbox
   - 
   - 
   - 
