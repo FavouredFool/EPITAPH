@@ -3,7 +3,6 @@ using UnityEngine;
 public class LungeState : VampireBaseState
 {
     BoltController _lungeBolt;
-    float _startDistance;
 
     float _startLungeTime;
     
@@ -20,8 +19,7 @@ public class LungeState : VampireBaseState
         
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsLungingBoolAnim, true);
         _ctx.PlayerController.MovementVelocity = Vector2.zero;
-
-        _startDistance = (_lungeBolt.Rb2D.position - _ctx.PlayerController.Rb.position).magnitude;
+        
         _startLungeTime = Time.time;
 
         // TODO add a max lunge time for a breakout when something goes horribly wrong
@@ -49,16 +47,13 @@ public class LungeState : VampireBaseState
             _ctx.PlayerController.LungeSpeed
         );
         
-        Debug.Log(_ctx.PlayerController.MovementVelocity.magnitude);
 
-
-// linear speed
+        // linear speed
         
         //_ctx.PlayerController.MovementVelocity = dir * _ctx.PlayerController.LungeSpeed * Time.deltaTime * 1000;
         //Debug.Log(_ctx.PlayerController.MovementVelocity);
         
         // pow
-        
         //float maxSpeed = _ctx.PlayerController.LungeSpeed;
         //float acceleration = _ctx.PlayerController.LungeAcceleration;
         //
@@ -74,13 +69,6 @@ public class LungeState : VampireBaseState
         //    _ctx.PlayerController.LungeSpeed
         //);
         
-        // relative to distance, maybe meh
-        //float distanceT = Mathf.Clamp01(diff.magnitude / _startDistance);
-        //
-        //float speed = _ctx.PlayerController.LungeSpeed *
-        //              (0.1f + (1f - Mathf.Exp(-_ctx.PlayerController.LungePower * distanceT)));
-        //
-        //_ctx.PlayerController.MovementVelocity = dir * speed;
         
         _ctx.PlayerController.CalculateVelocity();
         

@@ -8,7 +8,16 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] LayerMask _hitLayer;
     [SerializeField] LayerMask _boltLayer;
+    
+    [Header("Hit")]
+    [SerializeField, Range(1, 20)] int _maxHP;
+    [field: SerializeField, Range(1, 6)] public float HitSpeedMultiplier { get; set; } = 2.5f;
+    [field: SerializeField, Range(0.1f, 10)] public float BatTime { get; set; } = 2f;
+    [field: SerializeField] public GameObject Visual3DMesh { get; set; }
+    [field: SerializeField] public GameObject VFXObject { get; set; }
+    [field: SerializeField] public Collider2D Collider { get; set; }
     
     [Header("Movement")]
     [SerializeField, Range(1, 20)] float _speed;
@@ -66,6 +75,10 @@ public class PlayerController : MonoBehaviour
     // Dir
     public Vector2 LookDirection { get; set; }
     
+    // HP
+    // TODO gotta hook this up to the UI
+    public int CurrentHP { get; set; }
+    
     // Bolts
     public bool BoltInChamber { get; set; } = true;
     public Dictionary<BoltType, BoltController> CurrentBoltsHeld { get; private set; }
@@ -85,6 +98,8 @@ public class PlayerController : MonoBehaviour
     public TriggerPredicate FinishLungeTrigger { get; private set; }
     public TriggerPredicate StartReloadTrigger { get; private set; }
     public TriggerPredicate StopReloadTrigger { get; private set; }
+    public TriggerPredicate GetHitTrigger { get; private set; }
+    public TriggerPredicate FinishBatTrigger { get; private set; }
     
     // Hashes
     // Crossbow
@@ -139,6 +154,8 @@ public class PlayerController : MonoBehaviour
         Assert.IsNotNull(_characterAnimator);
         Assert.IsNotNull(_crossbowAnimator);
 
+        CurrentHP = _maxHP;
+
         InitStateMachine();
     }
 
@@ -153,13 +170,15 @@ public class PlayerController : MonoBehaviour
         ReloadState reloadState = new(ctx);
         ShootState shootState = new(ctx);
         LungeState lungeState = new(ctx);
-        VampireState vampireState = new(ctx);
+        HitRecoveryState hitRecoveryState = new(ctx);
 
         ShootTrigger = new TriggerPredicate();
         LungeTrigger = new TriggerPredicate();
         FinishLungeTrigger = new TriggerPredicate();
         StartReloadTrigger = new TriggerPredicate();
         StopReloadTrigger = new TriggerPredicate();
+        GetHitTrigger = new TriggerPredicate();
+        FinishBatTrigger = new TriggerPredicate();
         
         At(moveState, aimState, new FuncStatePredicate(() => IsAiming));
         At(aimState, moveState, new FuncStatePredicate(() => !IsAiming));
@@ -170,13 +189,18 @@ public class PlayerController : MonoBehaviour
         At(reloadState, moveState, StopReloadTrigger);
         
         At(aimState, shootState, ShootTrigger);
-        // Todo doublecheck if this is correct
         At(shootState, aimState, new FuncStatePredicate(() => true));
         
         At(moveState, lungeState, LungeTrigger);
         At(aimState, lungeState, LungeTrigger);
         
         At(lungeState, moveState, FinishLungeTrigger);
+        
+        At(moveState, hitRecoveryState, GetHitTrigger);
+        At(aimState, hitRecoveryState, GetHitTrigger);
+        At(reloadState, hitRecoveryState, GetHitTrigger);
+
+        At(hitRecoveryState, moveState, FinishBatTrigger);
         
         StateMachine.SetState(moveState);
     }
@@ -320,6 +344,11 @@ public class PlayerController : MonoBehaviour
         Destroy(bolt.gameObject);
     }
 
+    void Hit()
+    {
+        GetHitTrigger.Trigger();
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.GetComponentInParent<BoltController>() is { } bolt)
@@ -328,6 +357,11 @@ public class PlayerController : MonoBehaviour
             {
                 PickupBolt(bolt);
             }
+        }
+
+        if (LayerUtil.MaskContainsLayer(_hitLayer, other.gameObject.layer))
+        {
+            Hit();
         }
     }
 
