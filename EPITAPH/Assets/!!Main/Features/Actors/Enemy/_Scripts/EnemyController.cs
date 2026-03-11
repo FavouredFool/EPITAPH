@@ -99,6 +99,7 @@ public class EnemyController : MonoBehaviour
     #region ChaseBehaviour
 
     bool charging = false;
+    bool attacking = false;
     float _lastChargeTime = -Mathf.Infinity;
 
     [SerializeField, UnityEngine.Range(1, 15)] float _chargeSpeed;
@@ -109,6 +110,17 @@ public class EnemyController : MonoBehaviour
 
     public void ChaseBehaviourUpdateTick()
     {
+       
+            if (_rb.linearVelocity.magnitude > 0.1f)
+            {
+            animator.SetBool("walking", true);
+        }
+        else
+        {
+            animator.SetBool("walking", false);
+        }
+
+
         if (!charging)
         {
             _agent.destination = _target.position;
@@ -122,8 +134,30 @@ public class EnemyController : MonoBehaviour
             StartCoroutine(MeleeChaseAttackLoop());
         }
 
-        Translate();
-        Rotate();
+        if (IsTargetInRangeForMelee() && !charging && !attacking)
+        {
+            
+            StartCoroutine(NormalAttackLoop());
+
+        }
+
+        if (!charging && !attacking)
+        {
+            Translate();
+            Rotate();
+
+        }
+
+    }
+
+    public IEnumerator NormalAttackLoop()
+    {
+        attacking = true;
+        _rb.linearVelocity = Vector2.zero;
+        yield return new WaitForSeconds(0.2f);
+        animator.SetTrigger("attack");
+        yield return new WaitForSeconds(1);
+        attacking = false;
     }
 
     public IEnumerator MeleeChaseAttackLoop()
@@ -131,14 +165,18 @@ public class EnemyController : MonoBehaviour
         charging = true;
 
 
-        _agent.destination = (_target.transform.position-transform.position).normalized*500;
+        //_agent.destination = (_target.transform.position-transform.position).normalized*500;
         bool attacked = false;
         animator.SetBool("charging", true);
         animator.SetTrigger("startCharge");
         _agent.speed = 0;
+        _rb.linearVelocity = Vector2.zero;
 
+
+        Vector2 decidedMovementVelocity = (_target.transform.position - transform.position).normalized * _chargeSpeed;
         yield return new WaitForSeconds(1);
         _agent.speed = _chargeSpeed;
+        _rb.linearVelocity = decidedMovementVelocity;
 
         float timer = 0;
 
@@ -149,27 +187,38 @@ public class EnemyController : MonoBehaviour
             {
                 _agent.ResetPath();
                 _agent.speed = 0;
+                _rb.linearVelocity = Vector2.zero;
+
                 animator.SetTrigger("chargeAttack");
+                Attack(0.5f);
                 attacked = true;
                 break;
             }
 
+            /*
             if(Vector2.Distance(transform.position, _agent.destination) < 0.5f)
             {
                 Debug.Log("path cut short");
                 _agent.ResetPath();
                 _agent.speed = 0;
+                _rb.linearVelocity = Vector2.zero;
+
                 animator.SetTrigger("chargeAttack");
                 attacked = true;
                 break;
             }
+            */
             yield return null;
         }
+
+        
 
         if (!attacked)
         {
             _agent.ResetPath();
             _agent.speed = 0;
+            _rb.linearVelocity = Vector2.zero;
+
             animator.SetTrigger("chargeAttack");
             attacked = true;
         }
@@ -177,11 +226,25 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(1);
         animator.SetBool("charging", false);
         _agent.speed = _speed;
+        _rb.linearVelocity = Vector2.zero;
 
         charging = false;
         _lastChargeTime = Time.time;
     }
 
+
+    public void Attack(float attackRadius)
+    {
+
+        Physics2D.CircleCastAll(transform.position, attackRadius, Vector2.zero).ToList().ForEach(e =>
+        {
+           if(e.transform.TryGetComponent<PlayerController>(out var player))
+            {
+                Debug.Log("damaging player");
+              //  player.Hit((player.transform.position - transform.position).normalized * 5);
+            }
+        });
+    }
     public bool IsTargetVisible()
     {
         return true;
