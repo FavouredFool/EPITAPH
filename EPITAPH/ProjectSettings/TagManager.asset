@@ -11,14 +11,14 @@ TagManager:
   - 
   - Water
   - UI
-  - Player
+  - PlayerHurtboxAndCollision
   - EnemiesCollision
   - EnemyDamagingStuff
   - PlayerDamagingStuff
   - Wall
   - BoltPickup
   - EnemiesHurtbox
-  - 
+  - PlayerWall
   - 
   - 
   - 
