@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-	<object class="AudioFile" id="{3a851fdb-ee2e-4652-9a1a-e585245aa376}">
+	<object class="AudioFile" id="{296b1b74-0978-4ad8-986d-5a83ad94927c}">
 		<property name="assetPath">
-			<value>Enemies/BatAttacks/BatAttack.wav</value>
+			<value>Enemies/BatAttacks/BatAttack-2.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>
@@ -11,7 +11,7 @@
 			<value>2</value>
 		</property>
 		<property name="length">
-			<value>0.9175963718820862</value>
+			<value>1.4702947845804988</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{d8d3a64f-1576-4084-b11e-614e2cb247e0}</destination>
