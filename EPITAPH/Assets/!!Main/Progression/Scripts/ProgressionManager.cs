@@ -3,25 +3,22 @@ using UnityEngine.SceneManagement;
 
 public class ProgressionManager : MonoBehaviour
 {
-    public ProgressionVariables ProgressionVariables=>ProgressionVariableAnchor.ProgressionVariables;
-    public PlayerVariables PlayerVariables=>PlayerVariableAnchor.PlayerVariables;
 
-    public Scene currentLevel;
 
-    void Start()
+    void Awake()
     {
-        Scene loadedLevel = SceneManager.GetSceneByName(ProgressionVariables.LevelName);
-        if (!loadedLevel.isLoaded)
-            LoadLevel();
+        ProgressionVariableAnchor.ProgressionVariables.SetLevel(SceneManager.GetActiveScene().name);
+        Scene baseScene = SceneManager.GetSceneByName("_GameBase");
+        if (!baseScene.isLoaded)
+        SceneManager.LoadScene("_GameBase", LoadSceneMode.Additive);
     }
-    public void ProgressLevel()
+    public static void LoadNextLevel()
     {
-        SceneManager.UnloadSceneAsync(ProgressionVariables.LevelName);
-        ProgressionVariables.Level++;
-        LoadLevel();
+        ProgressionVariables progressionVariables=ProgressionVariableAnchor.ProgressionVariables;
+
+        SceneManager.UnloadSceneAsync(progressionVariables.LevelName);
+        progressionVariables.Level++;
+        SceneManager.LoadScene(progressionVariables.LevelName, LoadSceneMode.Additive);
     }
-    public void LoadLevel()
-    {
-        SceneManager.LoadScene(ProgressionVariables.LevelName, LoadSceneMode.Additive);
-    }
+
 }
