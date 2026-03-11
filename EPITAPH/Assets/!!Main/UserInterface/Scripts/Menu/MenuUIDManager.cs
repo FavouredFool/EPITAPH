@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class MenuUIDManager : MonoBehaviour
 {
@@ -77,10 +78,12 @@ public class MenuUIDManager : MonoBehaviour
     public void StartGame()
     {
         Debug.Log("START GAME");
+        SceneManager.LoadScene("_GameBase");
     }
     public void QuitGame()
     {
         Debug.Log("QUIT GAME");
+        SceneManager.LoadScene("_MainMenu");
     }
     public void QuitApplication()
     {

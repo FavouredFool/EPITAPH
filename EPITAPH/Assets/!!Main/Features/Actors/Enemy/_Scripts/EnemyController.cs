@@ -44,12 +44,24 @@ public class EnemyController : MonoBehaviour
         _currentHp = _maxHp;
     }
 
+    private void Start()
+    {
+    }
     void Update()
     {
         ChaseBehaviourUpdateTick();
         _agent.nextPosition = transform.position;
     }
 
+
+    
+
+    public void ApplyKnockback(Vector2 direction,float intensity)
+    {
+        _knockbackVelocity = direction * intensity;
+        _rb.linearVelocity = _knockbackVelocity; 
+
+    }
     void FixedUpdate()
     {
         if (_isDead)
@@ -63,8 +75,16 @@ public class EnemyController : MonoBehaviour
     void Translate()
     {
         _movementVelocity = _agent.desiredVelocity;
-        _knockbackVelocity *= Mathf.Exp(-_knockbackDecay * Time.deltaTime);
-        _rb.linearVelocity = _movementVelocity + _knockbackVelocity;
+        _knockbackVelocity *= Mathf.Exp(-_knockbackDecay * Time.fixedDeltaTime);
+        if(_knockbackVelocity.magnitude < 0.01f)
+        {
+            _rb.linearVelocity = _movementVelocity;
+        }
+        else
+        {
+            _rb.linearVelocity = _knockbackVelocity;
+
+        }
     }
 
     void Rotate()
@@ -110,10 +130,11 @@ public class EnemyController : MonoBehaviour
     {
         charging = true;
 
+
+        _agent.destination = (_target.transform.position-transform.position).normalized*500;
         bool attacked = false;
         animator.SetBool("charging", true);
         animator.SetTrigger("startCharge");
-           // _agent.ResetPath();
         _agent.speed = 0;
 
         yield return new WaitForSeconds(1);
@@ -135,6 +156,7 @@ public class EnemyController : MonoBehaviour
 
             if(Vector2.Distance(transform.position, _agent.destination) < 0.5f)
             {
+                Debug.Log("path cut short");
                 _agent.ResetPath();
                 _agent.speed = 0;
                 animator.SetTrigger("chargeAttack");
