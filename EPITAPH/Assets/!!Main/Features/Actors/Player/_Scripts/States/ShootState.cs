@@ -11,22 +11,22 @@ public class ShootState : VampireBaseState
     {
         BoltType type = _ctx.PlayerController.GetBoltTypeToShoot();
         
-        _ctx.PlayerController.CurrentBoltsHeld[type] = false;
+        BoltController bolt = Object.Instantiate(_ctx.PlayerController.ProjectileBlueprint, _ctx.PlayerController.transform.position + _ctx.PlayerController.transform.forward * _ctx.PlayerController.SpawnDist, _ctx.PlayerController.transform.rotation, _ctx.PlayerController.InstantiationParent);
+        bolt.BoltType = type;
+        bolt.BloodpointPlayer = _ctx.PlayerController.BloodlineConnection;
+        
+        _ctx.PlayerController.CurrentBoltsHeld[type] = bolt;
         _ctx.PlayerController.BoltInChamber = false;
         
-        BoltController bolt = Object.Instantiate(_projectileBlueprint, transform.position + transform.forward * _spawnDist, transform.rotation, _instantiationParent);
-        bolt.BoltType = type;
-        bolt.BloodpointPlayer = _bloodlineConnection;
-        
-        Knockback(-transform.up);
+        _ctx.PlayerController.Knockback(-_ctx.PlayerController.transform.up);
 
         // Play Audio
         PlayerAudio.PlayReleaseCrossbow();
         
         // Animation
         Debug.Log("SHOT");
-        CrossboxAnimator.SetTrigger(PlayerController.ShootCrossbowTriggerAnim);
-        CharacterAnimator.SetTrigger(PlayerController.ShotCharacterTriggerAnim);
+        _ctx.PlayerController.CrossboxAnimator.SetTrigger(PlayerController.ShootCrossbowTriggerAnim);
+        _ctx.PlayerController.CharacterAnimator.SetTrigger(PlayerController.ShotCharacterTriggerAnim);
     }
 
     public override void Update()

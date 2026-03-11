@@ -180,17 +180,6 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "9f6f6866-93d6-40d9-8ed5-512e42beb25c",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
                     "name": "2D Vector",
                     "id": "82661f42-4977-4583-898c-958dcdfb813d",
                     "path": "2DVector",
@@ -258,8 +247,30 @@
                 },
                 {
                     "name": "",
+                    "id": "ca04b790-a7f8-4ba2-9a3d-9da446e8d45d",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "cae9103e-c1b8-44e8-b634-2afa0cd9a3ba",
                     "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LungeLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "47b19e60-5d57-460a-9047-f6a854a0098f",
+                    "path": "<Keyboard>/2",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -280,6 +291,17 @@
                 },
                 {
                     "name": "",
+                    "id": "0663367c-a045-4976-982f-10576188732d",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LungeDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "d7d529b7-be49-4acb-b878-83928931745c",
                     "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
@@ -291,8 +313,30 @@
                 },
                 {
                     "name": "",
+                    "id": "c985ae01-f938-4c6f-9c51-b209c6dad738",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LungeUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "bc95896e-b70c-44fc-9d8b-94d08dac03f1",
                     "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LungeRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "abd2f223-d46c-41b5-a0a6-af9654ff1e48",
+                    "path": "<Keyboard>/4",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

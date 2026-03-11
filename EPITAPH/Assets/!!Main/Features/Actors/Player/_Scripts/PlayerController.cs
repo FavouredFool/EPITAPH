@@ -42,6 +42,11 @@ public class PlayerController : MonoBehaviour
     
     public Animator CharacterAnimator => _characterAnimator;
     public Animator CrossboxAnimator => _crossbowAnimator;
+    public float SpawnDist => _spawnDist;
+    public Transform InstantiationParent => _instantiationParent;
+    public Transform BloodlineConnection => _bloodlineConnection;
+
+    public BoltController ProjectileBlueprint => _projectileBlueprint;
 
     public float ReloadTime => _reloadTime;
     
@@ -57,7 +62,13 @@ public class PlayerController : MonoBehaviour
     
     // Bolts
     public bool BoltInChamber { get; set; } = true;
-    public Dictionary<BoltType, bool> CurrentBoltsHeld { get; private set; }
+    public Dictionary<BoltType, BoltController> CurrentBoltsHeld { get; private set; }
+    
+    bool IsAiming => RotateInput.magnitude > _moveLockThreshold && BoltInChamber;
+    
+    // Lunge
+    // TODO i really dislike doing this but i dont know how else i can convey the info to the state
+    public BoltController CurrentLungeBolt { get; set; }
 
     // State Machine
     public StateMachine StateMachine { get; set; }
@@ -107,12 +118,12 @@ public class PlayerController : MonoBehaviour
 
         _rb = GetComponent<Rigidbody2D>();
 
-        CurrentBoltsHeld = new Dictionary<BoltType, bool>
+        CurrentBoltsHeld = new Dictionary<BoltType, BoltController>
         {
-            [BoltType.DOWN] = true,
-            [BoltType.LEFT] = true,
-            [BoltType.UP] = true,
-            [BoltType.RIGHT] = true
+            [BoltType.DOWN] = null,
+            [BoltType.LEFT] = null,
+            [BoltType.UP] = null,
+            [BoltType.RIGHT] = null
         };
 
         PADScriptableObject.Setup(this.gameObject);
@@ -134,18 +145,16 @@ public class PlayerController : MonoBehaviour
         ReloadState reloadState = new(ctx);
         ShootState shootState = new(ctx);
         LungeState lungeState = new(ctx);
+        VampireState vampireState = new(ctx);
 
         ShootTrigger = new TriggerPredicate();
         LungeTrigger = new TriggerPredicate();
         FinishLungeTrigger = new TriggerPredicate();
         StartReloadTrigger = new TriggerPredicate();
         StopReloadTrigger = new TriggerPredicate();
- 
-
-        bool isAiming = RotateInput.magnitude > _moveLockThreshold && BoltInChamber;
         
-        At(moveState, aimState, new FuncStatePredicate(() => isAiming));
-        At(aimState, moveState, new FuncStatePredicate(() => !isAiming));
+        At(moveState, aimState, new FuncStatePredicate(() => IsAiming));
+        At(aimState, moveState, new FuncStatePredicate(() => !IsAiming));
         
         At(moveState, reloadState, StartReloadTrigger);
         At(aimState, reloadState, StartReloadTrigger);
@@ -174,7 +183,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         StateMachine.Update();
-        Debug.Log(StateMachine.CurrentState);
+        //Debug.Log(StateMachine.CurrentState);
     }
     
     void FixedUpdate()
@@ -257,12 +266,10 @@ public class PlayerController : MonoBehaviour
     
     public void LungeToBolt(BoltType boltType)
     {
-        Debug.Log("start lunge to " + boltType);
-
-        _characterAnimator.SetTrigger(IsLungingTriggerAnim);
+        if (CurrentBoltsHeld[boltType] == null) return;
         
-        
-        // Set state machine trigger
+        CurrentLungeBolt = CurrentBoltsHeld[boltType];
+        LungeTrigger.Trigger();
     }
     
     public void ShootBolt()
@@ -276,7 +283,7 @@ public class PlayerController : MonoBehaviour
     public void StartReload()
     {
         if (BoltInChamber) return;
-        if (CurrentBoltsHeld.Values.All(e => !e)) return;
+        if (CurrentBoltsHeld.Values.All(e => e != null)) return;
         
         StartReloadTrigger.Trigger();
     }
@@ -284,7 +291,7 @@ public class PlayerController : MonoBehaviour
 
     public BoltType GetBoltTypeToShoot()
     {
-        foreach (var kv in CurrentBoltsHeld.Where(kv => kv.Value))
+        foreach (var kv in CurrentBoltsHeld.Where(kv => kv.Value == null))
         {
             return kv.Key;
         }
@@ -294,7 +301,7 @@ public class PlayerController : MonoBehaviour
 
     public void PickupBolt(BoltController bolt)
     {
-        CurrentBoltsHeld[bolt.BoltType] = true;
+        CurrentBoltsHeld[bolt.BoltType] = null;
 
         Destroy(bolt.gameObject);
     }
