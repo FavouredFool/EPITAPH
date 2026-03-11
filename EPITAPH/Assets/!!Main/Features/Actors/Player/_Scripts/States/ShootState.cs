@@ -24,7 +24,6 @@ public class ShootState : VampireBaseState
         PlayerAudio.PlayReleaseCrossbow();
         
         // Animation
-        Debug.Log("SHOT");
         _ctx.PlayerController.CrossboxAnimator.SetTrigger(PlayerController.ShootCrossbowTriggerAnim);
         _ctx.PlayerController.CharacterAnimator.SetTrigger(PlayerController.ShotCharacterTriggerAnim);
     }

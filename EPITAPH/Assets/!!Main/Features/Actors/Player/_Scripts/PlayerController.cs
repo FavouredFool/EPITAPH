@@ -268,7 +268,11 @@ public class PlayerController : MonoBehaviour
     {
         if (CurrentBoltsHeld[boltType] == null) return;
         
-        CurrentLungeBolt = CurrentBoltsHeld[boltType];
+        BoltController boltToLunge = CurrentBoltsHeld[boltType];
+
+        if (!boltToLunge.IsLungeable) return;
+ 
+        CurrentLungeBolt = boltToLunge;
         LungeTrigger.Trigger();
     }
     
