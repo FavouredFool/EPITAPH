@@ -18,6 +18,8 @@ public class BoltController : MonoBehaviour
     [SerializeField] LineRenderer _lineRenderer;
     [SerializeField] Transform _endPoint;
     
+    [SerializeField, Range(0, 2)] public float _testBoltRayThickness = 1;
+    
     public Rigidbody2D Rb2D { get; set; }
     public PlayerController Player { get; set; }
     Rigidbody _rb3D;
@@ -141,7 +143,22 @@ public class BoltController : MonoBehaviour
     {
         // only if there is a clear line of sight to the enemy
         Vector2 diff = Player.BloodlineConnection.position - _endPoint.position;
-        RaycastHit2D hit = Physics2D.Raycast(_endPoint.position, diff.normalized, diff.magnitude, _blockLayers);
+        Vector2 dir = diff.normalized;
+        //RaycastHit2D hit = Physics2D.Raycast(_endPoint.position, diff.normalized, diff.magnitude, _blockLayers);
+        //return hit.collider == null;
+        
+        Vector2 start = _endPoint.position;
+        Vector2 center = start + diff * 0.5f;
+
+        RaycastHit2D hit = Physics2D.BoxCast(
+            center,
+            new Vector2(diff.magnitude, _testBoltRayThickness),
+            Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg,
+            Vector2.zero,
+            0f,
+            _blockLayers
+        );
+        
         return hit.collider == null;
     }
 }
