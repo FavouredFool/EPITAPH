@@ -3,6 +3,7 @@ using UnityEngine;
 public class LungeState : VampireBaseState
 {
     BoltController _lungeBolt;
+    float _startDistance;
     
     public LungeState(VampireStateContext ctx) : base(ctx)
     {
@@ -16,7 +17,12 @@ public class LungeState : VampireBaseState
         // find actual bolt from type
         
         Debug.Log("start lunge to " + _lungeBolt);
-        _ctx.PlayerController.CharacterAnimator.SetTrigger(PlayerController.IsLungingTriggerAnim);
+        _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsLungingBoolAnim, true);
+        _ctx.PlayerController.MovementVelocity = Vector2.zero;
+
+        _startDistance = (_lungeBolt.Rb2D.position - _ctx.PlayerController.Rb.position).magnitude;
+
+        // TODO add a max lunge time for a breakout when something goes horribly wrong
     }
 
     public override void Update()
@@ -26,11 +32,63 @@ public class LungeState : VampireBaseState
     
     public override void FixedUpdate()
     {
+        if (_lungeBolt == null) return;
         
+        Vector2 diff = (_lungeBolt.Rb2D.position - _ctx.PlayerController.Rb.position);
+        Vector2 dir = diff.normalized;
+        
+        // acceleration
+        _ctx.PlayerController.MovementVelocity += dir * (_ctx.PlayerController.LungeAcceleration * Time.deltaTime);
+
+        _ctx.PlayerController.MovementVelocity = Vector2.ClampMagnitude(
+            _ctx.PlayerController.MovementVelocity,
+            _ctx.PlayerController.LungeSpeed
+        );
+
+
+// linear speed
+        
+        //_ctx.PlayerController.MovementVelocity = dir * _ctx.PlayerController.LungeSpeed * Time.deltaTime * 1000;
+        //Debug.Log(_ctx.PlayerController.MovementVelocity);
+        
+        // pow
+        
+        //float maxSpeed = _ctx.PlayerController.LungeSpeed;
+        //float acceleration = _ctx.PlayerController.LungeAcceleration;
+        //
+        //float t = _ctx.PlayerController.MovementVelocity.magnitude / maxSpeed;
+        //
+        //float accelMultiplier = Mathf.Pow(t, _ctx.PlayerController.LungePower) + 0.1f;
+        //
+        //_ctx.PlayerController.MovementVelocity +=
+        //    direction * (acceleration * accelMultiplier * Time.fixedDeltaTime);
+        //
+        //_ctx.PlayerController.MovementVelocity = Vector2.ClampMagnitude(
+        //    _ctx.PlayerController.MovementVelocity,
+        //    _ctx.PlayerController.LungeSpeed
+        //);
+        
+        // relative to distance, maybe meh
+        //float distanceT = Mathf.Clamp01(diff.magnitude / _startDistance);
+        //
+        //float speed = _ctx.PlayerController.LungeSpeed *
+        //              (0.1f + (1f - Mathf.Exp(-_ctx.PlayerController.LungePower * distanceT)));
+        //
+        //_ctx.PlayerController.MovementVelocity = dir * speed;
+        
+        _ctx.PlayerController.CalculateVelocity();
+        
+        if (_ctx.PlayerController.Rb.linearVelocity.sqrMagnitude > 0.05)
+        {
+            _ctx.PlayerController.LookDirection = _ctx.PlayerController.Rb.linearVelocity.normalized;
+        }
+        
+        _ctx.PlayerController.Rotation();
     }
 
     public override void OnExit()
     {
-        
+        _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsLungingBoolAnim, false);
+        _ctx.PlayerController.MovementVelocity = Vector2.zero;
     }
 }

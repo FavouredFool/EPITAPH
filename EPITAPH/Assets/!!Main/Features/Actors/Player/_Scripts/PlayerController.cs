@@ -36,7 +36,12 @@ public class PlayerController : MonoBehaviour
     [Header("Animation")]
     [SerializeField] Animator _characterAnimator;
     [SerializeField] Animator _crossbowAnimator;
-
+    
+    [Header("Lunge")]
+    [field:SerializeField, Range(1, 50)] public float LungeSpeed { get; private set; }
+    [field:SerializeField, Range(1, 50)] public float LungeAcceleration { get; private set; }
+    [field: SerializeField, Range(1, 6)] public float LungePower { get; private set; } = 3;
+    
     public float Speed => _speed;
     public float SpeedAimReduction => _speedAimReduction;
     
@@ -51,7 +56,7 @@ public class PlayerController : MonoBehaviour
     public float ReloadTime => _reloadTime;
     
     InputActions _inputActions;
-    Rigidbody2D _rb;
+    public Rigidbody2D Rb { get; set; }
 
     // Input
     public Vector2 MovementInput { get; set; }
@@ -91,7 +96,7 @@ public class PlayerController : MonoBehaviour
     public static readonly int IsMovingBoolAnim = Animator.StringToHash("IsMoving");
     public static readonly int IsAimingBoolAnim = Animator.StringToHash("IsAiming");
     public static readonly int IsReloadingBoolAnim = Animator.StringToHash("IsReloading");
-    public static readonly int IsLungingTriggerAnim = Animator.StringToHash("IsLunging");
+    public static readonly int IsLungingBoolAnim = Animator.StringToHash("IsLunging");
     public static readonly int ShotCharacterTriggerAnim = Animator.StringToHash("Shot");
     
 
@@ -116,7 +121,7 @@ public class PlayerController : MonoBehaviour
         _inputActions = new InputActions();
         _inputActions.Enable();
 
-        _rb = GetComponent<Rigidbody2D>();
+        Rb = GetComponent<Rigidbody2D>();
 
         CurrentBoltsHeld = new Dictionary<BoltType, BoltController>
         {
@@ -217,7 +222,7 @@ public class PlayerController : MonoBehaviour
         KnockbackVelocity *= Mathf.Exp(-_knockbackDecay * Time.deltaTime);
         
         // Combine
-        _rb.linearVelocity = MovementVelocity + KnockbackVelocity;
+        Rb.linearVelocity = MovementVelocity + KnockbackVelocity;
     }
     
 
@@ -226,7 +231,7 @@ public class PlayerController : MonoBehaviour
         // LookDirection set by State
         
         float angle = Mathf.Atan2(LookDirection.y, LookDirection.x) * Mathf.Rad2Deg - 90f;
-        _rb.MoveRotation(Quaternion.Euler(0f, 0f, angle));
+        Rb.MoveRotation(Quaternion.Euler(0f, 0f, angle));
     }
     
     public void Knockback(Vector2 dir)
@@ -307,6 +312,8 @@ public class PlayerController : MonoBehaviour
     {
         CurrentBoltsHeld[bolt.BoltType] = null;
 
+        FinishLungeTrigger.Trigger();
+        
         Destroy(bolt.gameObject);
     }
 
