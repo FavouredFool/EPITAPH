@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4557718978452135905
 RectTransform:
   m_ObjectHideFlags: 0
@@ -444,8 +444,7 @@ MonoBehaviour:
   lettersPerSecond: 60
   wordsPerSecond: 10
   customTypewriter: {fileID: 0}
-  eventHandlers:
-  - {fileID: 0}
+  eventHandlers: []
 --- !u!1 &3211007857253131724
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,7 +456,6 @@ GameObject:
   - component: {fileID: 7823458414776051012}
   - component: {fileID: 2147210714878450548}
   - component: {fileID: 3952979704085574594}
-  - component: {fileID: 2597888695459042383}
   m_Layer: 5
   m_Name: Continue Button
   m_TagString: Untagged
@@ -523,62 +521,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2597888695459042383
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3211007857253131724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 3952979704085574594}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Yarn.Unity.LineView, Assembly-CSharp
-        m_MethodName: OnContinueClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &3658444547285097040
 GameObject:
   m_ObjectHideFlags: 0
@@ -716,6 +658,58 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &3816051848675559330
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6222824116448174306}
+  - component: {fileID: 2064763336321580743}
+  m_Layer: 5
+  m_Name: Line Provider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6222824116448174306
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3816051848675559330}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1360039681916414629}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2064763336321580743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3816051848675559330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b6798449caec4a32a5ad27badb06624, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: YarnSpinner.Unity::Yarn.Unity.BuiltinLocalisedLineProvider
+  _textLocaleCode: en
+  _assetLocaleCode: en
+  _useFallback: 0
+  _fallbackLocaleCode: en
 --- !u!1 &4256576804948482367
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,7 +759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0901fdc59460943b682c5c4000c44a0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineProvider: {fileID: 0}
+  lineProvider: {fileID: 2064763336321580743}
 --- !u!114 &2851490128511001834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -779,7 +773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   palette: {fileID: 11400000, guid: 6df01bf68e01943908f9e625c3b0bbc6, type: 2}
-  lineProvider: {fileID: 0}
+  lineProvider: {fileID: 2064763336321580743}
 --- !u!1 &4615734092550671205
 GameObject:
   m_ObjectHideFlags: 0
@@ -811,6 +805,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6222824116448174306}
   - {fileID: 1718440625524066915}
   - {fileID: 1638244488016578983}
   - {fileID: 8342464875447060495}
@@ -835,12 +830,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yarnProject: {fileID: 7545569452688597077, guid: 7d4715c855c6df244a4221845a47822d, type: 3}
   variableStorage: {fileID: 5069842827733036124}
-  lineProvider: {fileID: 0}
+  lineProvider: {fileID: 2064763336321580743}
   saliencyStrategy: 0
   dialoguePresenters:
   - {fileID: 3475030241186173751}
   - {fileID: 5911928043556554233}
-  - {fileID: 1710050362421929619}
   verboseLogging: 0
   autoStart: 0
   startNode: Start
@@ -1189,7 +1183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1638244488016578983
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1226,7 +1220,7 @@ MonoBehaviour:
   separateHurryUpAndAdvanceControls: 0
   multiAdvanceIsCancel: 0
   advanceRequestsBeforeCancellingLine: 2
-  inputMode: 1
+  inputMode: 2
   hurryUpLineAction: {fileID: 0}
   nextLineAction: {fileID: 0}
   hurryUpOptionsAction: {fileID: 0}
@@ -1347,7 +1341,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BeatHueShifter
   modulo: {x: 1, y: 1}
   play: 0
-  _graphic: {fileID: 0}
+  _graphic: {fileID: 7732406091234532535}
   hues:
   - {r: 0.25882354, g: 0, b: 0.21960786, a: 1}
   - {r: 1, g: 0, b: 0.30980393, a: 1}
