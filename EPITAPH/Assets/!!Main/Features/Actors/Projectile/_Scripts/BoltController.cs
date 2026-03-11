@@ -98,6 +98,16 @@ public class BoltController : MonoBehaviour
 
     public void HitSomething(Collider2D other = null)
     {
+        if (other != null)
+        {
+            if (other.GetComponent<BreakableWall>() is { }
+            breakableWall)
+            {
+                breakableWall.BreakWall();
+                return;
+            }
+          
+        }
         Vector2 velocity = Rb2D.linearVelocity;
         
         Rb2D.bodyType = RigidbodyType2D.Kinematic;
@@ -115,7 +125,7 @@ public class BoltController : MonoBehaviour
         {
 			Rb2D.transform.SetParent(other.transform.parent, true);
 		}
-        
+      
         if (other != null)
         {
             if (other.GetComponentInParent<EnemyController>() is { } enemy)
