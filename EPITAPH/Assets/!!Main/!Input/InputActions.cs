@@ -129,36 +129,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""LungeLeft"",
+                    ""name"": ""UseBolt"",
                     ""type"": ""Button"",
-                    ""id"": ""db7dad04-ca33-431b-a68e-3c8c08b71a8b"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""LungeDown"",
-                    ""type"": ""Button"",
-                    ""id"": ""bfb9276c-6137-4e3c-9b1c-ceb30f10414c"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""LungeUp"",
-                    ""type"": ""Button"",
-                    ""id"": ""fa39587c-7368-4cbf-87c3-e7b6e4258674"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""LungeRight"",
-                    ""type"": ""Button"",
-                    ""id"": ""8bfd2ec6-29a8-4de2-a045-fc796c54d7f7"",
+                    ""id"": ""78c67df9-26e7-4925-91f4-01b760135ee8"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -344,89 +317,23 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""cae9103e-c1b8-44e8-b634-2afa0cd9a3ba"",
-                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""id"": ""505644dd-a3b1-4776-99a5-9f542aba9269"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""LungeLeft"",
+                    ""action"": ""UseBolt"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""47b19e60-5d57-460a-9047-f6a854a0098f"",
-                    ""path"": ""<Keyboard>/2"",
+                    ""id"": ""5126eecb-424f-4ae2-a270-75f4110c1c81"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""LungeLeft"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""efc3abf1-6b55-4d5b-8a1c-5b6fb6c54ec4"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LungeDown"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0663367c-a045-4976-982f-10576188732d"",
-                    ""path"": ""<Keyboard>/1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LungeDown"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d7d529b7-be49-4acb-b878-83928931745c"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LungeUp"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c985ae01-f938-4c6f-9c51-b209c6dad738"",
-                    ""path"": ""<Keyboard>/3"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LungeUp"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""bc95896e-b70c-44fc-9d8b-94d08dac03f1"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LungeRight"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""abd2f223-d46c-41b5-a0a6-af9654ff1e48"",
-                    ""path"": ""<Keyboard>/4"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LungeRight"",
+                    ""action"": ""UseBolt"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -522,10 +429,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
-        m_Player_LungeLeft = m_Player.FindAction("LungeLeft", throwIfNotFound: true);
-        m_Player_LungeDown = m_Player.FindAction("LungeDown", throwIfNotFound: true);
-        m_Player_LungeUp = m_Player.FindAction("LungeUp", throwIfNotFound: true);
-        m_Player_LungeRight = m_Player.FindAction("LungeRight", throwIfNotFound: true);
+        m_Player_UseBolt = m_Player.FindAction("UseBolt", throwIfNotFound: true);
         // Menus
         m_Menus = asset.FindActionMap("Menus", throwIfNotFound: true);
         m_Menus_Pause = m_Menus.FindAction("Pause", throwIfNotFound: true);
@@ -615,10 +519,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Reload;
-    private readonly InputAction m_Player_LungeLeft;
-    private readonly InputAction m_Player_LungeDown;
-    private readonly InputAction m_Player_LungeUp;
-    private readonly InputAction m_Player_LungeRight;
+    private readonly InputAction m_Player_UseBolt;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -647,21 +548,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
         /// <summary>
-        /// Provides access to the underlying input action "Player/LungeLeft".
+        /// Provides access to the underlying input action "Player/UseBolt".
         /// </summary>
-        public InputAction @LungeLeft => m_Wrapper.m_Player_LungeLeft;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/LungeDown".
-        /// </summary>
-        public InputAction @LungeDown => m_Wrapper.m_Player_LungeDown;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/LungeUp".
-        /// </summary>
-        public InputAction @LungeUp => m_Wrapper.m_Player_LungeUp;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/LungeRight".
-        /// </summary>
-        public InputAction @LungeRight => m_Wrapper.m_Player_LungeRight;
+        public InputAction @UseBolt => m_Wrapper.m_Player_UseBolt;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -700,18 +589,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
-            @LungeLeft.started += instance.OnLungeLeft;
-            @LungeLeft.performed += instance.OnLungeLeft;
-            @LungeLeft.canceled += instance.OnLungeLeft;
-            @LungeDown.started += instance.OnLungeDown;
-            @LungeDown.performed += instance.OnLungeDown;
-            @LungeDown.canceled += instance.OnLungeDown;
-            @LungeUp.started += instance.OnLungeUp;
-            @LungeUp.performed += instance.OnLungeUp;
-            @LungeUp.canceled += instance.OnLungeUp;
-            @LungeRight.started += instance.OnLungeRight;
-            @LungeRight.performed += instance.OnLungeRight;
-            @LungeRight.canceled += instance.OnLungeRight;
+            @UseBolt.started += instance.OnUseBolt;
+            @UseBolt.performed += instance.OnUseBolt;
+            @UseBolt.canceled += instance.OnUseBolt;
         }
 
         /// <summary>
@@ -735,18 +615,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
-            @LungeLeft.started -= instance.OnLungeLeft;
-            @LungeLeft.performed -= instance.OnLungeLeft;
-            @LungeLeft.canceled -= instance.OnLungeLeft;
-            @LungeDown.started -= instance.OnLungeDown;
-            @LungeDown.performed -= instance.OnLungeDown;
-            @LungeDown.canceled -= instance.OnLungeDown;
-            @LungeUp.started -= instance.OnLungeUp;
-            @LungeUp.performed -= instance.OnLungeUp;
-            @LungeUp.canceled -= instance.OnLungeUp;
-            @LungeRight.started -= instance.OnLungeRight;
-            @LungeRight.performed -= instance.OnLungeRight;
-            @LungeRight.canceled -= instance.OnLungeRight;
+            @UseBolt.started -= instance.OnUseBolt;
+            @UseBolt.performed -= instance.OnUseBolt;
+            @UseBolt.canceled -= instance.OnUseBolt;
         }
 
         /// <summary>
@@ -923,33 +794,12 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnReload(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "LungeLeft" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "UseBolt" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnLungeLeft(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "LungeDown" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnLungeDown(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "LungeUp" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnLungeUp(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "LungeRight" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnLungeRight(InputAction.CallbackContext context);
+        void OnUseBolt(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Menus" which allows adding and removing callbacks.

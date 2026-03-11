@@ -46,6 +46,9 @@ public class PlayerController : MonoBehaviour
     [Header("Animation")]
     [SerializeField] Animator _characterAnimator;
     [SerializeField] Animator _crossbowAnimator;
+
+    [Header("Bolt")]
+    [SerializeField, Range(0, 180)] float _maxActivateAngle = 40;
     
     [Header("Lunge")]
     [field:SerializeField, Range(1, 100)] public float LungeSpeed { get; private set; }
@@ -86,7 +89,7 @@ public class PlayerController : MonoBehaviour
     public bool BoltInChamber { get; set; } = true;
     public Dictionary<BoltType, BoltController> CurrentBoltsHeld { get; private set; }
     
-    bool IsAiming => RotateInput.magnitude > _moveLockThreshold && BoltInChamber;
+    bool IsAiming => RotateInput.magnitude > _moveLockThreshold;
     
     // Lunge
     // TODO i really dislike doing this but i dont know how else i can convey the info to the state
@@ -305,7 +308,7 @@ public class PlayerController : MonoBehaviour
         
         BoltController boltToLunge = CurrentBoltsHeld[boltType];
 
-        if (!boltToLunge.IsLungeable) return;
+        if (!boltToLunge.IsLineOfSight) return;
  
         CurrentLungeBolt = boltToLunge;
         LungeTrigger.Trigger();
@@ -315,6 +318,7 @@ public class PlayerController : MonoBehaviour
     {
         BoltType type = GetBoltTypeToShoot();
         if (type == BoltType.NONE) return;
+        if (!BoltInChamber) return;
 
         ShootTrigger.Trigger();
     }
@@ -342,6 +346,7 @@ public class PlayerController : MonoBehaviour
     {
         CurrentBoltsHeld[bolt.BoltType] = null;
 
+        
         FinishLungeTrigger.Trigger();
         
         Destroy(bolt.gameObject);
@@ -356,6 +361,50 @@ public class PlayerController : MonoBehaviour
     {
         LastHitDir = dir;
         GetHitTrigger.Trigger();
+    }
+
+    public void UpdateActiveBolt(bool toggleAllOff)
+    {
+        BoltController[] bolts = CurrentBoltsHeld.Select(e => e.Value).Where(e => e != null).ToArray();
+
+        BoltController bestBolt = null;
+        float bestAngle = float.PositiveInfinity;
+
+
+        Vector2 aimDir = RotateInput.normalized;
+        
+        foreach (BoltController bolt in bolts)
+        {
+            Vector2 boltDir = (bolt.Rb2D.position - Rb.position).normalized;
+
+            float angle = Vector2.Angle(aimDir, boltDir);
+
+            if (angle > _maxActivateAngle)
+            {
+                continue;
+            }
+            
+            if (angle < bestAngle)
+            {
+                bestAngle = angle;
+                bestBolt = bolt;
+            }
+        }
+        
+        foreach (BoltController boltToTurnOff in bolts)
+        {
+            boltToTurnOff.IsSelected = boltToTurnOff == bestBolt && !toggleAllOff;
+        }
+    }
+
+    public void UseActiveBolt()
+    {
+        BoltController activeBolt = CurrentBoltsHeld.FirstOrDefault(e => e.Value != null && e.Value.IsActivatable).Value;
+
+        if (activeBolt == null) return;
+        
+        CurrentLungeBolt = activeBolt;
+        LungeTrigger.Trigger();
     }
 
     void OnTriggerEnter2D(Collider2D other)

@@ -13,19 +13,19 @@ public class AimState : VampireBaseState
         _ctx.InputActions.Player.Shoot.performed += _ctx.PlayerController.ShootBoltInput;
         _ctx.InputActions.Player.Reload.performed += _ctx.PlayerController.ReloadInputStart;
         
-        _ctx.InputActions.Player.LungeDown.performed += _ctx.PlayerController.LungeDownInput;
-        _ctx.InputActions.Player.LungeLeft.performed += _ctx.PlayerController.LungeLeftInput;
-        _ctx.InputActions.Player.LungeUp.performed += _ctx.PlayerController.LungeUpInput;
-        _ctx.InputActions.Player.LungeRight.performed += _ctx.PlayerController.LungeRightInput;
-
         _ctx.PlayerController.SetCameraFollow(true);
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsAimingBoolAnim, true);
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsMovingBoolAnim, true);
+        
+        _ctx.PlayerController.UpdateActiveBolt(true);
+        
+        _ctx.InputActions.Player.UseBolt.performed += UseActiveBoltInput;
     }
 
     public override void Update()
     {
         _ctx.PlayerController.ReadInput();
+        _ctx.PlayerController.UpdateActiveBolt(false);
     }
     
     public override void FixedUpdate()
@@ -42,14 +42,18 @@ public class AimState : VampireBaseState
     {
         _ctx.InputActions.Player.Shoot.performed -= _ctx.PlayerController.ShootBoltInput;
         _ctx.InputActions.Player.Reload.performed -= _ctx.PlayerController.ReloadInputStart;
-        
-        _ctx.InputActions.Player.LungeDown.performed -= _ctx.PlayerController.LungeDownInput;
-        _ctx.InputActions.Player.LungeLeft.performed -= _ctx.PlayerController.LungeLeftInput;
-        _ctx.InputActions.Player.LungeUp.performed -= _ctx.PlayerController.LungeUpInput;
-        _ctx.InputActions.Player.LungeRight.performed -= _ctx.PlayerController.LungeRightInput;
+
+        _ctx.InputActions.Player.UseBolt.performed -= UseActiveBoltInput;
         
         _ctx.PlayerController.SetCameraFollow(false);
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsAimingBoolAnim, false);
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsMovingBoolAnim, false);
+        
+        _ctx.PlayerController.UpdateActiveBolt(true);
+    }
+
+    public void UseActiveBoltInput(InputAction.CallbackContext ctx)
+    {
+        _ctx.PlayerController.UseActiveBolt();
     }
 }
