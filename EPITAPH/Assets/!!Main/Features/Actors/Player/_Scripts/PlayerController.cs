@@ -345,7 +345,6 @@ public class PlayerController : MonoBehaviour
     public void PickupBolt(BoltController bolt)
     {
         CurrentBoltsHeld[bolt.BoltType] = null;
-
         
         FinishLungeTrigger.Trigger();
         

@@ -1,0 +1,56 @@
+using UnityEngine;
+
+public class HitAndKnockbackedState : EnemyBaseState
+{
+    static readonly int EnterKnockbackedTriggerAnim = Animator.StringToHash("EnterKnockback");
+    static readonly int ExitKnockbackTriggerAnim = Animator.StringToHash("ExitKnockback");
+    
+    public HitAndKnockbackedState(EnemyStateContext ctx) : base(ctx)
+    {
+
+    }
+
+    public override void OnEnter()
+    {
+        _ctx.EnemyController.Animator.SetTrigger(EnterKnockbackedTriggerAnim);
+        _ctx.EnemyController.Knockback(_ctx.EnemyController.LatestHitVelocity);
+        
+        _ctx.EnemyController.CurrentHp -= 1;
+        
+        PlayerAudio.PlayMeatHit(_ctx.EnemyController.transform.position);
+        SignalBus.Fire(new Hit_Enemy(_ctx.EnemyController.Rb.position));
+    }
+
+    public override void Update()
+    {
+        if (_ctx.EnemyController.KnockbackVelocity.sqrMagnitude < 0.05)
+        {
+            if (_ctx.EnemyController.CurrentHp <= 0)
+            {
+                _ctx.EnemyController.Die();
+                _ctx.EnemyController.NormalDeathTrigger.Trigger();
+            }
+            else
+            {
+                _ctx.EnemyController.Animator.SetTrigger(ExitKnockbackTriggerAnim);
+                _ctx.EnemyController.ExitKnockback.Trigger();
+            }
+        }
+    }
+    
+    public override void FixedUpdate()
+    {
+        _ctx.EnemyController.KnockbackVelocity *= Mathf.Exp(-_ctx.EnemyController.KnockbackDecay * Time.fixedDeltaTime);
+        _ctx.EnemyController.Rb.linearVelocity = _ctx.EnemyController.KnockbackVelocity;
+
+        Vector2 dir = -_ctx.EnemyController.Rb.linearVelocity.normalized;
+        
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
+        _ctx.EnemyController.Rb.MoveRotation(Quaternion.Euler(0f, 0f, angle));
+    }
+
+    public override void OnExit()
+    {
+        _ctx.EnemyController.Rb.linearVelocity = Vector2.zero;
+    }
+}
