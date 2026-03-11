@@ -261,10 +261,11 @@ MonoBehaviour:
   PADScriptableObject: {fileID: 11400000, guid: 97171c05725167e438dded62167c2289, type: 2}
   _characterAnimator: {fileID: 507660546181610574}
   _crossbowAnimator: {fileID: 4327648699261966165}
-  <LungeSpeed>k__BackingField: 60
-  <LungeAcceleration>k__BackingField: 200
+  <LungeSpeed>k__BackingField: 40
+  <LungeAcceleration>k__BackingField: 160
   <LungePower>k__BackingField: 4
   <InitalDelay>k__BackingField: 0.15
+  <FailsaveExitTime>k__BackingField: 4
 --- !u!50 &7293642660323857259
 Rigidbody2D:
   serializedVersion: 5
@@ -380,13 +381,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8934039217903088191}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3967837825882570733}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &9172875970443336580
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -421,8 +422,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Offset: {x: -0.09000003, y: -0.08461654}
+  m_Radius: 0.70410264
 --- !u!114 &7223937281465304360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,8 +459,8 @@ MonoBehaviour:
   m_ShadowMesh:
     m_Mesh: {fileID: 0}
     m_LocalBounds:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0, y: 0, z: 0}
+      m_Center: {x: -0.09000397, y: -0.084617615, z: 0}
+      m_Extent: {x: 0.70409393, y: 0.70409393, z: 0}
     m_EdgeProcessing: 1
     m_TrimEdge: 0
     m_FlipX: 0

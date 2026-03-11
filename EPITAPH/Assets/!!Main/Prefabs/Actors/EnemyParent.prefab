@@ -1,5 +1,73 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &37114334158702600
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2156999278010146445}
+  - component: {fileID: 2361289282510935252}
+  m_Layer: 12
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2156999278010146445
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37114334158702600}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2554441304551925697}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &2361289282510935252
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37114334158702600}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.075}
+  m_Radius: 0.4
 --- !u!1 &1712106833503289627
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,7 +265,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2554441304551925697}
-  - component: {fileID: 29259621164265616}
   m_Layer: 7
   m_Name: Enemy2D
   m_TagString: Untagged
@@ -220,15 +287,49 @@ Transform:
   m_Children:
   - {fileID: 5746510258430515385}
   - {fileID: 8472291778601935155}
+  - {fileID: 2156999278010146445}
+  - {fileID: 964725404209683376}
   m_Father: {fileID: 3615438809422013557}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &29259621164265616
+--- !u!1 &6323240407353874924
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 964725404209683376}
+  - component: {fileID: 2119390547479153153}
+  m_Layer: 7
+  m_Name: CollideBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &964725404209683376
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6323240407353874924}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2554441304551925697}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &2119390547479153153
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4939097353297032175}
+  m_GameObject: {fileID: 6323240407353874924}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -256,8 +357,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.75
+  m_Offset: {x: 0, y: 0.05}
+  m_Radius: 0.1
 --- !u!1 &7276502925574245455
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,10 +538,10 @@ MonoBehaviour:
   _deadSprite: {fileID: 7276502925574245455}
   animator: {fileID: 8439757380821537968}
   _chargeSpeed: 10.79
-  _chargeStartRange: 4.15
-  _chargeAttackRange: 1.35
-  _chargeDuration: 0.52
-  _chargeCooldown: 15
+  _chargeStartRange: 2.44
+  _chargeAttackRange: 1.76
+  _chargeDuration: 0.88
+  _chargeCooldown: 5.14
 --- !u!195 &6147159875537704608
 NavMeshAgent:
   m_ObjectHideFlags: 0

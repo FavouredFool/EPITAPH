@@ -58,8 +58,7 @@ public class EnemyController : MonoBehaviour
 
     public void ApplyKnockback(Vector2 direction,float intensity)
     {
-        _knockbackVelocity = direction * intensity;
-        _rb.linearVelocity = _knockbackVelocity; 
+       
 
     }
     void FixedUpdate()
@@ -190,7 +189,6 @@ public class EnemyController : MonoBehaviour
                 _rb.linearVelocity = Vector2.zero;
 
                 animator.SetTrigger("chargeAttack");
-                Attack(0.5f);
                 attacked = true;
                 break;
             }
@@ -284,6 +282,10 @@ public class EnemyController : MonoBehaviour
     void Knockback(Vector2 velocity)
     {
         _knockbackVelocity += velocity / _knockbackResistance;
+        _rb.linearVelocity = _knockbackVelocity;
+        StopAllCoroutines();
+        charging = false;
+        attacking = false;
     }
 
     void CheckForStake()

@@ -617,7 +617,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 4eadb26183521724c988b3c79a43f967, type: 2}
+  m_Motion: {fileID: -3917803186756192843, guid: dffa2ca315da40142b75697803a1b100, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -706,7 +706,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: root|PlayerDash
-  m_Speed: 0.25
+  m_Speed: 0.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -3576211325067658305}
@@ -719,7 +719,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -794346151615511307, guid: 5966c0b589b88cb4aa54cc7b32c1f431, type: 3}
+  m_Motion: {fileID: -794346151615511307, guid: 87789a8dd6129cb4f90898de98388333, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
