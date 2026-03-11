@@ -5,7 +5,7 @@
 			<value>Crossbow Lock</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{8c2d2c35-91e8-4fab-9778-5eaf20183d04}</destination>

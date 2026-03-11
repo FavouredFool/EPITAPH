@@ -5,7 +5,7 @@
 			<value>Crossbow Charging</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{8c2d2c35-91e8-4fab-9778-5eaf20183d04}</destination>
@@ -50,6 +50,8 @@
 	<object class="MasterTrack" id="{4489c1f8-d1f6-4c3b-bb2c-963bce90f0c9}">
 		<relationship name="automationTracks">
 			<destination>{18d4a062-436f-4ed9-b018-9a86370c3531}</destination>
+			<destination>{64047a87-7c22-4c79-96ec-0e3622808915}</destination>
+			<destination>{96f35bbb-d082-4d08-bef1-9e1c32d2d6a6}</destination>
 		</relationship>
 		<relationship name="modules">
 			<destination>{7112d05d-4e51-43fa-8cf9-6b9ebb14afac}</destination>
@@ -117,6 +119,16 @@
 	<object class="AutomationTrack" id="{18d4a062-436f-4ed9-b018-9a86370c3531}">
 		<relationship name="automator">
 			<destination>{0e2aac16-11b3-4b03-b435-494540d6f50e}</destination>
+		</relationship>
+	</object>
+	<object class="AutomationTrack" id="{64047a87-7c22-4c79-96ec-0e3622808915}">
+		<relationship name="automator">
+			<destination>{6cc1bf29-11cf-452a-aae2-f36172ad6916}</destination>
+		</relationship>
+	</object>
+	<object class="AutomationTrack" id="{96f35bbb-d082-4d08-bef1-9e1c32d2d6a6}">
+		<relationship name="automator">
+			<destination>{b2becb31-44fc-4b7b-84d4-df0330669190}</destination>
 		</relationship>
 	</object>
 	<object class="MultiSound" id="{7112d05d-4e51-43fa-8cf9-6b9ebb14afac}" />

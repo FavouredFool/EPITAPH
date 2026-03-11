@@ -22,6 +22,9 @@ public class LungeState : VampireBaseState
         
         _startLungeTime = Time.time;
 
+        // AUDIO
+        PlayerAudio.PlayLunge();
+
         // TODO add a max lunge time for a breakout when something goes horribly wrong
     }
 

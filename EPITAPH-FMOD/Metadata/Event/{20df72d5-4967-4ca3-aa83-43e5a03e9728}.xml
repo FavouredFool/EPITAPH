@@ -5,7 +5,7 @@
 			<value>MeatHit</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{1f39cf55-351d-4e5f-965c-c7747b98c83e}</destination>
