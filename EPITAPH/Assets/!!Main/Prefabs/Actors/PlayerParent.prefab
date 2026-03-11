@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 381551514078586361}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 1.2379398, y: 0.000000014901161, z: -0.14338996}
-  m_LocalScale: {x: 1, y: 0.99999976, z: 0.99999976}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1904830882746296008}
@@ -244,6 +244,7 @@ MonoBehaviour:
   <Visual3DMesh>k__BackingField: {fileID: 36141211466067002}
   <VFXObject>k__BackingField: {fileID: 1174812970023929490}
   <Collider>k__BackingField: {fileID: 9172875970443336580}
+  <KnockbackStrength>k__BackingField: 1
   _speed: 5
   _speedAimReduction: 3
   _speedReloadReduction: 6

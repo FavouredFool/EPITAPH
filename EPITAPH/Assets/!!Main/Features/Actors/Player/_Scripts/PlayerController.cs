@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField] public GameObject Visual3DMesh { get; set; }
     [field: SerializeField] public GameObject VFXObject { get; set; }
     [field: SerializeField] public Collider2D Collider { get; set; }
+    [field: SerializeField, Range(0, 10)] public float KnockbackStrength { get; set; }
     
     [Header("Movement")]
     [SerializeField, Range(1, 20)] float _speed;
@@ -78,6 +79,7 @@ public class PlayerController : MonoBehaviour
     // HP
     // TODO gotta hook this up to the UI
     public int CurrentHP { get; set; }
+    public Vector2 LastHitDir { get; set; }
     
     // Bolts
     public bool BoltInChamber { get; set; } = true;
@@ -344,8 +346,14 @@ public class PlayerController : MonoBehaviour
         Destroy(bolt.gameObject);
     }
 
-    void Hit()
+    public void Hit()
     {
+        Hit(Vector2.zero);
+    }
+    
+    public void Hit(Vector2 dir)
+    {
+        LastHitDir = dir;
         GetHitTrigger.Trigger();
     }
 
