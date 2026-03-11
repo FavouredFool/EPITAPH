@@ -110,6 +110,17 @@ public class EnemyController : MonoBehaviour
 
     public void ChaseBehaviourUpdateTick()
     {
+       
+            if (_rb.linearVelocity.magnitude > 0.1f)
+            {
+            animator.SetBool("walking", true);
+        }
+        else
+        {
+            animator.SetBool("walking", false);
+        }
+
+
         if (!charging)
         {
             _agent.destination = _target.position;
