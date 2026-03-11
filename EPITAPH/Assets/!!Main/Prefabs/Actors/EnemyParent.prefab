@@ -923,6 +923,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5439692578283748525, guid: 6fe48fe348c21af409d006239212ad86, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7110988848833205158}
+    - targetCorrespondingSourceObject: {fileID: 5439692578283748525, guid: 6fe48fe348c21af409d006239212ad86, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1918446553079621999}
   m_SourcePrefab: {fileID: 100100000, guid: 6fe48fe348c21af409d006239212ad86, type: 3}
 --- !u!1 &1159726373442621484 stripped
 GameObject:
@@ -941,6 +944,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f230f0241588b8c42a6137fd8ddbb044, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackAnimationEvent
+--- !u!114 &1918446553079621999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159726373442621484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a938db7e6fcafe24fb2461ebcab35136, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAudio
+  data: {fileID: 11400000, guid: 24c4cb426fdd2634687270c2d2f11a81, type: 2}
 --- !u!4 &1725321977637865484 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5518057825216685197, guid: 6fe48fe348c21af409d006239212ad86, type: 3}

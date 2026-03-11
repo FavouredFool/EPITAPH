@@ -9,6 +9,10 @@ public class EnemyAudio : MonoBehaviour
 
     EventInstance attackInstance;
 
+    private void Awake()
+    {
+        Setup();
+    }
     public void Setup()
     {
         attackInstance = RuntimeManager.CreateInstance(data.AttackReference);
@@ -24,6 +28,8 @@ public class EnemyAudio : MonoBehaviour
         {
             attackInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         }
+        RuntimeManager.AttachInstanceToGameObject(attackInstance, this.gameObject);
+
         attackInstance.start();
 
 
