@@ -74,9 +74,9 @@ public class PlayerAudio : MonoBehaviour
         instance.chargeInstance.setParameterByName("Charge", charge);
         float dist;
         FMOD.RESULT wtf = instance.chargeInstance.getParameterByName("Elevation", out dist);
-        Debug.Log(wtf);
-        Debug.Log($"Charging:\n x:{dist}");
-        Debug.Log(instance.gameObject.transform.position);
+        //Debug.Log(wtf);
+        //Debug.Log($"Charging:\n x:{dist}");
+        //Debug.Log(instance.gameObject.transform.position);
     }
 
 
