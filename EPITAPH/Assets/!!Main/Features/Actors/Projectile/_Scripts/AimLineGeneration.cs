@@ -27,21 +27,22 @@ public class AimLineGeneration : MonoBehaviour
     {
         UpdateOffsetAngle();
         
-        if (_enabled && !_playerController.IsAiming)
-        {
-            _enabled = false;
-        }
-        
-        if (!_enabled && _playerController.IsAiming)
-        {
-            _actualAngle = Vector2.SignedAngle(Vector2.up, _playerController.AimAssistedLookDirection);
-            _actualAngle = _offsetAngle;
-            _enabled = true;
-        }
+        // TODO Maybe not necessary at all?
+        //if (_enabled && !_playerController.IsAiming)
+        //{
+        //    _enabled = false;
+        //}
+        //
+        //if (!_enabled && _playerController.IsAiming)
+        //{
+        //    _actualAngle = Vector2.SignedAngle(Vector2.up, _playerController.AimAssistedLookDirection);
+        //    _actualAngle = _offsetAngle;
+        //    _enabled = true;
+        //}
         
         RegenerateLine();
 
-        _lineRenderer.enabled = _playerController.IsAiming;
+        _lineRenderer.enabled = _playerController.StateMachine.CurrentState is AimState;
     }
 
     void UpdateOffsetAngle()
@@ -49,14 +50,7 @@ public class AimLineGeneration : MonoBehaviour
         // Should turn this into a windup that i can then resolve with the UI
         _actualAngle = Vector2.SignedAngle(Vector2.up, _playerController.transform.up);
         
-        if (!_playerController.IsAiming)
-        {
-            _offsetAngle = _actualAngle;
-        }
-        else
-        {
-            _offsetAngle = Mathf.MoveTowardsAngle(_offsetAngle, _actualAngle, _angleDecaySpeed * Time.deltaTime * 100);
-        }
+        _offsetAngle = Mathf.MoveTowardsAngle(_offsetAngle, _actualAngle, _angleDecaySpeed * Time.deltaTime * 100);
     }
 
     void RegenerateLine()

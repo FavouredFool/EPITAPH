@@ -394,7 +394,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7330901085573960058}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
@@ -429,20 +429,17 @@ MonoBehaviour:
   _wallLayers:
     serializedVersion: 2
     m_Bits: 1024
-  _hitLayers:
-    serializedVersion: 2
-    m_Bits: 256
   _maxHp: 5
-  _speed: 0
-  _knockbackDecay: 15
+  _speed: 4.15
+  _knockbackDecay: 6.26
   _knockbackResistance: 2.5
   _pinKnockbackMagnitudeThreshold: 0.25
   _deadSprite: {fileID: 7276502925574245455}
   animator: {fileID: 8439757380821537968}
-  _chargeSpeed: 1
-  _chargeStartRange: 1
-  _chargeAttackRange: 1
-  _chargeDuration: 1
+  _chargeSpeed: 10.79
+  _chargeStartRange: 5.07
+  _chargeAttackRange: 1.41
+  _chargeDuration: 1.58
   _chargeCooldown: 1
 --- !u!195 &6147159875537704608
 NavMeshAgent:

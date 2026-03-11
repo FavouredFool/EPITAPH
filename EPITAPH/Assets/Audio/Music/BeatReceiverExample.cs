@@ -17,6 +17,5 @@ public class BeatReceiverExample : MonoBehaviour,AudioEventSubscriber<EarlyBeatC
 
     public void OnEventHappened(EarlyBeatChanged e)
     {
-        Debug.Log($"{Time.time} Beat: {e.beat}\n");
     }
 }

@@ -5,12 +5,15 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class BoltController : MonoBehaviour
 {
+    [SerializeField] LayerMask _blockLayers;
     [SerializeField] LayerMask _boltPickup;
     [SerializeField, Range(1, 300)] float _shootSpeed = 15;
 
     [SerializeField] Collider2D _hitbox;
     [SerializeField] Collider2D _pickupBox;
 
+    [SerializeField] Gradient _mainGradient;
+    [SerializeField] Gradient _blockedGradient;
     [SerializeField] LineRenderer _lineRenderer;
     [SerializeField] Transform _endPoint;
 
@@ -19,7 +22,8 @@ public class BoltController : MonoBehaviour
     Rigidbody _rb3D;
 
     BoltType _boltType;
-    
+
+    public bool IsLungeable { get; set; }
     
     public BoltType BoltType
     {
@@ -45,6 +49,11 @@ public class BoltController : MonoBehaviour
         Rb2D.AddForce(transform.up * _shootSpeed, ForceMode2D.Impulse);
     }
 
+    void Update()
+    {
+        IsLungeable = TestLungeable();
+    }
+
     void LateUpdate()
     {
         _lineRenderer.SetPosition(0, _endPoint.position);
@@ -56,6 +65,8 @@ public class BoltController : MonoBehaviour
         playerPos.y = position.y;
         
         _lineRenderer.SetPosition(1, playerPos);
+        
+        _lineRenderer.colorGradient = IsLungeable ? _mainGradient : _blockedGradient;
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -90,6 +101,14 @@ public class BoltController : MonoBehaviour
         }
 
         SignalBus.Fire(new Signal_ShowBoltMarker(transform,_boltType,true,false));
+    }
+
+    public bool TestLungeable()
+    {
+        Vector2 diff = BloodpointPlayer.position - _endPoint.position;
+        RaycastHit2D hit = Physics2D.Raycast(_endPoint.position, diff.normalized, diff.magnitude, _blockLayers);
+        
+        return hit.collider == null;
     }
 }
 

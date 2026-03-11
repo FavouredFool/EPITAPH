@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Range(1, 20)] float _speedReloadReduction;
     [SerializeField, Range(0, 0.95f)] float _moveLockThreshold = 0.3f;
     [SerializeField, Range(1, 20)] float _knockbackDecay;
-    [SerializeField] AimAssistV3 _aimAssist;
+    //[SerializeField] AimAssistV3 _aimAssist;
     
     [Header("Shooting")]
     [SerializeField, Range(0, 50)] float _knockbackStrength = 2;
@@ -37,315 +37,273 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Animator _characterAnimator;
     [SerializeField] Animator _crossbowAnimator;
     
+    [Header("Lunge")]
+    [field:SerializeField, Range(1, 100)] public float LungeSpeed { get; private set; }
+    [field:SerializeField, Range(1, 200)] public float LungeAcceleration { get; private set; }
+    [field: SerializeField, Range(1, 6)] public float LungePower { get; private set; } = 3;
+    [field: SerializeField, Range(0, 1)] public float InitalDelay { get; private set; } = 0.1f;
+    
+    public float Speed => _speed;
+    public float SpeedAimReduction => _speedAimReduction;
+    
+    public Animator CharacterAnimator => _characterAnimator;
+    public Animator CrossboxAnimator => _crossbowAnimator;
+    public float SpawnDist => _spawnDist;
+    public Transform InstantiationParent => _instantiationParent;
+    public Transform BloodlineConnection => _bloodlineConnection;
+
+    public BoltController ProjectileBlueprint => _projectileBlueprint;
+
+    public float ReloadTime => _reloadTime;
     
     InputActions _inputActions;
-    Rigidbody2D _rb;
+    public Rigidbody2D Rb { get; set; }
 
-    Vector2 MovementInput { get; set; }
-    Vector2 RotateInput  { get; set; }
+    // Input
+    public Vector2 MovementInput { get; set; }
+    public Vector2 RotateInput  { get; set; }
 
-    float _reloadStart = float.PositiveInfinity;
-
-    bool _isReloading = false;
-    bool _isLunging = false;
-
-    bool _boltInChamber = true;
-    Dictionary<BoltType, bool> _currentBoltsHeld;
+    // Dir
+    public Vector2 LookDirection { get; set; }
     
+    // Bolts
+    public bool BoltInChamber { get; set; } = true;
+    public Dictionary<BoltType, BoltController> CurrentBoltsHeld { get; private set; }
+    
+    bool IsAiming => RotateInput.magnitude > _moveLockThreshold && BoltInChamber;
+    
+    // Lunge
+    // TODO i really dislike doing this but i dont know how else i can convey the info to the state
+    public BoltController CurrentLungeBolt { get; set; }
+
+    // State Machine
+    public StateMachine StateMachine { get; set; }
+    
+    // State Triggers
+    public TriggerPredicate ShootTrigger { get; private set; }
+    public TriggerPredicate LungeTrigger { get; private set; }
+    public TriggerPredicate FinishLungeTrigger { get; private set; }
+    public TriggerPredicate StartReloadTrigger { get; private set; }
+    public TriggerPredicate StopReloadTrigger { get; private set; }
+    
+    // Hashes
     // Crossbow
-    static readonly int ShootCrossbowTrigger = Animator.StringToHash("Shoot");
-    static readonly int StartReloadTrigger = Animator.StringToHash("StartReload");
-    static readonly int InterruptReloadTrigger = Animator.StringToHash("InterruptReload");
-    static readonly int FinishReloadTrigger = Animator.StringToHash("FinishReload");
+    public static readonly int ShootCrossbowTriggerAnim = Animator.StringToHash("Shoot");
+    public static readonly int StartReloadTriggerAnim = Animator.StringToHash("StartReload");
+    public static readonly int InterruptReloadTriggerAnim = Animator.StringToHash("InterruptReload");
+    public static readonly int FinishReloadTriggerAnim = Animator.StringToHash("FinishReload");
     
     // Player
-    static readonly int IsMovingBool = Animator.StringToHash("IsMoving");
-    static readonly int IsAimingBool = Animator.StringToHash("IsAiming");
-    static readonly int IsReloadingBool = Animator.StringToHash("IsReloading");
-    static readonly int IsLungingTrigger = Animator.StringToHash("IsLunging");
-    static readonly int ShotCharacterTrigger = Animator.StringToHash("Shot");
+    public static readonly int IsMovingBoolAnim = Animator.StringToHash("IsMoving");
+    public static readonly int IsAimingBoolAnim = Animator.StringToHash("IsAiming");
+    public static readonly int IsReloadingBoolAnim = Animator.StringToHash("IsReloading");
+    public static readonly int IsLungingBoolAnim = Animator.StringToHash("IsLunging");
+    public static readonly int ShotCharacterTriggerAnim = Animator.StringToHash("Shot");
     
 
     public Vector2 AimAssistedLookDirection
     {
         get
         {
+            // TODO re-add aim assist
             Vector2 rawAimDir = RotateInput.normalized;
-
-            if (!IsAiming) return rawAimDir;
+            return rawAimDir;
             
-            float angle = Mathf.Atan2(rawAimDir.y, rawAimDir.x) * Mathf.Rad2Deg - 90;
-            float assistedAngle = _aimAssist.GetAssistedAngle(angle, transform.position);
-            
-            return Quaternion.Euler(0, 0, assistedAngle) * Vector2.up;
+            //float angle = Mathf.Atan2(rawAimDir.y, rawAimDir.x) * Mathf.Rad2Deg - 90;
+            //float assistedAngle = _aimAssist.GetAssistedAngle(angle, transform.position);
+            //
+            //return Quaternion.Euler(0, 0, assistedAngle) * Vector2.up;
         }
     }
 
-    Vector2 _movementVelocity;
-    Vector2 _knockbackVelocity;
-    
-    public bool IsAiming => RotateInput.magnitude > _moveLockThreshold && _boltInChamber;
-    // arbitrary threshold
-    public bool IsMoving => _rb.linearVelocity.magnitude > 0.05f;
+    public Vector2 MovementVelocity { get; set; }
+    public Vector2 KnockbackVelocity { get; set; }
     
     void Awake()
     {
         _inputActions = new InputActions();
         _inputActions.Enable();
 
-        _rb = GetComponent<Rigidbody2D>();
+        Rb = GetComponent<Rigidbody2D>();
 
-        _currentBoltsHeld = new Dictionary<BoltType, bool>
+        CurrentBoltsHeld = new Dictionary<BoltType, BoltController>
         {
-            [BoltType.DOWN] = true,
-            [BoltType.LEFT] = true,
-            [BoltType.UP] = true,
-            [BoltType.RIGHT] = true
+            [BoltType.DOWN] = null,
+            [BoltType.LEFT] = null,
+            [BoltType.UP] = null,
+            [BoltType.RIGHT] = null
         };
 
         PADScriptableObject.Setup(this.gameObject);
         
         Assert.IsNotNull(_characterAnimator);
         Assert.IsNotNull(_crossbowAnimator);
+
+        InitStateMachine();
     }
 
-    void Start()
+    void InitStateMachine()
     {
-        
-    }
+        StateMachine = new StateMachine();
 
+        VampireStateContext ctx = new(this, _inputActions);
 
-    void OnEnable()
-    {
-        _inputActions.Player.Shoot.performed += ShootBoltInput;
-        _inputActions.Player.Reload.performed += ReloadInputStart;
-        _inputActions.Player.Reload.canceled += ReloadInputStop;
+        MoveState moveState = new(ctx);
+        AimState aimState = new(ctx);
+        ReloadState reloadState = new(ctx);
+        ShootState shootState = new(ctx);
+        LungeState lungeState = new(ctx);
+        VampireState vampireState = new(ctx);
+
+        ShootTrigger = new TriggerPredicate();
+        LungeTrigger = new TriggerPredicate();
+        FinishLungeTrigger = new TriggerPredicate();
+        StartReloadTrigger = new TriggerPredicate();
+        StopReloadTrigger = new TriggerPredicate();
         
-        _inputActions.Player.LungeDown.performed += LungeDownInput;
-        _inputActions.Player.LungeLeft.performed += LungeLeftInput;
-        _inputActions.Player.LungeUp.performed += LungeUpInput;
-        _inputActions.Player.LungeRight.performed += LungeRightInput;
+        At(moveState, aimState, new FuncStatePredicate(() => IsAiming));
+        At(aimState, moveState, new FuncStatePredicate(() => !IsAiming));
+        
+        At(moveState, reloadState, StartReloadTrigger);
+        At(aimState, reloadState, StartReloadTrigger);
+        
+        At(reloadState, moveState, StopReloadTrigger);
+        
+        At(aimState, shootState, ShootTrigger);
+        // Todo doublecheck if this is correct
+        At(shootState, aimState, new FuncStatePredicate(() => true));
+        
+        At(moveState, lungeState, LungeTrigger);
+        At(aimState, lungeState, LungeTrigger);
+        
+        At(lungeState, moveState, FinishLungeTrigger);
+        
+        StateMachine.SetState(moveState);
     }
     
-    void OnDisable()
-    {
-        _inputActions.Player.Shoot.performed -= ShootBoltInput;
-        _inputActions.Player.Reload.performed -= ReloadInputStart;
-        _inputActions.Player.Reload.canceled -= ReloadInputStop;
-        
-        _inputActions.Player.LungeDown.performed -= LungeDownInput;
-        _inputActions.Player.LungeLeft.performed -= LungeLeftInput;
-        _inputActions.Player.LungeUp.performed -= LungeUpInput;
-        _inputActions.Player.LungeRight.performed -= LungeRightInput;
-    }
+    void At(IState from, IState to, IStatePredicate condition) =>
+        StateMachine.AddTransition(from, to, condition);
+    
+    void Any(IState to, IStatePredicate condition) =>
+        StateMachine.AddAnyTransition(to, condition);
+    
 
     void Update()
     {
-        MovementInput = _inputActions.Player.Movement.ReadValue<Vector2>();
-        RotateInput = _inputActions.Player.Look.ReadValue<Vector2>();
-
-        UpdateReload();
-        CameraPos();
-
-        UpdateAnimationParams();
-    }
-
-    void FixedUpdate()
-    {
-        Translation();
-        Rotation();
-    }
-
-    void UpdateAnimationParams()
-    {
-        _characterAnimator.SetBool(IsAimingBool, IsAiming);
-        _characterAnimator.SetBool(IsMovingBool, IsMoving);
-        _characterAnimator.SetBool(IsReloadingBool, _isReloading);
-    }
-
-    void UpdateReload()
-    {
-        if (!_isReloading) return;
-
-        PlayerAudio.SetCharge((Time.time - _reloadStart) / _reloadTime);
-
-        if (Time.time - _reloadStart > _reloadTime)
-        {
-            FinishReload();
-        }
+        StateMachine.Update();
+        //Debug.Log(StateMachine.CurrentState);
     }
     
-    void CameraPos()
+    void FixedUpdate()
     {
-        if (IsAiming)
-        {
-            _cameraFollow.localPosition = Vector3.up * _cameraAimOffset;
-        }
-        else
+        StateMachine.FixedUpdate();
+    }
+
+    public void ReadInput()
+    {
+        MovementInput = _inputActions.Player.Movement.ReadValue<Vector2>();
+        RotateInput = _inputActions.Player.Look.ReadValue<Vector2>();
+    }
+    
+    public void SetCameraFollow(bool setFar)
+    {
+        if (!setFar)
         {
             _cameraFollow.localPosition = Vector3.zero;
         }
-    }
-
-    void Translation()
-    {
-        if (_isReloading)
-        {
-            _movementVelocity = Vector2.zero;
-            //_movementVelocity = MovementInput * _speed / _speedReloadReduction;
-        }
         else
         {
-            if (IsAiming)
-            {
-                _movementVelocity = MovementInput * _speed / _speedAimReduction;
-            }
-            else
-            {
-                _movementVelocity = MovementInput * _speed;
-            }
+            _cameraFollow.localPosition = Vector3.up * _cameraAimOffset;
         }
+    }
 
+    public void CalculateVelocity()
+    {
+        // movement handled by the states
         
         // knockback
-        _knockbackVelocity *= Mathf.Exp(-_knockbackDecay * Time.deltaTime);
+        KnockbackVelocity *= Mathf.Exp(-_knockbackDecay * Time.deltaTime);
         
         // Combine
-        _rb.linearVelocity = _movementVelocity + _knockbackVelocity;
+        Rb.linearVelocity = MovementVelocity + KnockbackVelocity;
     }
+    
 
-    void Rotation()
+    public void Rotation()
     {
-        Vector2 dir = transform.up;
+        // LookDirection set by State
         
-        if (IsAiming)
-        {
-            dir = AimAssistedLookDirection;
-        }
-        else if (MovementInput.sqrMagnitude > 0.01)
-        {
-            dir = MovementInput.normalized;
-        }
-        
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
-        _rb.MoveRotation(Quaternion.Euler(0f, 0f, angle));
+        float angle = Mathf.Atan2(LookDirection.y, LookDirection.x) * Mathf.Rad2Deg - 90f;
+        Rb.MoveRotation(Quaternion.Euler(0f, 0f, angle));
     }
     
-    public void Knockback(Vector2 velocity)
+    public void Knockback(Vector2 dir)
     {
-        _knockbackVelocity += velocity;
+        KnockbackVelocity += dir * _knockbackStrength;
     }
     
-    void ShootBoltInput(InputAction.CallbackContext ctx)
+    public void ShootBoltInput(InputAction.CallbackContext ctx)
     {
         ShootBolt();
     }
 
-    void ReloadInputStart(InputAction.CallbackContext ctx)
+    public void ReloadInputStart(InputAction.CallbackContext ctx)
     {
         StartReload();
     }
 
-    void ReloadInputStop(InputAction.CallbackContext ctx)
-    {
-        InterruptReload();
-    }
-
-    void LungeRightInput(InputAction.CallbackContext ctx)
+    public void LungeRightInput(InputAction.CallbackContext ctx)
     {
         LungeToBolt(BoltType.RIGHT);
     }
     
-    void LungeDownInput(InputAction.CallbackContext ctx)
+    public void LungeDownInput(InputAction.CallbackContext ctx)
     {
         LungeToBolt(BoltType.DOWN);
     }
     
-    void LungeLeftInput(InputAction.CallbackContext ctx)
+    public void LungeLeftInput(InputAction.CallbackContext ctx)
     {
         LungeToBolt(BoltType.LEFT);
     }
     
-    void LungeUpInput(InputAction.CallbackContext ctx)
+    public void LungeUpInput(InputAction.CallbackContext ctx)
     {
         LungeToBolt(BoltType.UP);
     }
-
-    void LungeToBolt(BoltType boltType)
+    
+    public void LungeToBolt(BoltType boltType)
     {
-        if (_isReloading) return;
+        if (CurrentBoltsHeld[boltType] == null) return;
         
-        Debug.Log("start lunge to " + boltType);
+        BoltController boltToLunge = CurrentBoltsHeld[boltType];
 
-        _isLunging = true;
-        _characterAnimator.SetTrigger(IsLungingTrigger);
-    }
-
-    void StartReload()
-    {
-        if (_boltInChamber) return;
-        // no bolts left
-        if (_currentBoltsHeld.Values.All(e => !e)) return;
-        
-        _reloadStart = Time.time;
-        _isReloading = true;
-
-        PlayerAudio.StartCharging();
-
-        _crossbowAnimator.SetTrigger(StartReloadTrigger);
-    }
-
-    void FinishReload()
-    {
-        _boltInChamber = true;
-        _isReloading = false;
-        PlayerAudio.StopCharging();
-
-        PlayerAudio.PlayStepLock(3); // TODO: ADD Steps
-        _crossbowAnimator.SetTrigger(FinishReloadTrigger);
-    }
-
-    void InterruptReload()
-    {
-        if (!_isReloading) return;
-        
-        _reloadStart = float.PositiveInfinity;
-        _isReloading = false;
-
-        PlayerAudio.StopCharging();
-
-        _crossbowAnimator.SetTrigger(InterruptReloadTrigger);
+        if (!boltToLunge.IsLungeable) return;
+ 
+        CurrentLungeBolt = boltToLunge;
+        LungeTrigger.Trigger();
     }
     
-    void ShootBolt()
+    public void ShootBolt()
     {
-        if (!IsAiming) return;
-        
         BoltType type = GetBoltTypeToShoot();
-
         if (type == BoltType.NONE) return;
 
-        _currentBoltsHeld[type] = false;
-        _boltInChamber = false;
-        
-        BoltController bolt = Instantiate(_projectileBlueprint, transform.position + transform.forward * _spawnDist, transform.rotation, _instantiationParent);
-        bolt.BoltType = type;
-        bolt.BloodpointPlayer = _bloodlineConnection;
-        
-        Knockback(-transform.up * _knockbackStrength);
-
-        // Play Audio
-        PlayerAudio.PlayReleaseCrossbow();
-        
-        // Animation
-        Debug.Log("SHOT");
-        _crossbowAnimator.SetTrigger(ShootCrossbowTrigger);
-        _characterAnimator.SetTrigger(ShotCharacterTrigger);
+        ShootTrigger.Trigger();
     }
-
-    BoltType GetBoltTypeToShoot()
+    
+    public void StartReload()
     {
-        foreach (var kv in _currentBoltsHeld.Where(kv => kv.Value))
+        if (BoltInChamber) return;
+        if (CurrentBoltsHeld.Values.All(e => e != null)) return;
+        
+        StartReloadTrigger.Trigger();
+    }
+    
+
+    public BoltType GetBoltTypeToShoot()
+    {
+        foreach (var kv in CurrentBoltsHeld.Where(kv => kv.Value == null))
         {
             return kv.Key;
         }
@@ -353,10 +311,12 @@ public class PlayerController : MonoBehaviour
         return BoltType.NONE;
     }
 
-    void PickupBolt(BoltController bolt)
+    public void PickupBolt(BoltController bolt)
     {
-        _currentBoltsHeld[bolt.BoltType] = true;
+        CurrentBoltsHeld[bolt.BoltType] = null;
 
+        FinishLungeTrigger.Trigger();
+        
         Destroy(bolt.gameObject);
     }
 
@@ -369,5 +329,19 @@ public class PlayerController : MonoBehaviour
                 PickupBolt(bolt);
             }
         }
+    }
+
+    
+}
+
+public struct VampireStateContext
+{
+    public PlayerController PlayerController { get; set; }
+    public InputActions InputActions { get; set; }
+
+    public VampireStateContext(PlayerController playerController, InputActions inputActions)
+    {
+        PlayerController = playerController;
+        InputActions = inputActions;
     }
 }
