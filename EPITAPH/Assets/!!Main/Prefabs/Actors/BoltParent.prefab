@@ -616,7 +616,8 @@ GameObject:
   - component: {fileID: 8001859822077974044}
   - component: {fileID: 5996140833346766229}
   - component: {fileID: 2868904440770644723}
-  m_Layer: 8
+  - component: {fileID: 2500771410482647686}
+  m_Layer: 11
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -632,7 +633,7 @@ Transform:
   m_GameObject: {fileID: 8486439071630514552}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.285, z: 0}
+  m_LocalPosition: {x: 0, y: 0.28499976, z: -2}
   m_LocalScale: {x: 0.09986212, y: 0.06193, z: 1.1031045}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -671,7 +672,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4f77f202b45ae494aabfbe6bdccc34cb, type: 2}
+  - {fileID: -876546973899608171, guid: b2ae6592463687e4c87b831799d6f450, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -708,3 +709,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeshSortingOrderSetter
   _sortingLayerOrder: 150
+--- !u!210 &2500771410482647686
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8486439071630514552}
+  m_Enabled: 1
+  m_SortingLayerID: -778884729
+  m_SortingLayer: 1
+  m_SortingOrder: 223
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
