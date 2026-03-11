@@ -189,7 +189,6 @@ public class EnemyController : MonoBehaviour
                 _rb.linearVelocity = Vector2.zero;
 
                 animator.SetTrigger("chargeAttack");
-                Attack(0.5f);
                 attacked = true;
                 break;
             }
