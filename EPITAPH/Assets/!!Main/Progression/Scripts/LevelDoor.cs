@@ -15,14 +15,8 @@ public class LevelDoor : MonoBehaviour
     {
         
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player")&&AllEnemiesDefeated)
-        {
-            ProgressionManager.LoadNextLevel();
-        }
-    }
-    private void OnTriggerEnter2D(Collider other)
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player") && AllEnemiesDefeated)
         {

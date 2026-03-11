@@ -17,8 +17,11 @@ public class BoltController : MonoBehaviour
     [SerializeField] Gradient _activatableGradient;
     [SerializeField] LineRenderer _lineRenderer;
     [SerializeField] Transform _endPoint;
-    
     [SerializeField, Range(0, 2)] public float _testBoltRayThickness = 1;
+
+    [Header("MaterialStuff")]
+    [SerializeField] MeshRenderer[] _bloodRecolor;
+    [SerializeField] Color _reColor;
     
     public Rigidbody2D Rb2D { get; set; }
     public PlayerController Player { get; set; }
@@ -132,6 +135,7 @@ public class BoltController : MonoBehaviour
         {
             if (other.GetComponentInParent<EnemyController>() is { } enemy)
             {
+                MakeBloody();
                 enemy.EvaluateBoltHit(velocity);
             }
         }
@@ -160,6 +164,17 @@ public class BoltController : MonoBehaviour
         );
         
         return hit.collider == null;
+    }
+
+    void MakeBloody()
+    {
+        foreach (MeshRenderer bloodMatRenderer in _bloodRecolor)
+        {
+            foreach (Material mat in bloodMatRenderer.materials)
+            {
+                mat.SetColor("_BoltColor", _reColor);
+            }
+        }
     }
 }
 
