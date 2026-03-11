@@ -539,9 +539,9 @@ MonoBehaviour:
   animator: {fileID: 8439757380821537968}
   _chargeSpeed: 10.79
   _chargeStartRange: 4.15
-  _chargeAttackRange: 1.35
-  _chargeDuration: 0.52
-  _chargeCooldown: 15
+  _chargeAttackRange: 1.76
+  _chargeDuration: 0.88
+  _chargeCooldown: 5.14
 --- !u!195 &6147159875537704608
 NavMeshAgent:
   m_ObjectHideFlags: 0
