@@ -30,7 +30,10 @@ public class LungeState : VampireBaseState
 
     public override void Update()
     {
-        
+        if ((Time.time - _startLungeTime) > _ctx.PlayerController.FailsaveExitTime)
+        {
+            _ctx.PlayerController.FinishLungeTrigger.Trigger();
+        }
     }
     
     public override void FixedUpdate()
