@@ -115,3 +115,13 @@ public struct Signal_DialogueDefaultContinueToggled
 public struct Signal_DialogueForceContinue
 {
 }
+
+public struct Signal_StartDialogue
+{
+    public string nodeName;
+
+    public Signal_StartDialogue(string nodeName)
+    {
+        this.nodeName=nodeName;
+    }
+}

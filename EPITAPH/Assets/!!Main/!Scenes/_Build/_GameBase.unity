@@ -714,6 +714,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5726607219456463329, guid: 5b9b9f198c512bd4fb0aca1c29f2738a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7130577518015614107, guid: 5b9b9f198c512bd4fb0aca1c29f2738a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -735,6 +739,30 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7130577518015614107, guid: 5b9b9f198c512bd4fb0aca1c29f2738a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8153919354015524294, guid: 5b9b9f198c512bd4fb0aca1c29f2738a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8153919354015524294, guid: 5b9b9f198c512bd4fb0aca1c29f2738a, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8153919354015524294, guid: 5b9b9f198c512bd4fb0aca1c29f2738a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8153919354015524294, guid: 5b9b9f198c512bd4fb0aca1c29f2738a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8153919354015524294, guid: 5b9b9f198c512bd4fb0aca1c29f2738a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8153919354015524294, guid: 5b9b9f198c512bd4fb0aca1c29f2738a, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
@@ -1608,13 +1636,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfecd11665e49f044ba1a301285022bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProgressionManager
+  currentLevel: {}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1607142591}
   - {fileID: 1791419333}
   - {fileID: 1037412770}
   - {fileID: 615368760}
   - {fileID: 864560765}
   - {fileID: 1417214099}
-  - {fileID: 1607142591}

@@ -16,7 +16,6 @@ public class ProgressionManager : MonoBehaviour
     }
     public void ProgressLevel()
     {
-
         SceneManager.UnloadSceneAsync(ProgressionVariables.LevelName);
         ProgressionVariables.Level++;
         LoadLevel();

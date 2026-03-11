@@ -15,14 +15,22 @@ public class YarnManager : MonoBehaviour
     void OnEnable()
     {
         SignalBus.Subscribe<Signal_DialogueForceContinue>(ForceContinueDialogue);
+        SignalBus.Subscribe<Signal_StartDialogue>(SpinYarn);
     }
     void OnDisable()
     {
         SignalBus.Unsubscribe<Signal_DialogueForceContinue>(ForceContinueDialogue);
+        SignalBus.Unsubscribe<Signal_StartDialogue>(SpinYarn);
     }
 
+    public void SpinYarn(Signal_StartDialogue signal) => SpinYarn(signal.nodeName);
     public async void SpinYarn(string nodeName)
     {
+        if (_dialogueRunner.IsDialogueRunning)
+        {
+            Debug.LogWarning("Dialogue started while it was already running!");
+            return;
+        }
         ToggleDefaultDialogueContinue(true);
         SignalBus.Fire(new Signal_DialogueToggled(nodeName, true));
         await _dialogueRunner.StartDialogue(nodeName);
