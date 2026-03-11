@@ -75,3 +75,43 @@ public struct Signal_RefreshVolume
         Debug.Log(varName+" is "+PlayerPrefs.GetInt(varName));
     }
 }
+
+public struct Signal_DialogueToggled
+{
+    public bool on;
+    public string nodeName;
+    public Signal_DialogueToggled(string nodeName, bool on)
+    {
+        this.nodeName = nodeName;
+        this.on= on;
+    }
+}
+
+public struct Signal_MenuUIToggled
+{
+    public bool on;
+    public Signal_MenuUIToggled(bool on)
+    {
+        this.on= on;
+    }
+}
+public struct Signal_DialogueUIToggled
+{
+    public bool on;
+    public Signal_DialogueUIToggled(bool on)
+    {
+        this.on= on;
+    }
+}
+
+public struct Signal_DialogueDefaultContinueToggled
+{
+    public bool on;
+    public Signal_DialogueDefaultContinueToggled(bool on)
+    {
+        this.on= on;
+    }
+}
+public struct Signal_DialogueForceContinue
+{
+}

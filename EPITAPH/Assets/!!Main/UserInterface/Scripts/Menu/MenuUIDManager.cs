@@ -47,6 +47,7 @@ public class MenuUIDManager : MonoBehaviour
         Toggle(true);
     }
 
+    public void Toggle() => Toggle(!IsOpen);
     public void Toggle(bool on)
     {
         if (IsOpen == on) return;
@@ -73,6 +74,8 @@ public class MenuUIDManager : MonoBehaviour
             seq.Insert(0,_bodyRect.DOAnchorPosX(-4585,0.75f).SetEase(Ease.InSine));
             seq.Insert(0,_glowRect.DOAnchorPosX(-6000,0.75f).SetEase(Ease.InSine));
         }
+
+        SignalBus.Fire(new Signal_MenuUIToggled(IsOpen));
     }
 
     public void StartGame()

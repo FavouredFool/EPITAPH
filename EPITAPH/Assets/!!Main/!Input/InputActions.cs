@@ -431,6 +431,87 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Menus"",
+            ""id"": ""8984267a-f76f-4055-99ca-51a95bbf7d37"",
+            ""actions"": [
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""3dfca09c-adae-462e-ab9f-e118f0dbd3ae"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DialogueContinue"",
+                    ""type"": ""Button"",
+                    ""id"": ""fcb2fe7f-a879-4b79-8aea-d0188dfaafcb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""1b4bdc9a-b595-42de-b86d-3dbde9e9091c"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8f553a03-1cd2-418d-8061-f877c1a99658"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ababf71a-1550-4d40-b405-012f21585f25"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DialogueContinue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3bb8b354-0223-4f88-a40f-824077304f68"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DialogueContinue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6a87f5db-9599-4f61-9f70-d993f56537b1"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DialogueContinue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -445,11 +526,16 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Player_LungeDown = m_Player.FindAction("LungeDown", throwIfNotFound: true);
         m_Player_LungeUp = m_Player.FindAction("LungeUp", throwIfNotFound: true);
         m_Player_LungeRight = m_Player.FindAction("LungeRight", throwIfNotFound: true);
+        // Menus
+        m_Menus = asset.FindActionMap("Menus", throwIfNotFound: true);
+        m_Menus_Pause = m_Menus.FindAction("Pause", throwIfNotFound: true);
+        m_Menus_DialogueContinue = m_Menus.FindAction("DialogueContinue", throwIfNotFound: true);
     }
 
     ~@InputActions()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, InputActions.Player.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Menus.enabled, "This will cause a leak and performance issues, InputActions.Menus.Disable() has not been called.");
     }
 
     /// <summary>
@@ -694,6 +780,113 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="PlayerActions" /> instance referencing this action map.
     /// </summary>
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Menus
+    private readonly InputActionMap m_Menus;
+    private List<IMenusActions> m_MenusActionsCallbackInterfaces = new List<IMenusActions>();
+    private readonly InputAction m_Menus_Pause;
+    private readonly InputAction m_Menus_DialogueContinue;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Menus".
+    /// </summary>
+    public struct MenusActions
+    {
+        private @InputActions m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public MenusActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "Menus/Pause".
+        /// </summary>
+        public InputAction @Pause => m_Wrapper.m_Menus_Pause;
+        /// <summary>
+        /// Provides access to the underlying input action "Menus/DialogueContinue".
+        /// </summary>
+        public InputAction @DialogueContinue => m_Wrapper.m_Menus_DialogueContinue;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_Menus; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="MenusActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(MenusActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="MenusActions" />
+        public void AddCallbacks(IMenusActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MenusActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MenusActionsCallbackInterfaces.Add(instance);
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
+            @DialogueContinue.started += instance.OnDialogueContinue;
+            @DialogueContinue.performed += instance.OnDialogueContinue;
+            @DialogueContinue.canceled += instance.OnDialogueContinue;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="MenusActions" />
+        private void UnregisterCallbacks(IMenusActions instance)
+        {
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
+            @DialogueContinue.started -= instance.OnDialogueContinue;
+            @DialogueContinue.performed -= instance.OnDialogueContinue;
+            @DialogueContinue.canceled -= instance.OnDialogueContinue;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="MenusActions.UnregisterCallbacks(IMenusActions)" />.
+        /// </summary>
+        /// <seealso cref="MenusActions.UnregisterCallbacks(IMenusActions)" />
+        public void RemoveCallbacks(IMenusActions instance)
+        {
+            if (m_Wrapper.m_MenusActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="MenusActions.AddCallbacks(IMenusActions)" />
+        /// <seealso cref="MenusActions.RemoveCallbacks(IMenusActions)" />
+        /// <seealso cref="MenusActions.UnregisterCallbacks(IMenusActions)" />
+        public void SetCallbacks(IMenusActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MenusActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MenusActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="MenusActions" /> instance referencing this action map.
+    /// </summary>
+    public MenusActions @Menus => new MenusActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
     /// </summary>
@@ -757,5 +950,27 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnLungeRight(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Menus" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="MenusActions.AddCallbacks(IMenusActions)" />
+    /// <seealso cref="MenusActions.RemoveCallbacks(IMenusActions)" />
+    public interface IMenusActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "Pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPause(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DialogueContinue" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDialogueContinue(InputAction.CallbackContext context);
     }
 }

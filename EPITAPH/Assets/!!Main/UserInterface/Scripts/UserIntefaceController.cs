@@ -1,0 +1,53 @@
+using UnityEngine;
+using UnityEngine.InputSystem;
+using Yarn.Unity;
+
+public class UserInterfaceController : MonoBehaviour
+{
+    InputActions _inputActions;
+
+    [SerializeField]YarnManager _yarnManager;
+
+    [SerializeField]MenuUIDManager _menuManager;
+    [SerializeField]DialogueUIDManager _dialogueManager;
+
+    public bool IsAnyOpen => _dialogueManager.IsOpen || _menuManager.IsOpen;
+
+    void OnEnable()
+    {
+        _inputActions = new InputActions();
+        _inputActions.Enable();
+
+        _inputActions.Menus.Pause.performed += EnterPause;
+        _inputActions.Menus.DialogueContinue.performed += _yarnManager.InputDefaultContinueDialogue;
+
+        SignalBus.Subscribe<Signal_MenuUIToggled>(MenuUIToggled);
+        SignalBus.Subscribe<Signal_DialogueUIToggled>(DialogueUIToggled);
+    }
+    void OnDisable()
+    {
+        _inputActions.Menus.Pause.performed -= EnterPause;
+        _inputActions.Menus.DialogueContinue.performed -= _yarnManager.InputDefaultContinueDialogue;
+
+        SignalBus.Unsubscribe<Signal_MenuUIToggled>(MenuUIToggled);
+        SignalBus.Unsubscribe<Signal_DialogueUIToggled>(DialogueUIToggled);
+    }
+
+    public void EnterPause(InputAction.CallbackContext ctx)
+    {
+        if (!_menuManager.IsOpen)
+            _menuManager.Toggle(true);
+
+        _yarnManager.IsResponsive = _menuManager.IsOpen;
+
+        //The menu must close itself.
+    }
+
+    public void MenuUIToggled(Signal_MenuUIToggled signal)
+    {
+        Time.timeScale = _menuManager.IsOpen ? 0 : 1;
+    }
+    public void DialogueUIToggled(Signal_DialogueUIToggled signal)
+    {
+    }
+}
