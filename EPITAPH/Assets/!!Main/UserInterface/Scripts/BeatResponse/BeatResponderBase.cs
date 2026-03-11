@@ -2,7 +2,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BeatResponderBase : MonoBehaviour, AudioEventSubscriber<EarlyBeatChanged>
+public class BeatResponderBase : MonoBehaviour, AudioEventSubscriber<EarlyBeatChanged>, AudioEventSubscriber<BeatChanged>
 {
     public Vector2 modulo= Vector2.one;
     public bool play=true;
@@ -14,19 +14,27 @@ public class BeatResponderBase : MonoBehaviour, AudioEventSubscriber<EarlyBeatCh
     }
     void OnEnable()
     {
-        AudioBus.Subscribe(this);
+        AudioBus.Subscribe<EarlyBeatChanged>(this);
+        AudioBus.Subscribe<BeatChanged>(this);
     }
 
     void OnDisable()
     {
                 DOTween.Kill(this);
-        AudioBus.Unsubscribe(this);
+        AudioBus.Unsubscribe<EarlyBeatChanged>(this);
+        AudioBus.Unsubscribe<BeatChanged>(this);
     }
 
     public void OnEventHappened(EarlyBeatChanged e)
     {
         if(!play) return;
+      
         if ((e.beat % modulo.y) == modulo.x) BeatTrigger(e);
+
+    }
+    public virtual void OnOnBeatEventHappened(BeatChanged e)
+    {
+      
     }
     public virtual void BeatTrigger(EarlyBeatChanged e)
     {
@@ -41,6 +49,11 @@ public class BeatResponderBase : MonoBehaviour, AudioEventSubscriber<EarlyBeatCh
     public void Halt()
     {
         DOTween.Kill(this, true);
+    }
+
+    void AudioEventSubscriber<BeatChanged>.OnEventHappened(BeatChanged e)
+    {
+        OnOnBeatEventHappened(e);
     }
 
 }

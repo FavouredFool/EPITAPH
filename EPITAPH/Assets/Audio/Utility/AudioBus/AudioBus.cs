@@ -11,6 +11,7 @@ public static class AudioBus
         if (!subscribers.ContainsKey(typeof(T)))
             subscribers.Add(typeof(T), new());
         subscribers[typeof(T)].Add(sub);
+
     }
 
     public static void Unsubscribe<T>(AudioEventSubscriber<T> sub) where T : AudioEvent // Method for a Subscriber to unsubscribe from the Audio Controller
