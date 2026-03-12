@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(fileName = "PlayerVariables", menuName = "Scriptable Objects/PlayerVariables")]
 public class PlayerVariables : ScriptableObject
@@ -29,6 +30,11 @@ public class PlayerVariables : ScriptableObject
         get=> _health;
         set
         {
+            if (value == 0)
+            {
+                SceneManager.LoadScene("Level1");
+            }
+            
             _health=Mathf.Clamp(value,0,_healthMax);
             SignalBus.Fire(new Signal_RefreshUI_Health(this));
         }
