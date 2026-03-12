@@ -26,6 +26,14 @@ public struct Signal_RefreshUI_Charge
         this.variables = variables;
     }
 }
+public struct Signal_RefreshUI_ChargeProgress
+{
+    public PlayerVariables variables;
+    public Signal_RefreshUI_ChargeProgress(PlayerVariables variables)
+    {
+        this.variables = variables;
+    }
+}
 
 
 public struct Signal_ShowBoltMarker

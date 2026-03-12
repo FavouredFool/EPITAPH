@@ -478,7 +478,7 @@ MonoBehaviour:
   <RavageTime>k__BackingField: 1
   <ExplosionKnockbackStrength>k__BackingField: 200
   IsParrying: 0
-  MaxParryTime: 1
+  MaxParryTime: 0.3
   currentParryTime: 0
 --- !u!50 &7293642660323857259
 Rigidbody2D:

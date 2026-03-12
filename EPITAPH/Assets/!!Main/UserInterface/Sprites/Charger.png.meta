@@ -5,12 +5,6 @@ TextureImporter:
   - first:
       213: 2255384044103032568
     second: Charger_0
-  - first:
-      213: 8358570649767524675
-    second: Charger_1
-  - first:
-      213: -1873182947045689887
-    second: Charger_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -136,9 +130,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 2250
-        width: 1038
-        height: 871
+        y: 122
+        width: 4000
+        height: 3755
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -149,50 +143,6 @@ TextureImporter:
       bones: []
       spriteID: 8fe58dca6dbbc4f10800000000000000
       internalID: 2255384044103032568
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Charger_1
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 1229
-        width: 1715
-        height: 871
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 349366968bb9ff370800000000000000
-      internalID: 8358570649767524675
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Charger_2
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 208
-        width: 2396
-        height: 871
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1e5b502c80e1106e0800000000000000
-      internalID: -1873182947045689887
       vertices: []
       indices: 
       edges: []
@@ -212,8 +162,6 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Charger_0: 2255384044103032568
-      Charger_1: 8358570649767524675
-      Charger_2: -1873182947045689887
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
