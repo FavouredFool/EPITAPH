@@ -9,7 +9,6 @@ public class HealthMarker : MonoBehaviour, AudioEventSubscriber<EarlyBeatChanged
 
     [SerializeField] RectTransform _b_rect, _f_rect;
 
-    [SerializeField] float _tweenDuration=2;
     bool lastState=false, initiated;
     BeatResponderGroup _beatGroup;
 
@@ -31,7 +30,7 @@ public class HealthMarker : MonoBehaviour, AudioEventSubscriber<EarlyBeatChanged
             seq.SetUpdate(true);
             if (filled)
             {
-                float time= _tweenDuration;
+                float time= 0.5f;
 
                 seq.Insert(0,_b_rect.DOPunchScale(Vector3.one * 0.1f,time,1));
                 seq.Insert(0,_f_rect.DOAnchorPosY(15,time).SetEase(Ease.OutBack));
@@ -39,7 +38,7 @@ public class HealthMarker : MonoBehaviour, AudioEventSubscriber<EarlyBeatChanged
             }
             else
             {
-                float time= _tweenDuration;
+                float time= 1f;
                 
                 seq.OnPlay(() =>
                 {

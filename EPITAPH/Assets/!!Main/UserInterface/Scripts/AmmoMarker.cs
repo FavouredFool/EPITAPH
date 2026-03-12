@@ -8,7 +8,6 @@ public class AmmoMarker : MonoBehaviour, AudioEventSubscriber<EarlyBeatChanged>
     [SerializeField] Image _background;
     [SerializeField] RectTransform _b_rect;
 
-    [SerializeField] float _tweenDuration=2.5f;
     bool lastState=false, initiated;
     int siblingIndex, siblingCount;
     BeatResponderGroup _beatGroup;
@@ -34,17 +33,13 @@ public class AmmoMarker : MonoBehaviour, AudioEventSubscriber<EarlyBeatChanged>
             seq.SetUpdate(true);
             if (filled)
             {
-                float time= _tweenDuration;
-
-                seq.Insert(0,_b_rect.DOAnchorPosY(0,time).SetEase(Ease.OutSine));
-                seq.Insert(0,_background.DOColor(CustomColor.White,time).SetEase(Ease.OutCirc));
+                seq.Insert(0,_b_rect.DOAnchorPosY(0,0.66f).SetEase(Ease.OutSine));
+                seq.Insert(0,_background.DOColor(CustomColor.White,0.66f).SetEase(Ease.OutCirc));
             }
             else
-            {
-                float time= _tweenDuration;
-                
-                seq.Insert(0,_b_rect.DOAnchorPosY(-110,time).SetEase(Ease.OutBounce));
-                seq.Insert(0,_background.DOColor(CustomColor.OldBlood,time).SetEase(Ease.OutCirc));
+            {                
+                seq.Insert(0,_b_rect.DOAnchorPosY(-110,0.66f).SetEase(Ease.OutBounce));
+                seq.Insert(0,_background.DOColor(CustomColor.OldBlood,0.66f).SetEase(Ease.OutCirc));
             }
         }
 

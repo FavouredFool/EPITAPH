@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 9053305469239253080}
   - component: {fileID: 5024196338261180614}
   - component: {fileID: 2651094560478904621}
-  - component: {fileID: 7953150419171860310}
   - component: {fileID: 4149259377803901988}
   - component: {fileID: 6185065802398522570}
   - component: {fileID: 1236814602465671492}
@@ -94,18 +93,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7953150419171860310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2841597894823978006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f561e9d739732494282b6ecb5673c9d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BaseSelector
 --- !u!114 &4149259377803901988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,6 +218,7 @@ GameObject:
   - component: {fileID: 8269330539567220830}
   - component: {fileID: 5509042130507387389}
   - component: {fileID: 7718983050079743554}
+  - component: {fileID: 5691650899740954786}
   m_Layer: 10
   m_Name: Pillar
   m_TagString: Untagged
@@ -370,3 +358,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &5691650899740954786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8700682328369113373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f561e9d739732494282b6ecb5673c9d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseSelector
