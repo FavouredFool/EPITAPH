@@ -24,6 +24,7 @@
 		</relationship>
 		<relationship name="markerTracks">
 			<destination>{31fdd85a-8358-4716-b3f1-947c16db70bf}</destination>
+			<destination>{adf0c1b4-5b64-4b55-947b-df92b3a59c9a}</destination>
 		</relationship>
 		<relationship name="groupTracks">
 			<destination>{f0b88f58-cf2c-4181-baf0-4fef56474f95}</destination>
@@ -71,6 +72,7 @@
 	</object>
 	<object class="EventAutomatableProperties" id="{5912623d-1322-4d0e-a4e1-a84a1ff91942}" />
 	<object class="MarkerTrack" id="{31fdd85a-8358-4716-b3f1-947c16db70bf}" />
+	<object class="MarkerTrack" id="{adf0c1b4-5b64-4b55-947b-df92b3a59c9a}" />
 	<object class="GroupTrack" id="{f0b88f58-cf2c-4181-baf0-4fef56474f95}">
 		<relationship name="modules">
 			<destination>{590808bb-5605-450b-aa57-4dd1794b9b37}</destination>
@@ -132,9 +134,6 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{63999677-cb57-4202-b65b-54c597e3bf1a}">
-		<property name="volume">
-			<value>-12</value>
-		</property>
 		<relationship name="effectChain">
 			<destination>{aae7f3ce-bbef-4de1-94ef-b671b9718f84}</destination>
 		</relationship>
@@ -178,7 +177,7 @@
 	</object>
 	<object class="TransitionDestinationSound" id="{6c9ec8b9-388b-42dd-816d-04dc3de9ff45}">
 		<property name="start">
-			<value>7.441860465116279</value>
+			<value>7.9201837227933227</value>
 		</property>
 		<property name="length">
 			<value>0</value>
@@ -295,7 +294,7 @@
 	</object>
 	<object class="TransitionDestinationSound" id="{dc68a473-519a-4fc1-af39-aed56a315a22}">
 		<property name="length">
-			<value>7.4418604651162763</value>
+			<value>7.9201837227933174</value>
 		</property>
 	</object>
 	<object class="TransitionSourceSound" id="{34c2571f-430f-4577-8b81-c81faa5403b7}">
@@ -365,7 +364,7 @@
 	</object>
 	<object class="TransitionDestinationSound" id="{dc962da3-776c-4053-82fc-6968089be78f}">
 		<property name="start">
-			<value>7.441860465116279</value>
+			<value>7.9201837227933227</value>
 		</property>
 		<property name="length">
 			<value>0</value>
@@ -489,7 +488,7 @@
 			<destination>{7721c92d-4cec-43f8-96fa-cbd626c7d716}</destination>
 		</relationship>
 		<relationship name="markerTrack">
-			<destination>{31fdd85a-8358-4716-b3f1-947c16db70bf}</destination>
+			<destination>{adf0c1b4-5b64-4b55-947b-df92b3a59c9a}</destination>
 		</relationship>
 		<relationship name="transitionTimeline">
 			<destination>{b3b88a21-1e63-4d99-86f1-0e786a3eac7b}</destination>
@@ -506,7 +505,7 @@
 			<destination>{7721c92d-4cec-43f8-96fa-cbd626c7d716}</destination>
 		</relationship>
 		<relationship name="markerTrack">
-			<destination>{31fdd85a-8358-4716-b3f1-947c16db70bf}</destination>
+			<destination>{adf0c1b4-5b64-4b55-947b-df92b3a59c9a}</destination>
 		</relationship>
 		<relationship name="transitionTimeline">
 			<destination>{e8b62c29-2a73-400b-b7e1-b56f341e318e}</destination>
@@ -523,7 +522,7 @@
 			<destination>{7721c92d-4cec-43f8-96fa-cbd626c7d716}</destination>
 		</relationship>
 		<relationship name="markerTrack">
-			<destination>{31fdd85a-8358-4716-b3f1-947c16db70bf}</destination>
+			<destination>{adf0c1b4-5b64-4b55-947b-df92b3a59c9a}</destination>
 		</relationship>
 		<relationship name="transitionTimeline">
 			<destination>{7042a68e-19b6-4447-a6ef-f49652a74776}</destination>
@@ -540,7 +539,7 @@
 			<destination>{7721c92d-4cec-43f8-96fa-cbd626c7d716}</destination>
 		</relationship>
 		<relationship name="markerTrack">
-			<destination>{31fdd85a-8358-4716-b3f1-947c16db70bf}</destination>
+			<destination>{adf0c1b4-5b64-4b55-947b-df92b3a59c9a}</destination>
 		</relationship>
 		<relationship name="transitionTimeline">
 			<destination>{1936429e-e3f9-49af-bbc8-975e7016b0d2}</destination>
@@ -557,7 +556,7 @@
 			<destination>{7721c92d-4cec-43f8-96fa-cbd626c7d716}</destination>
 		</relationship>
 		<relationship name="markerTrack">
-			<destination>{31fdd85a-8358-4716-b3f1-947c16db70bf}</destination>
+			<destination>{adf0c1b4-5b64-4b55-947b-df92b3a59c9a}</destination>
 		</relationship>
 		<relationship name="transitionTimeline">
 			<destination>{af24363d-5cae-4149-8407-afadfc50cd1b}</destination>
@@ -613,7 +612,7 @@
 	</object>
 	<object class="TransitionTimeline" id="{7042a68e-19b6-4447-a6ef-f49652a74776}">
 		<property name="length">
-			<value>7.441860465116279</value>
+			<value>7.9201837227933227</value>
 		</property>
 		<relationship name="modules">
 			<destination>{daccd556-489c-4f3e-b752-3b85ee2d67ff}</destination>
