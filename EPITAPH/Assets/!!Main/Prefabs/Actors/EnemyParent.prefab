@@ -15305,6 +15305,9 @@ MonoBehaviour:
   <KnockbackMagnitudeThreshold>k__BackingField: 10
   _deadSprite: {fileID: 7276502925574245455}
   <Animator>k__BackingField: {fileID: 8439757380821537968}
+  GetParried: {fileID: 5637113363338436039}
+  Anticipation: {fileID: 5283626701715918697}
+  offset: {x: 0, y: 0, z: 0}
   _chargeSpeed: 10.79
   _chargeStartRange: 2.44
   _chargeAttackRange: 1.76
@@ -15436,6 +15439,11 @@ PrefabInstance:
 --- !u!4 &2885188349644017133 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 364843073231077732, guid: 3f698d104cab98540b3f70c85c0e6bf0, type: 3}
+  m_PrefabInstance: {fileID: 3249929129550924937}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &5637113363338436039 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7143023399214174542, guid: 3f698d104cab98540b3f70c85c0e6bf0, type: 3}
   m_PrefabInstance: {fileID: 3249929129550924937}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6585818918267219073
