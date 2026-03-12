@@ -254,7 +254,17 @@ public class PlayerController : MonoBehaviour
     
     void Any(IState to, IStatePredicate condition) =>
         StateMachine.AddAnyTransition(to, condition);
-    
+
+
+    void OnEnable()
+    {
+        _inputActions.Player.Parry.performed += ParryInput;
+    }
+
+    void OnDisable()
+    {
+        _inputActions.Player.Parry.performed -= ParryInput;
+    }
 
     void Update()
     {
@@ -263,16 +273,15 @@ public class PlayerController : MonoBehaviour
         
         CrossbowAnimator.SetInteger(ChargeIntAnim, PlayerVariableAnchor.PlayerVariables.Charge);
         CharacterAnimator.SetInteger(ChargeIntAnim, PlayerVariableAnchor.PlayerVariables.Charge);
+
+        ParryUpdate();
     }
     
     void FixedUpdate()
     {
         StateMachine.FixedUpdate();
 
-        if (ParryCooldown <= 1)
-        {
-            ParryCooldown += Time.deltaTime;
-        }
+        
 
     }
 
@@ -323,8 +332,54 @@ public class PlayerController : MonoBehaviour
     {
         ShootBolt();
     }
+
+    public void ParryInput(InputAction.CallbackContext ctx)
+    {
+        ParryEnter();
+    }
     
-    // TODO whyy is this not connected anymore??
+    public void ParryEnter()
+    {
+        if (ParryCooldown >= 1)
+        {
+            IsParrying = true;
+            currentParryTime = 0;
+            ParryEffect.Play();
+        }
+    }
+
+    void ParryUpdate()
+    {
+        if (ParryCooldown <= 1)
+        {
+            ParryCooldown += Time.deltaTime;
+        }
+        
+        if (!IsParrying)
+        {
+            return;
+        }
+        
+        if (ParryCooldown >= 1)
+        {
+            if (currentParryTime < MaxParryTime)
+            {
+                IsParrying = true;
+                currentParryTime += Time.deltaTime;
+            }
+            else
+            {
+                // is it right here?
+                IsParrying = false;
+                currentParryTime = 0;
+                ParryEffect.Stop();
+                ParryCooldown = 0;
+            }
+        }
+    }
+    
+    
+    // TODO whyy is this not connected anymore?
     public void LungeToBolt(BoltType boltType)
     {
         if (PlayerVariableAnchor.PlayerVariables.CurrentBoltsHeld[boltType] == null) return;
