@@ -22,8 +22,8 @@ public class PlayerController : MonoBehaviour
     
     [Header("Movement")]
     [SerializeField, Range(1, 20)] float _speed;
-    [SerializeField, Range(1, 20)] float _speedAimReduction;
-    [SerializeField, Range(1, 20)] float _speedReloadReduction;
+    [SerializeField, Range(1, 60)] float _speedAimReduction;
+    [SerializeField, Range(1, 60)] float _reloadAimReduction;
     [SerializeField, Range(0, 0.95f)] float _moveLockThreshold = 0.3f;
     [SerializeField, Range(1, 20)] float _knockbackDecay;
     //[SerializeField] AimAssistV3 _aimAssist;
@@ -71,6 +71,7 @@ public class PlayerController : MonoBehaviour
     
     public float Speed => _speed;
     public float SpeedAimReduction => _speedAimReduction;
+    public float ReloadAimReduction => _reloadAimReduction;
     
     public Animator CharacterAnimator => _characterAnimator;
     public Animator CrossbowAnimator => _crossbowAnimator;
@@ -94,6 +95,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 LastHitDir { get; set; }
     
     bool IsAiming => RotateInput.magnitude > _moveLockThreshold;
+    
     public bool IsParrying = false;
     public float MaxParryTime = 1;
     public float currentParryTime = 0;
@@ -111,8 +113,6 @@ public class PlayerController : MonoBehaviour
     public TriggerPredicate ShootTrigger { get; private set; }
     public TriggerPredicate LungeTrigger { get; private set; }
     public TriggerPredicate FinishLungeTrigger { get; private set; }
-    public TriggerPredicate StartReloadTrigger { get; private set; }
-    public TriggerPredicate StopReloadTrigger { get; private set; }
     public TriggerPredicate GetHitTrigger { get; private set; }
     public TriggerPredicate FinishBatTrigger { get; private set; }
     public TriggerPredicate FinishRavageTrigger { get; private set; }
@@ -153,6 +153,15 @@ public class PlayerController : MonoBehaviour
 
     public Vector2 MovementVelocity { get; set; }
     public Vector2 KnockbackVelocity { get; set; }
+
+    public bool RequestsReload()
+    {
+        if (!_inputActions.Player.Reload.IsPressed()) return false;
+        if (PlayerVariableAnchor.PlayerVariables.Charge == 3) return false;
+        if (PlayerVariableAnchor.PlayerVariables.CurrentAmmoCount == 0) return false;
+
+        return true;
+    }
     
     void Awake()
     {
@@ -201,8 +210,6 @@ public class PlayerController : MonoBehaviour
         ShootTrigger = new TriggerPredicate();
         LungeTrigger = new TriggerPredicate();
         FinishLungeTrigger = new TriggerPredicate();
-        StartReloadTrigger = new TriggerPredicate();
-        StopReloadTrigger = new TriggerPredicate();
         GetHitTrigger = new TriggerPredicate();
         FinishBatTrigger = new TriggerPredicate();
         FinishRavageTrigger = new TriggerPredicate();
@@ -210,16 +217,21 @@ public class PlayerController : MonoBehaviour
         At(moveState, aimState, new FuncStatePredicate(() => IsAiming));
         At(aimState, moveState, new FuncStatePredicate(() => !IsAiming));
         
-        At(moveState, reloadState, StartReloadTrigger);
-        At(aimState, reloadState, StartReloadTrigger);
         
-        At(reloadState, moveState, StopReloadTrigger);
+        At(moveState, reloadState, new FuncStatePredicate(RequestsReload));
+        At(aimState, reloadState, new FuncStatePredicate(RequestsReload));
+        
+        At(reloadState, moveState, new FuncStatePredicate(() => !RequestsReload() && !IsAiming));
+        At(reloadState, aimState, new FuncStatePredicate(() => !RequestsReload() && IsAiming));
         
         At(aimState, shootState, ShootTrigger);
+        At(reloadState, shootState, ShootTrigger);
+        
         At(shootState, aimState, new FuncStatePredicate(() => true));
         
         At(moveState, lungeState, LungeTrigger);
         At(aimState, lungeState, LungeTrigger);
+        At(reloadState, lungeState, LungeTrigger);
         
         //At(lungeState, moveState, Rava);
         At(lungeState, ravageState, FinishLungeTrigger);
@@ -228,6 +240,7 @@ public class PlayerController : MonoBehaviour
         At(moveState, hitRecoveryState, GetHitTrigger);
         At(aimState, hitRecoveryState, GetHitTrigger);
         At(reloadState, hitRecoveryState, GetHitTrigger);
+        
 
         At(hitRecoveryState, moveState, FinishBatTrigger);
         
@@ -308,12 +321,8 @@ public class PlayerController : MonoBehaviour
     {
         ShootBolt();
     }
-
-    public void ReloadInputStart(InputAction.CallbackContext ctx)
-    {
-        StartReload();
-    }
     
+    // TODO whyy is this not connected anymore??
     public void LungeToBolt(BoltType boltType)
     {
         if (PlayerVariableAnchor.PlayerVariables.CurrentBoltsHeld[boltType] == null) return;
@@ -334,15 +343,6 @@ public class PlayerController : MonoBehaviour
 
         ShootTrigger.Trigger();
     }
-    
-    public void StartReload()
-    {
-        if (PlayerVariableAnchor.PlayerVariables.Charge == 3) return;
-        if (PlayerVariableAnchor.PlayerVariables.CurrentAmmoCount == 0) return;
-        
-        StartReloadTrigger.Trigger();
-    }
-    
 
     public BoltType GetBoltTypeToShoot()
     {
