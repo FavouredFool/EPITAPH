@@ -9,8 +9,6 @@ public class MoveState : VampireBaseState
 
     public override void OnEnter()
     {
-        _ctx.InputActions.Player.Reload.performed += _ctx.PlayerController.ReloadInputStart;
-        
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsMovingBoolAnim, true);
     }
 
@@ -36,8 +34,6 @@ public class MoveState : VampireBaseState
 
     public override void OnExit()
     {
-        _ctx.InputActions.Player.Reload.performed -= _ctx.PlayerController.ReloadInputStart;
-        
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsMovingBoolAnim, false);
     }
 }

@@ -11,9 +11,15 @@ public class ReloadState : VampireBaseState
 
     public override void OnEnter()
     {
-        _ctx.InputActions.Player.Reload.canceled += ReloadInputStop;
+        _ctx.InputActions.Player.Shoot.performed += _ctx.PlayerController.ShootBoltInput;
+        _ctx.InputActions.Player.UseBolt.performed += UseActiveBoltInput;
+        
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsReloadingBoolAnim, true);
         _ctx.PlayerController.CrossbowAnimator.SetBool(PlayerController.IsReloadBoolAnim, true);
+        
+        _ctx.PlayerController.UpdateActiveBolt(true);
+        _ctx.PlayerController.UpdateActiveBolt(true);
+        
         _reloadStart = Time.time;
         
         PlayerAudio.StartCharging();
@@ -28,6 +34,8 @@ public class ReloadState : VampireBaseState
     public override void Update()
     {
         _ctx.PlayerController.ReadInput();
+        _ctx.PlayerController.UpdateActiveBolt(false);
+        
         if (_ctx.PlayerController.ParryCooldown >= 1)
         {
             if (_ctx.PlayerController.currentParryTime < _ctx.PlayerController.MaxParryTime)
@@ -41,18 +49,38 @@ public class ReloadState : VampireBaseState
             }
         }
         UpdateReload();
+        
+        _ctx.PlayerController.SetCameraFollow(_ctx.PlayerController.RotateInput.sqrMagnitude > 0.05f);
     }
     
     public override void FixedUpdate()
     {
-        _ctx.PlayerController.MovementVelocity = Vector2.zero;
+        _ctx.PlayerController.MovementVelocity = _ctx.PlayerController.MovementInput * _ctx.PlayerController.Speed * 0;
         _ctx.PlayerController.CalculateVelocity();
+
+        if (_ctx.PlayerController.RotateInput.sqrMagnitude > 0.05)
+        {
+            _ctx.PlayerController.LookDirection = _ctx.PlayerController.AimAssistedLookDirection;
+            _ctx.PlayerController.Rotation();
+        }
         
-        _ctx.PlayerController.Rotation();
     }
 
     public override void OnExit()
     {
+        FinishReload();
+        
+        _ctx.PlayerController.SetCameraFollow(false);
+        
+        _ctx.PlayerController.UpdateActiveBolt(true);
+        _ctx.PlayerController.SetCameraFollow(false);
+        
+        _ctx.PlayerController.IsParrying = false;
+        _ctx.PlayerController.currentParryTime = 0;
+
+        _ctx.InputActions.Player.Shoot.performed -= _ctx.PlayerController.ShootBoltInput;
+        _ctx.InputActions.Player.UseBolt.performed -= UseActiveBoltInput;
+        
         if (_ctx.PlayerController.ParryCooldown >= 1)
         {
             _ctx.PlayerController.IsParrying = false;
@@ -60,16 +88,10 @@ public class ReloadState : VampireBaseState
             _ctx.PlayerController.ParryEffect.Stop();
             _ctx.PlayerController.ParryCooldown = 0;
         }
-        _ctx.InputActions.Player.Reload.canceled -= ReloadInputStop;
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsReloadingBoolAnim, false);
         _ctx.PlayerController.CrossbowAnimator.SetBool(PlayerController.IsReloadBoolAnim, false);
     }
-    
-    public void ReloadInputStop(InputAction.CallbackContext ctx)
-    {
-        FinishReload();
-    }
-    
+
     public void UpdateReload()
     {
         if (PlayerVariableAnchor.PlayerVariables.Charge == 3)
@@ -112,10 +134,6 @@ public class ReloadState : VampireBaseState
 
     public void FinishReload()
     {
-        // TODO only listen to input to stop the charge (or the highest has been reached)
-        
-        _ctx.PlayerController.StopReloadTrigger.Trigger();
-        
         PlayerAudio.StopCharging();
 
         if (PlayerVariableAnchor.PlayerVariables.Charge != 3)
@@ -128,5 +146,10 @@ public class ReloadState : VampireBaseState
         }
 
         
+    }
+    
+    public void UseActiveBoltInput(InputAction.CallbackContext ctx)
+    {
+        _ctx.PlayerController.UseActiveBolt();
     }
 }
