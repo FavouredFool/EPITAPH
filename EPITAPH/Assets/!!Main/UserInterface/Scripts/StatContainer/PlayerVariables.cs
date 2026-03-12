@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerVariables", menuName = "Scriptable Objects/PlayerVariables")]
@@ -8,8 +9,9 @@ public class PlayerVariables : ScriptableObject
     [SerializeField] int _healthMax;
 
 [Header("Ammo")]
-    [SerializeField] int _ammo;
-    [SerializeField] int _ammoMax;
+    public Dictionary<BoltType, BoltController> CurrentBoltsHeld { get; set; }
+    //[SerializeField] int _ammo;
+    //[SerializeField] int _ammoMax;
 
 [Header("Charge")]
     [SerializeField] float _charge;
@@ -33,19 +35,38 @@ public class PlayerVariables : ScriptableObject
             SignalBus.Fire(new Signal_RefreshUI_Charge(this));
         }
     }
-    public int Ammo
+
+    public void AddAmmo(BoltType type)
     {
-        get=> _ammo;
-        set
-        {
-            _ammo=Mathf.Clamp(value,0,_ammoMax);
-            SignalBus.Fire(new Signal_RefreshUI_Ammo(this));
-        }
+        CurrentBoltsHeld[type] = null;
+        SignalBus.Fire(new Signal_RefreshUI_Ammo(this));
+    }
+
+    public void LoseAmmo(BoltController bolt)
+    {
+        CurrentBoltsHeld[bolt.BoltType] = bolt;
+        SignalBus.Fire(new Signal_RefreshUI_Ammo(this));
     }
     
+    public int CurrentAmmoCount
+    {
+        get
+        {
+            int countAmmo = 0;
+
+            foreach (var bolts in CurrentBoltsHeld.Values)
+            {
+                if (bolts == null)
+                {
+                    countAmmo += 1;
+                }
+            }
+            
+            return countAmmo;
+        }
+    }
     public int HealthMax=>_healthMax;
     public float ChargeMax=>_chargeMax;
-    public int AmmoMax=>_ammoMax;
 
     public void HealMax() => Heal(HealthMax);
     public void Heal(int value)
@@ -61,14 +82,14 @@ public class PlayerVariables : ScriptableObject
     }
     [ContextMenu("Heal Health Test")] public void HealTest() => HealMax();
 
-    [ContextMenu("Shoot Ammo Test")]
-    public void ShootTest()
-    {
-        Ammo -= 1;
-    }
-    [ContextMenu("Retrieve Ammo Test")]
-    public void RetrieveTest()
-    {
-        Ammo += 1;
-    }
+    //[ContextMenu("Shoot Ammo Test")]
+    //public void ShootTest()
+    //{
+    //    AmmoCount -= 1;
+    //}
+    //[ContextMenu("Retrieve Ammo Test")]
+    //public void RetrieveTest()
+    //{
+    //    AmmoCount += 1;
+    //}
 }

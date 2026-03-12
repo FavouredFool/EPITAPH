@@ -65,7 +65,9 @@ public class ReloadState : VampireBaseState
     
     public void UpdateReload()
     {
-        PlayerAudio.SetCharge((Time.time - _reloadStart) / _ctx.PlayerController.ReloadTime);
+        float chargeT = (Time.time - _reloadStart) / _ctx.PlayerController.ReloadTime;
+        PlayerAudio.SetCharge(chargeT);
+        PlayerVariableAnchor.PlayerVariables.Charge = chargeT;
 
         if (Time.time - _reloadStart >_ctx.PlayerController.ReloadTime)
         {
@@ -77,8 +79,9 @@ public class ReloadState : VampireBaseState
     {
         _ctx.PlayerController.StopReloadTrigger.Trigger();
         
-        _ctx.PlayerController.BoltInChamber = true;
         PlayerAudio.StopCharging();
+
+        PlayerVariableAnchor.PlayerVariables.Charge = 1;
 
         PlayerAudio.PlayStepLock(3); // TODO: ADD Steps
         _ctx.PlayerController.CrossboxAnimator.SetTrigger(PlayerController.FinishReloadTriggerAnim);
@@ -91,6 +94,8 @@ public class ReloadState : VampireBaseState
         _reloadStart = float.PositiveInfinity;
 
         PlayerAudio.StopCharging();
+        
+        PlayerVariableAnchor.PlayerVariables.Charge = 0;
 
         _ctx.PlayerController.CrossboxAnimator.SetTrigger(PlayerController.InterruptReloadTriggerAnim);
     }
