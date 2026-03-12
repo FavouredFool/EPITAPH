@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using NUnit.Framework;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -57,7 +58,8 @@ public class EnemyController : MonoBehaviour
 
 
     public Vector2 LatestHitVelocity { get; set; }
-    
+
+    Vector3 offset;
     void Awake()
     {
         Rb = GetComponent<Rigidbody2D>();
@@ -69,8 +71,11 @@ public class EnemyController : MonoBehaviour
         _agent.updateUpAxis = false;
         _agent.speed = _speed;
 
+        offset=UnityEngine.Random.insideUnitCircle.normalized;
+
+
         //CurrentHp = _maxHp;
-        
+
         InitStateMachine();
     }
 
@@ -174,6 +179,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField, UnityEngine.Range(0, 15)] float _chargeDuration;
     [SerializeField, UnityEngine.Range(0, 15)] float _chargeCooldown;
 
+
     public void ChaseBehaviourUpdateTick()
     {
        
@@ -189,7 +195,7 @@ public class EnemyController : MonoBehaviour
 
         if (!charging)
         {
-            _agent.destination = _target.position;
+            _agent.destination = _target.position+offset;
         }
     }
 
