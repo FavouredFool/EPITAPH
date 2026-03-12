@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
+using UnityEngine.TextCore.Text;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -114,7 +115,6 @@ public class PlayerController : MonoBehaviour
     // Crossbow
     public static readonly int ShootCrossbowTriggerAnim = Animator.StringToHash("Shoot");
     public static readonly int IsReloadBoolAnim = Animator.StringToHash("IsReload");
-    public static readonly int ChargeIntAnim = Animator.StringToHash("Charge");
     
     // Player
     public static readonly int IsMovingBoolAnim = Animator.StringToHash("IsMoving");
@@ -127,6 +127,9 @@ public class PlayerController : MonoBehaviour
     public static readonly int AimDirXFloatAnim = Animator.StringToHash("AimDirX");
     public static readonly int AimDirYFloatAnim = Animator.StringToHash("AimDirY");
 
+    // Both
+    public static readonly int ChargeIntAnim = Animator.StringToHash("Charge");
+    
     public Vector2 AimAssistedLookDirection
     {
         get
@@ -238,6 +241,7 @@ public class PlayerController : MonoBehaviour
         //Debug.Log(StateMachine.CurrentState);
         
         CrossbowAnimator.SetInteger(ChargeIntAnim, PlayerVariableAnchor.PlayerVariables.Charge);
+        CharacterAnimator.SetInteger(ChargeIntAnim, PlayerVariableAnchor.PlayerVariables.Charge);
     }
     
     void FixedUpdate()

@@ -459,9 +459,9 @@ MonoBehaviour:
   _projectileBlueprint: {fileID: 3159500885758386700, guid: ab0c37ca8bfc3e04289b07f66f8f1814, type: 3}
   _spawnDist: 0.2
   _bloodlineConnection: {fileID: 3944289762324200595}
-  <ReloadTimeCharge1>k__BackingField: 1
-  <ReloadTimeCharge2>k__BackingField: 2.5
-  <ReloadTimeCharge3>k__BackingField: 4.5
+  <ReloadTimeCharge1>k__BackingField: 0.75
+  <ReloadTimeCharge2>k__BackingField: 1.25
+  <ReloadTimeCharge3>k__BackingField: 2.75
   _cameraFollow: {fileID: 6711845830664808249}
   _cameraAimOffset: 2.5
   PADScriptableObject: {fileID: 11400000, guid: 97171c05725167e438dded62167c2289, type: 2}
