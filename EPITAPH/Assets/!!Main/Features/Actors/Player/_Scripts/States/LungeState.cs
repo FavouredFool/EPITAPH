@@ -17,7 +17,7 @@ public class LungeState : VampireBaseState
         
         // find actual bolt from type
         
-        _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsLungingBoolAnim, true);
+        _ctx.PlayerController.CharacterAnimator.SetTrigger(PlayerController.EnterLungeTriggerAnim);
         _ctx.PlayerController.MovementVelocity = Vector2.zero;
 
         _ctx.PlayerController.MainCollider.enabled = false;
@@ -36,6 +36,7 @@ public class LungeState : VampireBaseState
         if ((Time.time - _startLungeTime) > _ctx.PlayerController.FailsaveExitTime)
         {
             _ctx.PlayerController.FinishLungeTrigger.Trigger();
+            _ctx.PlayerController.CharacterAnimator.SetTrigger(PlayerController.EnterIdle);
         }
     }
     
@@ -91,7 +92,6 @@ public class LungeState : VampireBaseState
 
     public override void OnExit()
     {
-        _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsLungingBoolAnim, false);
         _ctx.PlayerController.MovementVelocity = Vector2.zero;
         
         _ctx.PlayerController.MainCollider.enabled = true;

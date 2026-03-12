@@ -1,27 +1,72 @@
+using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class LevelDoor : MonoBehaviour
 {
-    [SerializeField] ProgressionManager progressionManager;
-    private bool AllEnemiesDefeated = true;
-    private int EnemyCount;
-    private int currentDeadEnemies;
+    private bool AllEnemiesDefeated => deadEnemyCount>=enemyCount;
+    private int enemyCount;
+    private int deadEnemyCount;
+
+    public GameObject counterObject, pinkGlow,purpleGlow;
+    public TMP_Text counterText;
+
+    void Awake()
+    {
+        EnemyController[] enemies = FindObjectsByType<EnemyController>(FindObjectsInactive.Exclude,FindObjectsSortMode.None);
+        enemyCount = enemies.Length;
+        deadEnemyCount = 0;
+        RefreshUI();
+    }
 
     private void OnEnable()
     {
-        
+        SignalBus.Subscribe<Signal_EnemyDeath>(OnEnemyDeath);
     }
     private void OnDisable()
     {
-        
+        SignalBus.Unsubscribe<Signal_EnemyDeath>(OnEnemyDeath);        
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public void OnEnemyDeath(Signal_EnemyDeath signal)
     {
-        if (other.CompareTag("Player") && AllEnemiesDefeated)
-        {
+        deadEnemyCount++;
+        RefreshUI();
+    }
+
+    public void RefreshUI()
+    {
+        if(!AllEnemiesDefeated)
+            counterText.text= deadEnemyCount+"/"+enemyCount;
+        else
+            counterText.text="Next Chamber";
+
+        counterObject.SetActive(AllEnemiesDefeated);
+        pinkGlow.SetActive(AllEnemiesDefeated);
+        purpleGlow.SetActive(!AllEnemiesDefeated);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log(other.gameObject.name);
+
+        PlayerController player = other.GetComponentInParent<PlayerController>();
+
+        if (player == null) return;
+
+        Debug.Log("OKE");
+        if (AllEnemiesDefeated)
             ProgressionManager.LoadNextLevel();
-        }
+
+        counterObject.SetActive(true);
+    }
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (!other.GetComponentInParent<PlayerController>()) return;
+
+        Debug.Log("byee");
+
+        counterObject.SetActive(AllEnemiesDefeated);
     }
 
 }

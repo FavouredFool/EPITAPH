@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using NUnit.Framework;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -94,19 +95,19 @@ public class EnemyController : MonoBehaviour
         EnterStun = new TriggerPredicate();
         ExitStun = new TriggerPredicate();
         EnterChase = new TriggerPredicate();
-
-        At(hitAndKnockbackedState, chaseState, ExitKnockback);
         ReviveTrigger = new TriggerPredicate();
+        
+        //At(hitAndKnockbackedState, chaseState, ExitKnockback);
 
-        At(chaseState, hitAndKnockbackedState, EnterKnockback);
+        Any(hitAndKnockbackedState, EnterKnockback);
 
         At(hitAndKnockbackedState, stakedState, StakedTrigger);
+        //At(hitAndKnockbackedState, normalDeathState, NormalDeathTrigger);
 
-        At(chaseState, normalDeathState, NormalDeathTrigger);
+        Any(normalDeathState, NormalDeathTrigger);
 
         At(stunnedState, chaseState, ExitStun);
         At(idleState, chaseState, EnterChase);
-        StateMachine.SetState(idleState);
         At(chaseState, stunnedState, EnterStun);
 
         At(normalDeathState, chaseState, ReviveTrigger);
@@ -124,6 +125,7 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         StateMachine.Update();
+        Debug.Log(StateMachine.CurrentState);
     }
 
     // please dont add anything here, use methods below
@@ -344,7 +346,7 @@ public class EnemyController : MonoBehaviour
  
     public void Die()
     {
-        //_deadSprite.SetActive(true);
+        SignalBus.Fire(new Signal_EnemyDeath(this));
     }
 
     public void Knockback(Vector2 velocity)
