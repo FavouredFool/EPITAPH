@@ -26,6 +26,7 @@ public class PlayerVariableAnchor : MonoBehaviour
         SignalBus.Fire(new Signal_RefreshUI_Health(playerVariables));
         SignalBus.Fire(new Signal_RefreshUI_Ammo(playerVariables));
         SignalBus.Fire(new Signal_RefreshUI_Charge(playerVariables));
-
+        SignalBus.Fire(new Signal_RefreshUI_ChargeProgress(playerVariables));
+        SignalBus.Fire(new Signal_RefreshUI_Style(playerVariables));
     }
 }

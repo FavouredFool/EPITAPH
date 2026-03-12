@@ -35,6 +35,7 @@ public class StyleUID : MonoBehaviour
 
     public void RefreshUID(Signal_RefreshUI_Style signal)
     {
+        Debug.Log("STYLE UI");
         SetText(coolWords[signal.variables.Style]);
         Color color = _timerFill.color;
         _timerFill.color = Color.white;
