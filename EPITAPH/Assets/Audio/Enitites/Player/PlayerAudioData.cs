@@ -9,6 +9,7 @@ public class PlayerAudioData : ScriptableObject
     [SerializeField] public EventReference chargeEvent;
     [SerializeField] public EventReference lockedEvent;
     [SerializeField] public EventReference releaseEvent;
+    [SerializeField] public EventReference boltPickup;
     [Header("Hits")]
     [SerializeField] public EventReference hitMeat;
     [SerializeField] public EventReference hitWall;

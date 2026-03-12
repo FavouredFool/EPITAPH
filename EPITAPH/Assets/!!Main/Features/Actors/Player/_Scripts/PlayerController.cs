@@ -357,7 +357,8 @@ public class PlayerController : MonoBehaviour
     public void PickupBolt(BoltController bolt)
     {
         PlayerVariableAnchor.PlayerVariables.AddAmmo(bolt.BoltType);
-        
+        Debug.Log("PickupBolt");
+        PlayerAudio.PlayBoltPickup();
         FinishLungeTrigger.Trigger();
         
         Destroy(bolt.gameObject);
