@@ -179,6 +179,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField, UnityEngine.Range(0, 15)] float _chargeAttackRange;
     [SerializeField, UnityEngine.Range(0, 15)] float _chargeDuration;
     [SerializeField, UnityEngine.Range(0, 15)] float _chargeCooldown;
+    [SerializeField, UnityEngine.Range(0, 15)] float _meleeAttackAntipicationTime;
 
 
     public void ChaseBehaviourUpdateTick()
@@ -227,9 +228,10 @@ public class EnemyController : MonoBehaviour
     {
         attacking = true;
         Rb.linearVelocity = Vector2.zero;
-        yield return new WaitForSeconds(0.2f);
+        Anticipation.Play();
+        yield return new WaitForSeconds(_meleeAttackAntipicationTime);
         Animator.SetTrigger("attack");
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.8f);
         attacking = false;
     }
 
@@ -296,7 +298,7 @@ public class EnemyController : MonoBehaviour
             attacked = true;
         }
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
       
         Animator.SetBool("charging", false);
         _agent.speed = _speed;
