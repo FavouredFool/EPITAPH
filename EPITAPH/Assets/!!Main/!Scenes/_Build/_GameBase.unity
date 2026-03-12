@@ -1204,6 +1204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1699777563}
   - component: {fileID: 1699777562}
+  - component: {fileID: 1699777564}
   m_Layer: 0
   m_Name: MusicManager
   m_TagString: Untagged
@@ -1246,6 +1247,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 615368760}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1699777564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699777561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18bd5ed3d129879459c218a5f4927c3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioSetup
 --- !u!1 &1791419332
 GameObject:
   m_ObjectHideFlags: 0
