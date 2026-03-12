@@ -275,6 +275,13 @@ public class EnemyController : MonoBehaviour
         {
             if(e.transform.TryGetComponent<PlayerController>(out var player))
             {
+                if (player.IsParrying)
+                {
+                    Knockback(new Vector3(1, 1, 1));
+                    Debug.Log("I got parried");
+                    return;
+
+                }
                 player.Hit((player.transform.position - transform.position).normalized);
             }
         });

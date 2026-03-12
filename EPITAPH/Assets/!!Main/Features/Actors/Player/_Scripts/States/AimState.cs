@@ -18,8 +18,8 @@ public class AimState : VampireBaseState
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsMovingBoolAnim, true);
         
         _ctx.PlayerController.UpdateActiveBolt(true);
-        
         _ctx.InputActions.Player.UseBolt.performed += UseActiveBoltInput;
+     
     }
 
     public override void Update()
@@ -50,6 +50,9 @@ public class AimState : VampireBaseState
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsMovingBoolAnim, false);
         
         _ctx.PlayerController.UpdateActiveBolt(true);
+
+      
+        
     }
 
     public void UseActiveBoltInput(InputAction.CallbackContext ctx)

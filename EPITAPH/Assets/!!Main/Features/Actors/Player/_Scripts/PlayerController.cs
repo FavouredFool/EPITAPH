@@ -84,6 +84,9 @@ public class PlayerController : MonoBehaviour
     public Vector2 LastHitDir { get; set; }
     
     bool IsAiming => RotateInput.magnitude > _moveLockThreshold;
+    public bool IsParrying = false;
+    public float MaxParryTime = 1;
+    public float currentParryTime = 0;
     public bool BoltInChamber => PlayerVariableAnchor.PlayerVariables.Charge >= 1;
     
     // Lunge
@@ -222,6 +225,7 @@ public class PlayerController : MonoBehaviour
     
     void FixedUpdate()
     {
+       
         StateMachine.FixedUpdate();
     }
 

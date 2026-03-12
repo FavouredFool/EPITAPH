@@ -19,12 +19,25 @@ public class ReloadState : VampireBaseState
         _ctx.PlayerController.CrossboxAnimator.SetTrigger(PlayerController.StartReloadTriggerAnim);
         PlayerAudio.StartCharging();
 
+        _ctx.PlayerController.IsParrying = true;
+        _ctx.PlayerController.currentParryTime = 0;
     }
 
     public override void Update()
     {
         _ctx.PlayerController.ReadInput();
-        
+
+        if (_ctx.PlayerController.currentParryTime < _ctx.PlayerController.MaxParryTime)
+        {
+            Debug.Log("IsParrying");
+            _ctx.PlayerController.IsParrying = true;
+            _ctx.PlayerController.currentParryTime += Time.deltaTime;
+        }
+        else
+        {
+            _ctx.PlayerController.IsParrying = false;
+        }
+
         UpdateReload();
     }
     
@@ -38,6 +51,9 @@ public class ReloadState : VampireBaseState
 
     public override void OnExit()
     {
+        _ctx.PlayerController.IsParrying = false;
+        _ctx.PlayerController.currentParryTime = 0;
+
         _ctx.InputActions.Player.Reload.canceled -= ReloadInputStop;
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsReloadingBoolAnim, false);
     }
