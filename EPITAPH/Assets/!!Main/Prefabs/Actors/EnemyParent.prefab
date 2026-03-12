@@ -20215,13 +20215,14 @@ MonoBehaviour:
   <Animator>k__BackingField: {fileID: 8439757380821537968}
   GetParried: {fileID: 5637113363338436039}
   Anticipation: {fileID: 5283626701715918697}
+  ChargeAnticipation: {fileID: 4491525150756422466}
   offset: {x: 0, y: 0, z: 0}
-  _chargeSpeed: 10.79
-  _chargeStartRange: 2.44
-  _chargeAttackRange: 1.76
-  _chargeDuration: 0.88
-  _chargeCooldown: 5.14
-  _meleeAttackAntipicationTime: 0
+  _chargeSpeed: 8
+  _chargeStartRange: 3
+  _chargeAttackRange: 1.5
+  _chargeDuration: 0.5
+  _chargeCooldown: 12
+  _meleeAttackAntipicationTime: 0.6
 --- !u!195 &6147159875537704608
 NavMeshAgent:
   m_ObjectHideFlags: 0

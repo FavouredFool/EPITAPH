@@ -251,7 +251,8 @@ public class EnemyController : MonoBehaviour
 
         Vector2 decidedMovementVelocity = (_target.transform.position - transform.position).normalized * _chargeSpeed;
         ChargeAnticipation.Play();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1);
+        Anticipation.Play();
         _agent.speed = _chargeSpeed;
         Rb.linearVelocity = decidedMovementVelocity;
 
