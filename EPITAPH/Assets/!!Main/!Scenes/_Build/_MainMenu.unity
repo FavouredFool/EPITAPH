@@ -195,11 +195,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MusicPlayer
   MusicEvent:
     Guid:
-      Data1: -359893080
-      Data2: 1119288469
-      Data3: 1094881674
-      Data4: 375221637
-    Path: event:/Music/PlaceholderTrack
+      Data1: -1562142761
+      Data2: 1079563692
+      Data3: -1669752669
+      Data4: 657173584
+    Path: event:/Music/Track_00
   lookahead: 0.2
 --- !u!4 &1643059970
 Transform:

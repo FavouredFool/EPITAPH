@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8024424281235067106}
   - component: {fileID: 2277454113613137900}
-  - component: {fileID: 2784297127004554570}
   m_Layer: 0
   m_Name: MusicPlayer
   m_TagString: Untagged
@@ -47,20 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MusicPlayer
   MusicEvent:
     Guid:
-      Data1: 1486637064
-      Data2: 1285632065
-      Data3: -748186189
-      Data4: 464022410
-    Path: event:/Music/SilentTempo
---- !u!114 &2784297127004554570
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8400946379320409867}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c06afc9ac2a487043a97c81c825ecd70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BeatReceiverExample
+      Data1: -1562142761
+      Data2: 1079563692
+      Data3: -1669752669
+      Data4: 657173584
+    Path: event:/Music/Track_00
+  lookahead: 0
