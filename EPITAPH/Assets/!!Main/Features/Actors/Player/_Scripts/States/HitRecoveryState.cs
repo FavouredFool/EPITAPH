@@ -10,9 +10,9 @@ public class HitRecoveryState : VampireBaseState
 
     public override void OnEnter()
     {
-        _ctx.PlayerController.CurrentHP -= 1;
+        PlayerVariableAnchor.PlayerVariables.Health -= 1;
 
-        if (_ctx.PlayerController.CurrentHP <= 0)
+        if (PlayerVariableAnchor.PlayerVariables.Health <= 0)
         {
             Debug.Log("GAME OVER");
             return;

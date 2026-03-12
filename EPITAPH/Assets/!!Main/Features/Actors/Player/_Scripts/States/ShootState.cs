@@ -15,8 +15,7 @@ public class ShootState : VampireBaseState
         bolt.BoltType = type;
         bolt.Player = _ctx.PlayerController;
         
-        _ctx.PlayerController.CurrentBoltsHeld[type] = bolt;
-        _ctx.PlayerController.BoltInChamber = false;
+        PlayerVariableAnchor.PlayerVariables.LoseAmmo(bolt);
         
         _ctx.PlayerController.Knockback(-_ctx.PlayerController.transform.up);
 
@@ -26,6 +25,9 @@ public class ShootState : VampireBaseState
         // Animation
         _ctx.PlayerController.CrossboxAnimator.SetTrigger(PlayerController.ShootCrossbowTriggerAnim);
         _ctx.PlayerController.CharacterAnimator.SetTrigger(PlayerController.ShotCharacterTriggerAnim);
+        
+        // Charge
+        PlayerVariableAnchor.PlayerVariables.Charge = 0;
     }
 
     public override void Update()
