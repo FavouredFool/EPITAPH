@@ -92,7 +92,9 @@ public class PlayerController : MonoBehaviour
     public Dictionary<BoltType, BoltController> CurrentBoltsHeld { get; private set; }
     
     bool IsAiming => RotateInput.magnitude > _moveLockThreshold;
-    
+    public bool IsParrying = false;
+    public float MaxParryTime = 1;
+    public float currentParryTime = 0;
     // Lunge
     // TODO i really dislike doing this but i dont know how else i can convey the info to the state
     public BoltController CurrentLungeBolt { get; set; }
@@ -228,6 +230,7 @@ public class PlayerController : MonoBehaviour
     
     void FixedUpdate()
     {
+       
         StateMachine.FixedUpdate();
     }
 
