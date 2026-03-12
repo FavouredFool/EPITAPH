@@ -23,11 +23,12 @@ public class ShootState : VampireBaseState
         PlayerAudio.PlayReleaseCrossbow();
         
         // Animation
-        _ctx.PlayerController.CrossboxAnimator.SetTrigger(PlayerController.ShootCrossbowTriggerAnim);
+        _ctx.PlayerController.CrossbowAnimator.SetTrigger(PlayerController.ShootCrossbowTriggerAnim);
         _ctx.PlayerController.CharacterAnimator.SetTrigger(PlayerController.ShotCharacterTriggerAnim);
         
         // Charge
         PlayerVariableAnchor.PlayerVariables.Charge = 0;
+        PlayerVariableAnchor.PlayerVariables.ChargeProgress = 0;
     }
 
     public override void Update()

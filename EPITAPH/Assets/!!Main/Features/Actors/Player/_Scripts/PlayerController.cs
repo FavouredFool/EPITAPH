@@ -32,7 +32,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] BoltController _projectileBlueprint;
     [SerializeField, Range(0, 4)] float _spawnDist;
     [SerializeField] Transform _bloodlineConnection;
-    [SerializeField, Range(0.1f, 4)] float _reloadTime;
+    [field: SerializeField, Range(0.1f, 10)] public float ReloadTimeCharge1 { get; private set; }
+    [field: SerializeField, Range(0.1f, 10)] public float ReloadTimeCharge2 { get; private set; }
+    [field: SerializeField, Range(0.1f, 10)] public float ReloadTimeCharge3 { get; private set; }
     
     [Header("Cam")]
     [SerializeField] Transform _cameraFollow;
@@ -67,13 +69,11 @@ public class PlayerController : MonoBehaviour
     public float SpeedAimReduction => _speedAimReduction;
     
     public Animator CharacterAnimator => _characterAnimator;
-    public Animator CrossboxAnimator => _crossbowAnimator;
+    public Animator CrossbowAnimator => _crossbowAnimator;
     public float SpawnDist => _spawnDist;
     public Transform BloodlineConnection => _bloodlineConnection;
 
     public BoltController ProjectileBlueprint => _projectileBlueprint;
-
-    public float ReloadTime => _reloadTime;
     
     InputActions _inputActions;
     public Rigidbody2D Rb { get; set; }
@@ -113,9 +113,8 @@ public class PlayerController : MonoBehaviour
     // Hashes
     // Crossbow
     public static readonly int ShootCrossbowTriggerAnim = Animator.StringToHash("Shoot");
-    public static readonly int StartReloadTriggerAnim = Animator.StringToHash("StartReload");
-    public static readonly int InterruptReloadTriggerAnim = Animator.StringToHash("InterruptReload");
-    public static readonly int FinishReloadTriggerAnim = Animator.StringToHash("FinishReload");
+    public static readonly int IsReloadBoolAnim = Animator.StringToHash("IsReload");
+    public static readonly int ChargeIntAnim = Animator.StringToHash("Charge");
     
     // Player
     public static readonly int IsMovingBoolAnim = Animator.StringToHash("IsMoving");
@@ -165,11 +164,15 @@ public class PlayerController : MonoBehaviour
         
         Assert.IsNotNull(_characterAnimator);
         Assert.IsNotNull(_crossbowAnimator);
-            
-        PlayerVariableAnchor.PlayerVariables.Health = PlayerVariableAnchor.PlayerVariables.HealthMax;
-        PlayerVariableAnchor.PlayerVariables.Charge = 1;
 
         InitStateMachine();
+    }
+
+    void Start()
+    {
+        PlayerVariableAnchor.PlayerVariables.Health = PlayerVariableAnchor.PlayerVariables.HealthMax;
+        PlayerVariableAnchor.PlayerVariables.Charge = 1;
+        PlayerVariableAnchor.PlayerVariables.ChargeProgress = 0;
     }
 
     void InitStateMachine()
@@ -233,6 +236,8 @@ public class PlayerController : MonoBehaviour
     {
         StateMachine.Update();
         //Debug.Log(StateMachine.CurrentState);
+        
+        CrossbowAnimator.SetInteger(ChargeIntAnim, PlayerVariableAnchor.PlayerVariables.Charge);
     }
     
     void FixedUpdate()
@@ -316,7 +321,7 @@ public class PlayerController : MonoBehaviour
     
     public void StartReload()
     {
-        if (BoltInChamber) return;
+        if (PlayerVariableAnchor.PlayerVariables.Charge == 3) return;
         if (PlayerVariableAnchor.PlayerVariables.CurrentAmmoCount == 0) return;
         
         StartReloadTrigger.Trigger();

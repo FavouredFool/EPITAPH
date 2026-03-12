@@ -14,9 +14,10 @@ public class ReloadState : VampireBaseState
     {
         _ctx.InputActions.Player.Reload.canceled += ReloadInputStop;
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsReloadingBoolAnim, true);
+        _ctx.PlayerController.CrossbowAnimator.SetBool(PlayerController.IsReloadBoolAnim, true);
         
         _reloadStart = Time.time;
-        _ctx.PlayerController.CrossboxAnimator.SetTrigger(PlayerController.StartReloadTriggerAnim);
+        
         PlayerAudio.StartCharging();
 
         _ctx.PlayerController.IsParrying = true;
@@ -56,47 +57,71 @@ public class ReloadState : VampireBaseState
 
         _ctx.InputActions.Player.Reload.canceled -= ReloadInputStop;
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsReloadingBoolAnim, false);
+        _ctx.PlayerController.CrossbowAnimator.SetBool(PlayerController.IsReloadBoolAnim, false);
     }
     
     public void ReloadInputStop(InputAction.CallbackContext ctx)
     {
-        InterruptReload();
+        FinishReload();
     }
     
     public void UpdateReload()
     {
-        float chargeT = (Time.time - _reloadStart) / _ctx.PlayerController.ReloadTime;
-        PlayerAudio.SetCharge(chargeT);
-        PlayerVariableAnchor.PlayerVariables.Charge = chargeT;
-
-        if (Time.time - _reloadStart >_ctx.PlayerController.ReloadTime)
+        if (PlayerVariableAnchor.PlayerVariables.Charge == 3)
         {
             FinishReload();
+            return;
         }
+        
+        if (PlayerVariableAnchor.PlayerVariables.ChargeProgress >= 1)
+        {
+            PlayerVariableAnchor.PlayerVariables.ChargeProgress = 0;
+            PlayerVariableAnchor.PlayerVariables.Charge += 1;
+            _reloadStart = Time.time;
+        }
+        
+        float reloadTime;
+
+        if (PlayerVariableAnchor.PlayerVariables.Charge == 0)
+        {
+            reloadTime = _ctx.PlayerController.ReloadTimeCharge1;
+        }
+        else if (PlayerVariableAnchor.PlayerVariables.Charge == 1)
+        {
+            reloadTime = _ctx.PlayerController.ReloadTimeCharge2;
+        }
+        else if (PlayerVariableAnchor.PlayerVariables.Charge == 2)
+        {
+            reloadTime = _ctx.PlayerController.ReloadTimeCharge3;
+        }
+        else
+        {
+            return;
+        }
+        
+        float chargeT = (Time.time - _reloadStart) / reloadTime;
+        PlayerAudio.SetCharge(chargeT);
+        PlayerVariableAnchor.PlayerVariables.ChargeProgress = chargeT;
     }
 
     public void FinishReload()
     {
+        // TODO only listen to input to stop the charge (or the highest has been reached)
+        
         _ctx.PlayerController.StopReloadTrigger.Trigger();
         
         PlayerAudio.StopCharging();
 
-        PlayerVariableAnchor.PlayerVariables.Charge = 1;
+        if (PlayerVariableAnchor.PlayerVariables.Charge != 3)
+        {
+            PlayerVariableAnchor.PlayerVariables.ChargeProgress = 0;
+        }
+        else
+        {
+            PlayerVariableAnchor.PlayerVariables.ChargeProgress = 1;
+        }
 
         PlayerAudio.PlayStepLock(3); // TODO: ADD Steps
-        _ctx.PlayerController.CrossboxAnimator.SetTrigger(PlayerController.FinishReloadTriggerAnim);
-    }
-
-    public void InterruptReload()
-    {
-        _ctx.PlayerController.StopReloadTrigger.Trigger();
         
-        _reloadStart = float.PositiveInfinity;
-
-        PlayerAudio.StopCharging();
-        
-        PlayerVariableAnchor.PlayerVariables.Charge = 0;
-
-        _ctx.PlayerController.CrossboxAnimator.SetTrigger(PlayerController.InterruptReloadTriggerAnim);
     }
 }
