@@ -7,6 +7,8 @@ public class NormalDeathState : EnemyBaseState
 
     float _reviveTime;
     float _startTime;
+
+    bool _finishedKnockback;
     
     public NormalDeathState(EnemyStateContext ctx) : base(ctx)
     {
@@ -21,12 +23,18 @@ public class NormalDeathState : EnemyBaseState
 
         _reviveTime = Random.Range(_ctx.EnemyController.ReviveRange.x, _ctx.EnemyController.ReviveRange.y);
         _startTime = Time.time;
+
+        _finishedKnockback = false;
     }
 
     public override void Update()
     {
-        if (_ctx.EnemyController.KnockbackVelocity.sqrMagnitude < 0.05)
+        if (!_finishedKnockback && _ctx.EnemyController.KnockbackVelocity.sqrMagnitude < 0.05)
         {
+            _finishedKnockback = true;
+            
+            _ctx.EnemyController.CurrentlyStickingBolt.StickToNothing();
+            _ctx.EnemyController.CurrentlyStickingBolt = null;
             _ctx.EnemyController.Rb.simulated = false;
         }
 
@@ -51,5 +59,6 @@ public class NormalDeathState : EnemyBaseState
     public override void OnExit()
     {
         _ctx.EnemyController.Animator.SetTrigger(ReviveTriggerAnim);
+        _ctx.EnemyController.Rb.simulated = true;
     }
 }
