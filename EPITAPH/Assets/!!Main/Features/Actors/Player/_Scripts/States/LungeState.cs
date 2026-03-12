@@ -96,5 +96,10 @@ public class LungeState : VampireBaseState
         
         _ctx.PlayerController.MainCollider.enabled = true;
         _ctx.PlayerController.LungeCollider.enabled = false;
+
+        if (PlayerVariableAnchor.PlayerVariables.Charge < 1)
+        {
+            PlayerVariableAnchor.PlayerVariables.Charge = 1;
+        }
     }
 }

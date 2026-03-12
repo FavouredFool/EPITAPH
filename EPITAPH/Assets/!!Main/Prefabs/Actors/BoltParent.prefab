@@ -403,7 +403,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   _lineRenderer: {fileID: 5715364174271043730}
   _endPoint: {fileID: 3310388444332561724}
-  _testBoltRayThickness: 1
+  _testBoltRayThickness: 0.2
   _bloodRecolor:
   - {fileID: 7064617353744204867}
   - {fileID: 6183218007283916103}

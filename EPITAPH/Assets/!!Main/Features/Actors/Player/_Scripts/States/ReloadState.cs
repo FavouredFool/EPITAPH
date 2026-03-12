@@ -29,7 +29,7 @@ public class ReloadState : VampireBaseState
 
         if (_ctx.PlayerController.currentParryTime < _ctx.PlayerController.MaxParryTime)
         {
-            Debug.Log("IsParrying");
+            //Debug.Log("IsParrying");
             _ctx.PlayerController.IsParrying = true;
             _ctx.PlayerController.currentParryTime += Time.deltaTime;
         }
