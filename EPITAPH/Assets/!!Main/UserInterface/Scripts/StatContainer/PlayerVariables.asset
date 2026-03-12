@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerVariables
   _health: 3
   _healthMax: 3
-  _ammo: 4
-  _ammoMax: 4
   _charge: 0
   _chargeMax: 3
+  _chargeProgress: 0
+  _style: 0
+  _styleMax: 7
+  _styleResetTime: 4
