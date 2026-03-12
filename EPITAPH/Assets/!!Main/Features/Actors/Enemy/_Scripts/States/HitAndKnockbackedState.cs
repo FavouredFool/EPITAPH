@@ -23,20 +23,22 @@ public class HitAndKnockbackedState : EnemyBaseState
     {
         if (_ctx.EnemyController.KnockbackVelocity.magnitude < _ctx.EnemyController.KnockbackMagnitudeThreshold)
         {
-            _ctx.EnemyController.CurrentHp -= 1;
+            _ctx.EnemyController.LatestHitVelocity = _ctx.EnemyController.KnockbackMagnitudeThreshold * _ctx.EnemyController.LatestHitVelocity.normalized;
+            _ctx.EnemyController.NormalDeathTrigger.Trigger();
             
-            if (_ctx.EnemyController.CurrentHp <= 0)
-            {
-                // final push of corpse
-                _ctx.EnemyController.LatestHitVelocity = _ctx.EnemyController.KnockbackMagnitudeThreshold * _ctx.EnemyController.LatestHitVelocity.normalized;
-                _ctx.EnemyController.Die();
-                _ctx.EnemyController.NormalDeathTrigger.Trigger();
-            }
-            else
-            {
-                _ctx.EnemyController.Animator.SetTrigger(ExitKnockbackTriggerAnim);
-                _ctx.EnemyController.ExitKnockback.Trigger();
-            }
+            // there's no way to normally recover from the knockback
+            //_ctx.EnemyController.CurrentHp -= 1;
+            //
+            //if (_ctx.EnemyController.CurrentHp <= 0)
+            //{
+            //    // final push of corpse
+            //    
+            //}
+            //else
+            //{
+            //    _ctx.EnemyController.Animator.SetTrigger(ExitKnockbackTriggerAnim);
+            //    _ctx.EnemyController.ExitKnockback.Trigger();
+            //}
         }
     }
     
