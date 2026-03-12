@@ -5169,6 +5169,7 @@ MonoBehaviour:
   <Visual3DMesh>k__BackingField: {fileID: 36141211466067002}
   <BatVFXObject>k__BackingField: {fileID: 1174812970023929490}
   <MainCollider>k__BackingField: {fileID: 5073509689141753427}
+  <WallCollider>k__BackingField: {fileID: 8497733251553354946}
   <HitKnockbackStrength>k__BackingField: 10
   _speed: 4
   _speedAimReduction: 1.5

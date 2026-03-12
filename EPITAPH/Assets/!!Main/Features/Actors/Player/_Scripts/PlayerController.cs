@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField] public GameObject Visual3DMesh { get; set; }
     [field: SerializeField] public GameObject BatVFXObject { get; set; }
     [field: SerializeField] public Collider2D MainCollider { get; set; }
+    [field: SerializeField] public Collider2D WallCollider { get; set; }
     [field: SerializeField, Range(0, 10)] public float HitKnockbackStrength { get; set; }
     
     [Header("Movement")]

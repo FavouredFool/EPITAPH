@@ -22,6 +22,7 @@ public class LungeState : VampireBaseState
 
         _ctx.PlayerController.MainCollider.enabled = false;
         _ctx.PlayerController.LungeCollider.enabled = true;
+        _ctx.PlayerController.WallCollider.enabled = false;
         
         _startLungeTime = Time.time;
 
@@ -96,6 +97,7 @@ public class LungeState : VampireBaseState
         
         _ctx.PlayerController.MainCollider.enabled = true;
         _ctx.PlayerController.LungeCollider.enabled = false;
+        _ctx.PlayerController.WallCollider.enabled = true;
 
         if (PlayerVariableAnchor.PlayerVariables.Charge < 1)
         {

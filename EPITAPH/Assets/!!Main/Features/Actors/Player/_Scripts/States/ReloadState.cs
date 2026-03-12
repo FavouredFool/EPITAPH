@@ -144,8 +144,6 @@ public class ReloadState : VampireBaseState
         {
             PlayerVariableAnchor.PlayerVariables.ChargeProgress = 1;
         }
-
-        
     }
     
     public void UseActiveBoltInput(InputAction.CallbackContext ctx)
