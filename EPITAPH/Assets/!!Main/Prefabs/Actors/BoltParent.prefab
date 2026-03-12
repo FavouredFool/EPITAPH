@@ -308,7 +308,6 @@ MonoBehaviour:
   _boltPickup:
     serializedVersion: 2
     m_Bits: 2048
-  _shootSpeed: 150
   _hitbox: {fileID: 2251670246412952734}
   _pickupBox: {fileID: 8217312107629525244}
   _mainGradient:
@@ -727,8 +726,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0031138659, y: 0.23887219}
-  m_Size: {x: 1.1411705, y: 1.4516652}
+  m_Offset: {x: 0.0031138659, y: -0.7826952}
+  m_Size: {x: 1.35, y: 3.567477}
   m_Direction: 0
 --- !u!1 &8486439071630514552
 GameObject:
