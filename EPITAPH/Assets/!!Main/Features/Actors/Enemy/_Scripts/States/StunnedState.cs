@@ -15,6 +15,8 @@ public class StunnedState : EnemyBaseState
         if (time >= 5)
         {
             _ctx.EnemyController.ExitStun.Trigger();
+            _ctx.EnemyController.Animator.SetTrigger("ExitStun");
+
         }
         base.FixedUpdate();
     }
@@ -28,7 +30,6 @@ public class StunnedState : EnemyBaseState
 
     public override void OnExit()
     {
-        _ctx.EnemyController.Animator.SetTrigger("ExitStun");
 
         base.OnExit();
 

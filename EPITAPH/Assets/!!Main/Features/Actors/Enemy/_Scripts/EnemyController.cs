@@ -77,9 +77,9 @@ public class EnemyController : MonoBehaviour
     void InitStateMachine()
     {
         StateMachine = new StateMachine();
-        
+
         EnemyStateContext ctx = new(this);
-        
+
         EverythingState chaseState = new(ctx);
         HitAndKnockbackedState hitAndKnockbackedState = new(ctx);
         NormalDeathState normalDeathState = new(ctx);
@@ -91,33 +91,28 @@ public class EnemyController : MonoBehaviour
         ExitKnockback = new TriggerPredicate();
         StakedTrigger = new TriggerPredicate();
         NormalDeathTrigger = new TriggerPredicate();
-        EnterStun= new TriggerPredicate();
+        EnterStun = new TriggerPredicate();
         ExitStun = new TriggerPredicate();
-        EnterChase=new TriggerPredicate();
+        EnterChase = new TriggerPredicate();
 
-        At(chaseState, hitAndKnockbackedState, EnterKnockback);
         At(hitAndKnockbackedState, chaseState, ExitKnockback);
         ReviveTrigger = new TriggerPredicate();
 
         At(chaseState, hitAndKnockbackedState, EnterKnockback);
-        //At(hitAndKnockbackedState, everythingState, ExitKnockback);
-        
-        At(hitAndKnockbackedState, normalDeathState, NormalDeathTrigger);
+
         At(hitAndKnockbackedState, stakedState, StakedTrigger);
-        
+
         At(chaseState, normalDeathState, NormalDeathTrigger);
 
-        At(chaseState, stunnedState, EnterStun);
         At(stunnedState, chaseState, ExitStun);
         At(idleState, chaseState, EnterChase);
         StateMachine.SetState(idleState);
         At(chaseState, stunnedState, EnterStun);
-        At(stunnedState, chaseState, ExitStun);
 
         At(normalDeathState, chaseState, ReviveTrigger);
         StateMachine.SetState(idleState);
     }
-    
+
     void At(IState from, IState to, IStatePredicate condition) =>
         StateMachine.AddTransition(from, to, condition);
     
