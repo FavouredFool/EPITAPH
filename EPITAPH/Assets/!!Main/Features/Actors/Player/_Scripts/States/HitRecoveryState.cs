@@ -22,7 +22,7 @@ public class HitRecoveryState : VampireBaseState
 
         _ctx.PlayerController.Visual3DMesh.SetActive(false);
         _ctx.PlayerController.MainCollider.enabled = false;
-        _ctx.PlayerController.VFXObject.SetActive(true);
+        _ctx.PlayerController.BatVFXObject.SetActive(true);
         
         _ctx.PlayerController.Knockback(_ctx.PlayerController.LastHitDir * _ctx.PlayerController.KnockbackStrength);
     }
@@ -56,6 +56,6 @@ public class HitRecoveryState : VampireBaseState
     {
         _ctx.PlayerController.Visual3DMesh.SetActive(true);
         _ctx.PlayerController.MainCollider.enabled = true;
-        _ctx.PlayerController.VFXObject.SetActive(false);
+        _ctx.PlayerController.BatVFXObject.SetActive(false);
     }
 }

@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField, Range(1, 6)] public float HitSpeedMultiplier { get; set; } = 2.5f;
     [field: SerializeField, Range(0.1f, 10)] public float BatTime { get; set; } = 2f;
     [field: SerializeField] public GameObject Visual3DMesh { get; set; }
-    [field: SerializeField] public GameObject VFXObject { get; set; }
+    [field: SerializeField] public GameObject BatVFXObject { get; set; }
     [field: SerializeField] public Collider2D MainCollider { get; set; }
     [field: SerializeField, Range(0, 10)] public float KnockbackStrength { get; set; }
     
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
     [Header("Bolt")]
     [SerializeField, Range(0, 180)] float _maxActivateAngle = 40;
     
-    [Header("Lunge")]
+    [field: Header("Lunge")]
     [field:SerializeField, Range(1, 100)] public float LungeSpeed { get; private set; }
     [field:SerializeField, Range(1, 200)] public float LungeAcceleration { get; private set; }
     [field: SerializeField, Range(1, 6)] public float LungePower { get; private set; } = 3;
@@ -56,6 +56,11 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField, Range(0, 30)] public float FailsaveExitTime { get; private set; } = 10f;
     [field: SerializeField] public Collider2D LungeCollider { get; private set; }
     [SerializeField, Range(0, 200)] float _lungeKnockbackStrength = 100;
+    
+    [field: Header("Ravage")]
+    [field: SerializeField, Range(0, 10)] public float ExplosionDistance { get; private set; } = 3;
+    [field: SerializeField] public GameObject ExplosionVFXObject { get; set; }
+    [field: SerializeField, Range(0, 10)] public float RavageTime { get; private set; } = 1;
     
     public float Speed => _speed;
     public float SpeedAimReduction => _speedAimReduction;
@@ -102,6 +107,7 @@ public class PlayerController : MonoBehaviour
     public TriggerPredicate StopReloadTrigger { get; private set; }
     public TriggerPredicate GetHitTrigger { get; private set; }
     public TriggerPredicate FinishBatTrigger { get; private set; }
+    public TriggerPredicate FinishRavageTrigger { get; private set; }
     
     // Hashes
     // Crossbow
@@ -114,8 +120,10 @@ public class PlayerController : MonoBehaviour
     public static readonly int IsMovingBoolAnim = Animator.StringToHash("IsMoving");
     public static readonly int IsAimingBoolAnim = Animator.StringToHash("IsAiming");
     public static readonly int IsReloadingBoolAnim = Animator.StringToHash("IsReloading");
-    public static readonly int IsLungingBoolAnim = Animator.StringToHash("IsLunging");
+    public static readonly int EnterLungeTriggerAnim = Animator.StringToHash("EnterLunge");
+    public static readonly int EnterIdle = Animator.StringToHash("EnterIdle");
     public static readonly int ShotCharacterTriggerAnim = Animator.StringToHash("Shot");
+    public static readonly int RavageTriggerAnim = Animator.StringToHash("Ravage");
     
 
     public Vector2 AimAssistedLookDirection
@@ -174,6 +182,7 @@ public class PlayerController : MonoBehaviour
         ShootState shootState = new(ctx);
         LungeState lungeState = new(ctx);
         HitRecoveryState hitRecoveryState = new(ctx);
+        RavageState ravageState = new(ctx);
 
         ShootTrigger = new TriggerPredicate();
         LungeTrigger = new TriggerPredicate();
@@ -182,6 +191,7 @@ public class PlayerController : MonoBehaviour
         StopReloadTrigger = new TriggerPredicate();
         GetHitTrigger = new TriggerPredicate();
         FinishBatTrigger = new TriggerPredicate();
+        FinishRavageTrigger = new TriggerPredicate();
         
         At(moveState, aimState, new FuncStatePredicate(() => IsAiming));
         At(aimState, moveState, new FuncStatePredicate(() => !IsAiming));
@@ -197,7 +207,9 @@ public class PlayerController : MonoBehaviour
         At(moveState, lungeState, LungeTrigger);
         At(aimState, lungeState, LungeTrigger);
         
-        At(lungeState, moveState, FinishLungeTrigger);
+        //At(lungeState, moveState, Rava);
+        At(lungeState, ravageState, FinishLungeTrigger);
+        At(ravageState, moveState, FinishRavageTrigger);
         
         At(moveState, hitRecoveryState, GetHitTrigger);
         At(aimState, hitRecoveryState, GetHitTrigger);
@@ -218,11 +230,11 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         StateMachine.Update();
+        //Debug.Log(StateMachine.CurrentState);
     }
     
     void FixedUpdate()
     {
-       
         StateMachine.FixedUpdate();
     }
 
