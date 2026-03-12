@@ -308,7 +308,6 @@ MonoBehaviour:
   _boltPickup:
     serializedVersion: 2
     m_Bits: 2048
-  _shootSpeed: 150
   _hitbox: {fileID: 2251670246412952734}
   _pickupBox: {fileID: 8217312107629525244}
   _mainGradient:
@@ -403,7 +402,6 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   _lineRenderer: {fileID: 5715364174271043730}
   _endPoint: {fileID: 3310388444332561724}
-  _testBoltRayThickness: 0.2
   _bloodRecolor:
   - {fileID: 7064617353744204867}
   - {fileID: 6183218007283916103}

@@ -36,7 +36,7 @@ public class LungeState : VampireBaseState
     {
         if ((Time.time - _startLungeTime) > _ctx.PlayerController.FailsaveExitTime)
         {
-            _ctx.PlayerController.FinishLungeTrigger.Trigger();
+            _ctx.PlayerController.LungeToRavageTrigger.Trigger();
             _ctx.PlayerController.CharacterAnimator.SetTrigger(PlayerController.EnterIdle);
         }
     }
@@ -99,9 +99,9 @@ public class LungeState : VampireBaseState
         _ctx.PlayerController.LungeCollider.enabled = false;
         _ctx.PlayerController.WallCollider.enabled = true;
 
-        if (PlayerVariableAnchor.PlayerVariables.Charge < 1)
-        {
-            PlayerVariableAnchor.PlayerVariables.Charge = 1;
-        }
+        //if (PlayerVariableAnchor.PlayerVariables.Charge < 1)
+        //{
+        //    PlayerVariableAnchor.PlayerVariables.Charge = 1;
+        //}
     }
 }

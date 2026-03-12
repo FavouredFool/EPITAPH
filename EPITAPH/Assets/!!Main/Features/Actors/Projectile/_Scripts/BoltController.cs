@@ -16,7 +16,7 @@ public class BoltController : MonoBehaviour
     [SerializeField] Gradient _activatableGradient;
     [SerializeField] LineRenderer _lineRenderer;
     [SerializeField] Transform _endPoint;
-    [SerializeField, Range(0, 2)] public float _testBoltRayThickness = 1;
+    //[SerializeField, Range(0, 2)] public float _testBoltRayThickness = 1;
 
     [Header("MaterialStuff")]
     [SerializeField] MeshRenderer[] _bloodRecolor;
@@ -33,7 +33,7 @@ public class BoltController : MonoBehaviour
 
     float _baseWidth;
 
-    public bool IsActivatable => IsSelected && IsLineOfSight && HasHitSomething && IsStakeBolt;
+    public bool IsActivatable => IsSelected && IsLineOfSight && HasHitSomething /*&& IsStakeBolt*/;
     
     public bool IsSelected { get; set; }
     

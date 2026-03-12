@@ -113,7 +113,8 @@ public class PlayerController : MonoBehaviour
     // State Triggers
     public TriggerPredicate ShootTrigger { get; private set; }
     public TriggerPredicate LungeTrigger { get; private set; }
-    public TriggerPredicate FinishLungeTrigger { get; private set; }
+    public TriggerPredicate LungeToRavageTrigger { get; private set; }
+    public TriggerPredicate LungeToMoveTrigger { get; private set; }
     public TriggerPredicate GetHitTrigger { get; private set; }
     public TriggerPredicate FinishBatTrigger { get; private set; }
     public TriggerPredicate FinishRavageTrigger { get; private set; }
@@ -210,14 +211,14 @@ public class PlayerController : MonoBehaviour
 
         ShootTrigger = new TriggerPredicate();
         LungeTrigger = new TriggerPredicate();
-        FinishLungeTrigger = new TriggerPredicate();
+        LungeToRavageTrigger = new TriggerPredicate();
         GetHitTrigger = new TriggerPredicate();
         FinishBatTrigger = new TriggerPredicate();
         FinishRavageTrigger = new TriggerPredicate();
+        LungeToMoveTrigger = new TriggerPredicate();
         
         At(moveState, aimState, new FuncStatePredicate(() => IsAiming));
         At(aimState, moveState, new FuncStatePredicate(() => !IsAiming));
-        
         
         At(moveState, reloadState, new FuncStatePredicate(RequestsReload));
         At(aimState, reloadState, new FuncStatePredicate(RequestsReload));
@@ -235,14 +236,14 @@ public class PlayerController : MonoBehaviour
         At(reloadState, lungeState, LungeTrigger);
         
         //At(lungeState, moveState, Rava);
-        At(lungeState, ravageState, FinishLungeTrigger);
+        At(lungeState, ravageState, LungeToRavageTrigger);
+        At(lungeState, moveState, LungeToMoveTrigger);
         At(ravageState, moveState, FinishRavageTrigger);
         
         At(moveState, hitRecoveryState, GetHitTrigger);
         At(aimState, hitRecoveryState, GetHitTrigger);
         At(reloadState, hitRecoveryState, GetHitTrigger);
         
-
         At(hitRecoveryState, moveState, FinishBatTrigger);
         
         StateMachine.SetState(moveState);
@@ -358,10 +359,18 @@ public class PlayerController : MonoBehaviour
     public void PickupBolt(BoltController bolt)
     {
         PlayerVariableAnchor.PlayerVariables.AddAmmo(bolt.BoltType);
-        Debug.Log("PickupBolt");
+        //Debug.Log("PickupBolt");
         PlayerAudio.PlayBoltPickup();
-        FinishLungeTrigger.Trigger();
-        
+
+        if (bolt.IsStakeBolt)
+        {
+            LungeToRavageTrigger.Trigger();
+        }
+        else
+        {
+            LungeToMoveTrigger.Trigger();
+        }
+
         Destroy(bolt.gameObject);
     }
 
@@ -385,24 +394,28 @@ public class PlayerController : MonoBehaviour
 
 
         Vector2 aimDir = RotateInput.normalized;
-        
-        foreach (BoltController bolt in bolts)
+
+        if (aimDir.sqrMagnitude > 0.05f)
         {
-            Vector2 boltDir = (bolt.Rb2D.position - Rb.position).normalized;
-
-            float angle = Vector2.Angle(aimDir, boltDir);
-
-            if (angle > _maxActivateAngle)
+            foreach (BoltController bolt in bolts)
             {
-                continue;
-            }
+                Vector2 boltDir = (bolt.Rb2D.position - Rb.position).normalized;
+
+                float angle = Vector2.Angle(aimDir, boltDir);
+
+                if (angle > _maxActivateAngle)
+                {
+                    continue;
+                }
             
-            if (angle < bestAngle)
-            {
-                bestAngle = angle;
-                bestBolt = bolt;
+                if (angle < bestAngle)
+                {
+                    bestAngle = angle;
+                    bestBolt = bolt;
+                }
             }
         }
+        
         
         foreach (BoltController boltToTurnOff in bolts)
         {
