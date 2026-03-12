@@ -346,7 +346,7 @@ public class EnemyController : MonoBehaviour
  
     public void Die()
     {
-        //_deadSprite.SetActive(true);
+        SignalBus.Fire(new Signal_EnemyDeath(this));
     }
 
     public void Knockback(Vector2 velocity)
