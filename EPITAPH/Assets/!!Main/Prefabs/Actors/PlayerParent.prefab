@@ -449,19 +449,22 @@ MonoBehaviour:
   <Visual3DMesh>k__BackingField: {fileID: 36141211466067002}
   <BatVFXObject>k__BackingField: {fileID: 1174812970023929490}
   <MainCollider>k__BackingField: {fileID: 5073509689141753427}
-  <KnockbackStrength>k__BackingField: 1
+  <HitKnockbackStrength>k__BackingField: 10
   _speed: 5
   _speedAimReduction: 3
   _speedReloadReduction: 6
   _moveLockThreshold: 0.95
   _knockbackDecay: 15
-  _knockbackStrength: 30
+  _shootKnockbackStrength: 2
   _projectileBlueprint: {fileID: 3159500885758386700, guid: ab0c37ca8bfc3e04289b07f66f8f1814, type: 3}
   _spawnDist: 0.2
   _bloodlineConnection: {fileID: 3944289762324200595}
   <ReloadTimeCharge1>k__BackingField: 0.75
   <ReloadTimeCharge2>k__BackingField: 1.25
   <ReloadTimeCharge3>k__BackingField: 2.75
+  <ShootSpeedCharge1>k__BackingField: 125
+  <ShootSpeedCharge2>k__BackingField: 250
+  <ShootSpeedCharge3>k__BackingField: 350
   _cameraFollow: {fileID: 6711845830664808249}
   _cameraAimOffset: 2.5
   PADScriptableObject: {fileID: 11400000, guid: 97171c05725167e438dded62167c2289, type: 2}

@@ -7,7 +7,6 @@ public class BoltController : MonoBehaviour
 {
     [SerializeField] LayerMask _blockLayers;
     [SerializeField] LayerMask _boltPickup;
-    [SerializeField, Range(1, 300)] float _shootSpeed = 15;
 
     [SerializeField] Collider2D _hitbox;
     [SerializeField] Collider2D _pickupBox;
@@ -64,9 +63,9 @@ public class BoltController : MonoBehaviour
         _lineRenderer.endWidth = _baseWidth;
     }
 
-    void Start()
+    public void GetShot(float shootSpeed)
     {
-        Rb2D.AddForce(transform.up * _shootSpeed, ForceMode2D.Impulse);
+        Rb2D.AddForce(transform.up * shootSpeed, ForceMode2D.Impulse);
     }
 
     void Update()
