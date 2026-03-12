@@ -1,27 +1,36 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ChargeUID : MonoBehaviour
 {
-    [SerializeField] Image[] _ChargeBars;
+    [SerializeField] Image _ChargeBar;
+    [SerializeField] TMP_Text _ChargeText;
+
+    [SerializeField] RectTransform _CenterRect;
+
+    [SerializeField]AnimationCurve _progressEase;
 
     void OnEnable()
     {
         SignalBus.Subscribe<Signal_RefreshUI_Charge>(RefreshUID);
+        SignalBus.Subscribe<Signal_RefreshUI_ChargeProgress>(RefreshUID);
     }
     void OnDisable()
     {
         SignalBus.Unsubscribe<Signal_RefreshUI_Charge>(RefreshUID);
+        SignalBus.Unsubscribe<Signal_RefreshUI_ChargeProgress>(RefreshUID);
     }
 
     public void RefreshUID(Signal_RefreshUI_Charge signal)
     {
-        float value= signal.variables.Charge;
+        int value = (int)signal.variables.Charge;
+        _ChargeText.text= value.ToString();
+    }
+    public void RefreshUID(Signal_RefreshUI_ChargeProgress signal)
+    {
+        float value = signal.variables.ChargeProgress;
 
-        for(int i =0; i<_ChargeBars.Length; i++)
-        {
-            float fill= Mathf.Clamp01(value-i);
-            _ChargeBars[i].fillAmount=fill;
-        }
+        _ChargeBar.fillAmount=_progressEase.Evaluate(value);
     }
 }
