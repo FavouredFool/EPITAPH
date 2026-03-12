@@ -20222,7 +20222,7 @@ MonoBehaviour:
   _chargeAttackRange: 1.5
   _chargeDuration: 0.5
   _chargeCooldown: 12
-  _meleeAttackAntipicationTime: 0.8
+  _meleeAttackAntipicationTime: 0.2
 --- !u!195 &6147159875537704608
 NavMeshAgent:
   m_ObjectHideFlags: 0
