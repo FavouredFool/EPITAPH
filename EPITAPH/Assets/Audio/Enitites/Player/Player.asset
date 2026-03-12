@@ -33,6 +33,13 @@ MonoBehaviour:
       Data3: 776208791
       Data4: 1542797747
     Path: event:/SFX/Player/Crossbow/CrossbowRelease
+  boltPickup:
+    Guid:
+      Data1: -21081570
+      Data2: 1238086475
+      Data3: -40039758
+      Data4: -264810015
+    Path: event:/SFX/Player/Crossbow/BoltPickup
   hitMeat:
     Guid:
       Data1: 551514837

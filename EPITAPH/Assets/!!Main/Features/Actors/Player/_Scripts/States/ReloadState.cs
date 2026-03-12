@@ -82,6 +82,7 @@ public class ReloadState : VampireBaseState
         {
             PlayerVariableAnchor.PlayerVariables.ChargeProgress = 0;
             PlayerVariableAnchor.PlayerVariables.Charge += 1;
+            PlayerAudio.PlayStepLock(PlayerVariableAnchor.PlayerVariables.Charge);
             _reloadStart = Time.time;
         }
         
@@ -126,7 +127,6 @@ public class ReloadState : VampireBaseState
             PlayerVariableAnchor.PlayerVariables.ChargeProgress = 1;
         }
 
-        PlayerAudio.PlayStepLock(3); // TODO: ADD Steps
         
     }
 }
