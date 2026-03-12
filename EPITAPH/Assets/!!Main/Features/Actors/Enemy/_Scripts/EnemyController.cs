@@ -59,7 +59,7 @@ public class EnemyController : MonoBehaviour
 
     public Vector2 LatestHitVelocity { get; set; }
 
-    Vector3 offset;
+   public Vector3 offset;
     void Awake()
     {
         Rb = GetComponent<Rigidbody2D>();
@@ -195,7 +195,8 @@ public class EnemyController : MonoBehaviour
 
         if (!charging)
         {
-            _agent.destination = _target.position+offset;
+         
+                _agent.destination = _target.position+offset*0.5f;
         }
     }
 
