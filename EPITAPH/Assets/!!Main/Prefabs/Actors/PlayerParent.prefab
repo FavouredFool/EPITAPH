@@ -450,17 +450,17 @@ MonoBehaviour:
   <BatVFXObject>k__BackingField: {fileID: 1174812970023929490}
   <MainCollider>k__BackingField: {fileID: 5073509689141753427}
   <HitKnockbackStrength>k__BackingField: 10
-  _speed: 5
-  _speedAimReduction: 3
-  _speedReloadReduction: 6
+  _speed: 4
+  _speedAimReduction: 1.5
+  _reloadAimReduction: 16
   _moveLockThreshold: 0.95
   _knockbackDecay: 15
   _shootKnockbackStrength: 2
   _projectileBlueprint: {fileID: 3159500885758386700, guid: ab0c37ca8bfc3e04289b07f66f8f1814, type: 3}
   _spawnDist: 0.2
   _bloodlineConnection: {fileID: 3944289762324200595}
-  <ReloadTimeCharge1>k__BackingField: 0.75
-  <ReloadTimeCharge2>k__BackingField: 1.25
+  <ReloadTimeCharge1>k__BackingField: 1
+  <ReloadTimeCharge2>k__BackingField: 1.75
   <ReloadTimeCharge3>k__BackingField: 2.75
   <ShootSpeedCharge1>k__BackingField: 125
   <ShootSpeedCharge2>k__BackingField: 250

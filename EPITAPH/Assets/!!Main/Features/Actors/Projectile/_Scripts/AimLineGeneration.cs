@@ -42,7 +42,7 @@ public class AimLineGeneration : MonoBehaviour
         
         RegenerateLine();
 
-        _lineRenderer.enabled = _playerController.StateMachine.CurrentState is AimState;
+        _lineRenderer.enabled = _playerController.StateMachine.CurrentState is AimState or ReloadState && _playerController.RotateInput.magnitude > 0.05f;
     }
 
     void UpdateOffsetAngle()
