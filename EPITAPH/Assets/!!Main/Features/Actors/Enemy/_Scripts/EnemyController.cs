@@ -49,6 +49,10 @@ public class EnemyController : MonoBehaviour
     
     public TriggerPredicate ReviveTrigger { get; private set; }
 
+    public TriggerPredicate EnterChase { get; private set; }
+
+
+
     public Vector2 LatestHitVelocity { get; set; }
     
     void Awake()
@@ -74,11 +78,12 @@ public class EnemyController : MonoBehaviour
         
         EnemyStateContext ctx = new(this);
         
-        EverythingState everythingState = new(ctx);
+        EverythingState chaseState = new(ctx);
         HitAndKnockbackedState hitAndKnockbackedState = new(ctx);
         NormalDeathState normalDeathState = new(ctx);
         StakedState stakedState = new(ctx);
         StunnedState stunnedState = new(ctx);
+        IdleState idleState = new(ctx);
 
         EnterKnockback = new TriggerPredicate();
         //ExitKnockback = new TriggerPredicate();
@@ -86,6 +91,10 @@ public class EnemyController : MonoBehaviour
         NormalDeathTrigger = new TriggerPredicate();
         EnterStun= new TriggerPredicate();
         ExitStun = new TriggerPredicate();
+        EnterChase=new TriggerPredicate();
+
+        At(chaseState, hitAndKnockbackedState, EnterKnockback);
+        At(hitAndKnockbackedState, chaseState, ExitKnockback);
         ReviveTrigger = new TriggerPredicate();
 
         At(everythingState, hitAndKnockbackedState, EnterKnockback);
@@ -94,8 +103,12 @@ public class EnemyController : MonoBehaviour
         At(hitAndKnockbackedState, normalDeathState, NormalDeathTrigger);
         At(hitAndKnockbackedState, stakedState, StakedTrigger);
         
-        At(everythingState, normalDeathState, NormalDeathTrigger);
+        At(chaseState, normalDeathState, NormalDeathTrigger);
 
+        At(chaseState, stunnedState, EnterStun);
+        At(stunnedState, chaseState, ExitStun);
+        At(idleState, chaseState, EnterChase);
+        StateMachine.SetState(idleState);
         At(everythingState, stunnedState, EnterStun);
         At(stunnedState, everythingState, ExitStun);
 
@@ -317,6 +330,11 @@ public class EnemyController : MonoBehaviour
     public bool IsTargetInRangeForMelee()
     {
         return Vector2.Distance(transform.position, _target.transform.position) < _chargeAttackRange;
+    }
+
+    public bool IsTargetInRangeForChaseBegin()
+    {
+        return Vector2.Distance(transform.position, _target.transform.position) < 10;
     }
 
     #endregion
