@@ -24,6 +24,7 @@ public class Bolt3DVisual : MonoBehaviour
 
         if (transform.position.z > _staticHeightThreshold)
         {
+            _boltController.EnablePickup();
             _boltController.HitSomething();
         }
 

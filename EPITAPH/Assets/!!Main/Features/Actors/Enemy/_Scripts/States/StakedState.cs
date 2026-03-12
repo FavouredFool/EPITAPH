@@ -15,6 +15,8 @@ public class StakedState : EnemyBaseState
         _ctx.EnemyController.Die();
         PlayerAudio.PlayWallHit(_ctx.EnemyController.transform.position);
         _ctx.EnemyController.Rb.simulated = false;
+        
+        _ctx.EnemyController.CurrentlyStickingBolt.StickToNothing();
     }
 
     public override void Update()

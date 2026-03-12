@@ -29,7 +29,6 @@ public class PlayerController : MonoBehaviour
     
     [Header("Shooting")]
     [SerializeField, Range(0, 50)] float _knockbackStrength = 2;
-    [SerializeField] Transform _instantiationParent;
     [SerializeField] BoltController _projectileBlueprint;
     [SerializeField, Range(0, 4)] float _spawnDist;
     [SerializeField] Transform _bloodlineConnection;
@@ -64,7 +63,6 @@ public class PlayerController : MonoBehaviour
     public Animator CharacterAnimator => _characterAnimator;
     public Animator CrossboxAnimator => _crossbowAnimator;
     public float SpawnDist => _spawnDist;
-    public Transform InstantiationParent => _instantiationParent;
     public Transform BloodlineConnection => _bloodlineConnection;
 
     public BoltController ProjectileBlueprint => _projectileBlueprint;
@@ -220,7 +218,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         StateMachine.Update();
-        //Debug.Log(StateMachine.CurrentState);
     }
     
     void FixedUpdate()
@@ -280,26 +277,6 @@ public class PlayerController : MonoBehaviour
     public void ReloadInputStart(InputAction.CallbackContext ctx)
     {
         StartReload();
-    }
-
-    public void LungeRightInput(InputAction.CallbackContext ctx)
-    {
-        LungeToBolt(BoltType.RIGHT);
-    }
-    
-    public void LungeDownInput(InputAction.CallbackContext ctx)
-    {
-        LungeToBolt(BoltType.DOWN);
-    }
-    
-    public void LungeLeftInput(InputAction.CallbackContext ctx)
-    {
-        LungeToBolt(BoltType.LEFT);
-    }
-    
-    public void LungeUpInput(InputAction.CallbackContext ctx)
-    {
-        LungeToBolt(BoltType.UP);
     }
     
     public void LungeToBolt(BoltType boltType)

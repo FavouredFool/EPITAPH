@@ -3,8 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class ProgressionManager : MonoBehaviour
 {
-
-
     void Awake()
     {
         ProgressionVariableAnchor.ProgressionVariables.SetLevel(SceneManager.GetActiveScene().name);

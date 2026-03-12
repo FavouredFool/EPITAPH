@@ -34,6 +34,8 @@ public class EnemyController : MonoBehaviour
     public Vector2 KnockbackVelocity { get; set; }
 
     NavMeshAgent _agent;
+    
+    public BoltController CurrentlyStickingBolt { get; set; }
 
     [field: SerializeField] public Animator Animator { get; set; }
     

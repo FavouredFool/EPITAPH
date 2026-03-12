@@ -24,7 +24,6 @@ public class BoltController : MonoBehaviour
     [SerializeField] Color _reColor;
 
     [Header("3D Stuff")]
-    //[SerializeField] Transform[] _visual3Dstuff;
     [SerializeField] Transform _visual3D;
     
     public Rigidbody2D Rb2D { get; set; }
@@ -126,31 +125,22 @@ public class BoltController : MonoBehaviour
         LayerUtil.SetLayerRecursively(gameObject, LayerUtil.ExtractLayerFromMask(_boltPickup));
         
         _hitbox.enabled = false;
-        _pickupBox.enabled = true;
-
         HasHitSomething = true;
         
 		if (other != null)
         {
 			Rb2D.transform.SetParent(other.transform.parent, true);
-		}
-      
-        if (other != null)
-        {
+            
             if (other.GetComponentInParent<EnemyController>() is { } enemy)
             {
-                //foreach (Transform threeDStuff in _visual3Dstuff)
-                //{
-                //    threeDStuff.SetParent(enemy.BoltBone, true);
-                //}
-                
-                _visual3D.SetParent(enemy.BoltBone);
-                _visual3D.localPosition = Vector3.zero;
-                _visual3D.localRotation = Quaternion.identity;
-                MakeBloody();
+                StickToEnemy(enemy);
                 enemy.EvaluateBoltHit(velocity);
             }
-        }
+            else
+            {
+                EnablePickup();
+            }
+		}
 
         SignalBus.Fire(new Signal_ShowBoltMarker(transform,_boltType,true,false));
     }
@@ -187,6 +177,35 @@ public class BoltController : MonoBehaviour
                 mat.SetColor("_BoltColor", _reColor);
             }
         }
+    }
+
+    void StickToEnemy(EnemyController enemy)
+    {
+        enemy.CurrentlyStickingBolt = this;
+        _visual3D.SetParent(enemy.BoltBone);
+        _visual3D.localPosition = Vector3.zero;
+        _visual3D.localRotation = Quaternion.identity;
+        MakeBloody();
+    }
+
+    public void StickToNothing()
+    {
+        
+        transform.SetParent(null, true);
+        transform.position = _visual3D.position;
+        _visual3D.SetParent(transform, true);
+        // reductive tecnically
+        _visual3D.localPosition = Vector3.zero;
+        
+        // do i want to keep the rotation maybe? Probably not.
+        //_visual3D.localRotation = Quaternion.identity;
+        
+        EnablePickup();
+    }
+
+    public void EnablePickup()
+    {
+        _pickupBox.enabled = true;
     }
 }
 
