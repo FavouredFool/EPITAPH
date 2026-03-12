@@ -63,8 +63,8 @@ Transform:
   m_GameObject: {fileID: 1421283867762544039}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.25}
+  m_LocalScale: {x: 1, y: 1, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1050688413452799966}
@@ -102,7 +102,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: caa022fe079d4c74baaac6ecb2505856, type: 3}
+  - {fileID: -876546973899608171, guid: 4aecfed98a34b054492c1f83c50cd785, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -255,14 +255,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5522538275079258361}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.31072623, w: 0.9504995}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.8, y: 2.9, z: 0}
-  m_LocalScale: {x: 1, y: 8, z: 50}
+  m_LocalScale: {x: 0.2, y: 8, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1099493953514705716}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 36.206}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &3224946173523987676
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -344,8 +344,8 @@ MonoBehaviour:
   m_ShadowMesh:
     m_Mesh: {fileID: 0}
     m_LocalBounds:
-      m_Center: {x: 0.0000076293945, y: 0.0000076293945, z: 0}
-      m_Extent: {x: 0.49999237, y: 0.49999237, z: 0}
+      m_Center: {x: -0.0000076293945, y: 0, z: 0}
+      m_Extent: {x: 0.49999237, y: 0.5, z: 0}
     m_EdgeProcessing: 1
     m_TrimEdge: 0
     m_FlipX: 0
@@ -421,7 +421,7 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 0.5, y: 0.5, z: 0.5}
   m_MoveThreshold: 0.1
-  m_Carve: 0
+  m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
@@ -437,4 +437,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 589e2ee419c956449aa74dcd61d310c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BreakableWall
-  GlassBreaking: {fileID: 0}
+  GlassBreaking: {fileID: 2774372810828526051, guid: 003740a952591344cb6d80429f0b97c0, type: 3}
