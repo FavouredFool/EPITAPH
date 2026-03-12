@@ -35,6 +35,15 @@ public struct Signal_RefreshUI_ChargeProgress
     }
 }
 
+public struct Signal_RefreshUI_Style
+{
+    public PlayerVariables variables;
+    public Signal_RefreshUI_Style(PlayerVariables variables)
+    {
+        this.variables = variables;
+    }
+}
+
 
 public struct Signal_ShowBoltMarker
 {
@@ -139,5 +148,13 @@ public struct Signal_EnemyDeath
     public Signal_EnemyDeath(EnemyController enemy)
     {
         this.enemy=enemy;
+    }
+}public struct Signal_PlayerDamage
+{
+    public PlayerController player;
+
+    public Signal_PlayerDamage(PlayerController enemy)
+    {
+        this.player=enemy;
     }
 }

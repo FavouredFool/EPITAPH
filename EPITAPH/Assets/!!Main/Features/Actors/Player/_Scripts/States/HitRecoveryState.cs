@@ -12,6 +12,8 @@ public class HitRecoveryState : VampireBaseState
     {
         PlayerVariableAnchor.PlayerVariables.Health -= 1;
 
+        SignalBus.Fire(new Signal_PlayerDamage(_ctx.PlayerController));
+
         if (PlayerVariableAnchor.PlayerVariables.Health <= 0)
         {
             Debug.Log("GAME OVER");

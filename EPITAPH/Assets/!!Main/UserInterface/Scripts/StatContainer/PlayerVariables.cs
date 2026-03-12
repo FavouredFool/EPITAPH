@@ -13,10 +13,16 @@ public class PlayerVariables : ScriptableObject
     //[SerializeField] int _ammo;
     //[SerializeField] int _ammoMax;
 
-    [Header("Charge")]
+[Header("Charge")]
     [SerializeField] int _charge;
-    [SerializeField] float _chargeProgress;
     [SerializeField] int _chargeMax;
+        [SerializeField] float _chargeProgress;
+
+        [Header("Style")]
+    [SerializeField] int _style;
+    [SerializeField] int _styleMax;
+    [SerializeField] float _styleResetTime;
+    float _lastStyleChangeTime;
 
     public int Health
     {
@@ -36,13 +42,24 @@ public class PlayerVariables : ScriptableObject
             SignalBus.Fire(new Signal_RefreshUI_Charge(this));
         }
     }
-        public float ChargeProgress
+    public float ChargeProgress
     {
         get=> _chargeProgress;
         set
         {
             _chargeProgress=Mathf.Clamp01(value);
             SignalBus.Fire(new Signal_RefreshUI_ChargeProgress(this));
+        }
+    }
+    public int Style
+    {
+        get => _style;
+        set
+        {
+            _style = Mathf.Clamp(value, 0, _styleMax);
+            Debug.Log("STYLE IS NOW lvl "+_style);
+            _lastStyleChangeTime = Time.time;
+            SignalBus.Fire(new Signal_RefreshUI_Style(this));
         }
     }
 
@@ -76,7 +93,11 @@ public class PlayerVariables : ScriptableObject
         }
     }
     public int HealthMax=>_healthMax;
-    public float ChargeMax=>_chargeMax;
+    public int ChargeMax=>_chargeMax;
+
+    public float StyleMax=>_styleMax;
+    public float StyleResetTime=>_styleResetTime;
+    public float StyleResetI=>(Time.time-_lastStyleChangeTime)/_styleResetTime;
 
     public void HealMax() => Heal(HealthMax);
     public void Heal(int value)

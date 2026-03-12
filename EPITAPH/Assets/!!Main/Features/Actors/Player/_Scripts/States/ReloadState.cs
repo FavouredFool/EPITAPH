@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 public class ReloadState : VampireBaseState
 {
     float _reloadStart = float.PositiveInfinity;
-    
     public ReloadState(VampireStateContext ctx) : base(ctx)
     {
 
@@ -24,9 +23,12 @@ public class ReloadState : VampireBaseState
         _reloadStart = Time.time;
         
         PlayerAudio.StartCharging();
-
-        _ctx.PlayerController.IsParrying = true;
-        _ctx.PlayerController.currentParryTime = 0;
+        if (_ctx.PlayerController.ParryCooldown >= 1)
+        {
+            _ctx.PlayerController.IsParrying = true;
+            _ctx.PlayerController.currentParryTime = 0;
+            _ctx.PlayerController.ParryEffect.Play();
+        }
     }
 
     public override void Update()
@@ -34,17 +36,18 @@ public class ReloadState : VampireBaseState
         _ctx.PlayerController.ReadInput();
         _ctx.PlayerController.UpdateActiveBolt(false);
         
-        if (_ctx.PlayerController.currentParryTime < _ctx.PlayerController.MaxParryTime)
+        if (_ctx.PlayerController.ParryCooldown >= 1)
         {
-            //Debug.Log("IsParrying");
-            _ctx.PlayerController.IsParrying = true;
-            _ctx.PlayerController.currentParryTime += Time.deltaTime;
+            if (_ctx.PlayerController.currentParryTime < _ctx.PlayerController.MaxParryTime)
+            {
+                _ctx.PlayerController.IsParrying = true;
+                _ctx.PlayerController.currentParryTime += Time.deltaTime;
+            }
+            else
+            {
+                _ctx.PlayerController.IsParrying = false;
+            }
         }
-        else
-        {
-            _ctx.PlayerController.IsParrying = false;
-        }
-
         UpdateReload();
         
         _ctx.PlayerController.SetCameraFollow(_ctx.PlayerController.RotateInput.sqrMagnitude > 0.05f);
@@ -78,6 +81,13 @@ public class ReloadState : VampireBaseState
         _ctx.InputActions.Player.Shoot.performed -= _ctx.PlayerController.ShootBoltInput;
         _ctx.InputActions.Player.UseBolt.performed -= UseActiveBoltInput;
         
+        if (_ctx.PlayerController.ParryCooldown >= 1)
+        {
+            _ctx.PlayerController.IsParrying = false;
+            _ctx.PlayerController.currentParryTime = 0;
+            _ctx.PlayerController.ParryEffect.Stop();
+            _ctx.PlayerController.ParryCooldown = 0;
+        }
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsReloadingBoolAnim, false);
         _ctx.PlayerController.CrossbowAnimator.SetBool(PlayerController.IsReloadBoolAnim, false);
     }
