@@ -157,6 +157,7 @@ public class BoltController : MonoBehaviour
         Vector2 start = _endPoint.position;
         Vector2 center = start + diff * 0.5f;
 
+        // TODO maybe turn this into a circle cast that actually moves over the space
         RaycastHit2D hit = Physics2D.BoxCast(
             center,
             new Vector2(diff.magnitude, _testBoltRayThickness),

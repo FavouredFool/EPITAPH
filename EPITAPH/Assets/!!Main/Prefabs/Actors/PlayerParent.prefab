@@ -472,10 +472,11 @@ MonoBehaviour:
   <InitalDelay>k__BackingField: 0.15
   <FailsaveExitTime>k__BackingField: 4
   <LungeCollider>k__BackingField: {fileID: 2669688092074519299}
-  _lungeKnockbackStrength: 50
-  <ExplosionDistance>k__BackingField: 3
+  <LungeKnockbackStrength>k__BackingField: 50
+  <ExplosionRadius>k__BackingField: 3
   <ExplosionVFXObject>k__BackingField: {fileID: 6103822573756688511}
-  <RavageTime>k__BackingField: 0.5
+  <RavageTime>k__BackingField: 1
+  <ExplosionKnockbackStrength>k__BackingField: 200
   IsParrying: 0
   MaxParryTime: 1
   currentParryTime: 0
