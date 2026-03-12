@@ -42,6 +42,9 @@ public class EnemyController : MonoBehaviour
     public TriggerPredicate EnterKnockback { get; private set; }
     public TriggerPredicate ExitKnockback { get; private set; }
 
+    public TriggerPredicate EnterStun { get; private set; }
+    public TriggerPredicate ExitStun { get; private set; }
+
     public Vector2 LatestHitVelocity { get; set; }
     
     void Awake()
@@ -59,7 +62,8 @@ public class EnemyController : MonoBehaviour
         
         InitStateMachine();
     }
-    
+
+
     void InitStateMachine()
     {
         StateMachine = new StateMachine();
@@ -70,12 +74,15 @@ public class EnemyController : MonoBehaviour
         HitAndKnockbackedState hitAndKnockbackedState = new(ctx);
         NormalDeathState normalDeathState = new(ctx);
         StakedState stakedState = new(ctx);
+        StunnedState stunnedState = new(ctx);
 
         EnterKnockback = new TriggerPredicate();
         ExitKnockback = new TriggerPredicate();
         StakedTrigger = new TriggerPredicate();
         NormalDeathTrigger = new TriggerPredicate();
-        
+        EnterStun= new TriggerPredicate();
+        ExitStun = new TriggerPredicate();
+
         At(everythingState, hitAndKnockbackedState, EnterKnockback);
         At(hitAndKnockbackedState, everythingState, ExitKnockback);
         
@@ -83,7 +90,9 @@ public class EnemyController : MonoBehaviour
         At(hitAndKnockbackedState, stakedState, StakedTrigger);
         
         At(everythingState, normalDeathState, NormalDeathTrigger);
-        
+
+        At(everythingState, stunnedState, EnterStun);
+        At(stunnedState, everythingState, ExitStun);
         StateMachine.SetState(everythingState);
     }
     
@@ -275,7 +284,16 @@ public class EnemyController : MonoBehaviour
         {
             if(e.transform.TryGetComponent<PlayerController>(out var player))
             {
-                player.Hit((player.transform.position - transform.position).normalized);
+                if (player.IsParrying)
+                {
+                    EnterStun.Trigger();
+
+                }
+                else
+                {
+                    player.Hit((player.transform.position - transform.position).normalized);
+
+                }
             }
         });
     }
