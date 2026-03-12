@@ -202,7 +202,7 @@ public class EnemyController : MonoBehaviour
 
     public void ChaseBehaviourFixedUpdateTick()
     {
-        if (IsTargetInRangeForCharge() && IsTargetVisible() && !charging && Time.time >= _lastChargeTime + _chargeCooldown)
+        if (IsTargetInRangeForCharge() && IsTargetVisible() && !charging && Time.time >= _lastChargeTime + _chargeCooldown )
         {
             StartCoroutine(MeleeChaseAttackLoop());
         }
@@ -246,7 +246,7 @@ public class EnemyController : MonoBehaviour
 
 
         Vector2 decidedMovementVelocity = (_target.transform.position - transform.position).normalized * _chargeSpeed;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         _agent.speed = _chargeSpeed;
         Rb.linearVelocity = decidedMovementVelocity;
 
@@ -330,7 +330,7 @@ public class EnemyController : MonoBehaviour
 
     public bool IsTargetInRangeForCharge()
     {
-        return Vector2.Distance(transform.position, _target.transform.position) < _chargeStartRange;
+        return Vector2.Distance(transform.position, _target.transform.position) < _chargeStartRange && Vector2.Distance(transform.position, _target.transform.position) > 2;
     }
 
     public bool IsTargetInRangeForMelee()
