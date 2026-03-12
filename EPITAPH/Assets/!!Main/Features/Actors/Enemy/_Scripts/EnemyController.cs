@@ -11,12 +11,14 @@ public class EnemyController : MonoBehaviour
    
     [SerializeField] Transform _target;
     [SerializeField] LayerMask _wallLayers;
-    [SerializeField, UnityEngine.Range(1, 6)] int _maxHp;
+    //[SerializeField, UnityEngine.Range(1, 6)] int _maxHp;
     [SerializeField, UnityEngine.Range(0, 20)] float _speed;
     [SerializeField, UnityEngine.Range(1, 20)] float _knockbackDecay;
     [SerializeField, UnityEngine.Range(1, 20)] float _knockbackResistance = 1;
     //[field: SerializeField, UnityEngine.Range(1, 20)] public float FinalCollapsePush { get; set; } = 1;
-
+    [field: SerializeField] public Vector2 ReviveRange { get; set; } = new(2, 5);
+    
+    
     [Header("3D Stuff")]
     [field: SerializeField] public Transform BoltBone { get; set; }
 
@@ -26,7 +28,7 @@ public class EnemyController : MonoBehaviour
     public float KnockbackDecay => _knockbackDecay;
     
     public Rigidbody2D Rb { get; set; }
-    public int CurrentHp { get; set; }
+    //public int CurrentHp { get; set; }
 
     Vector2 _movementVelocity;
     public Vector2 KnockbackVelocity { get; set; }
@@ -40,10 +42,12 @@ public class EnemyController : MonoBehaviour
     public TriggerPredicate StakedTrigger { get; private set; }
     public TriggerPredicate NormalDeathTrigger { get; private set; }
     public TriggerPredicate EnterKnockback { get; private set; }
-    public TriggerPredicate ExitKnockback { get; private set; }
+    //public TriggerPredicate ExitKnockback { get; private set; }
 
     public TriggerPredicate EnterStun { get; private set; }
     public TriggerPredicate ExitStun { get; private set; }
+    
+    public TriggerPredicate ReviveTrigger { get; private set; }
 
     public TriggerPredicate EnterChase { get; private set; }
 
@@ -62,7 +66,7 @@ public class EnemyController : MonoBehaviour
         _agent.updateUpAxis = false;
         _agent.speed = _speed;
 
-        CurrentHp = _maxHp;
+        //CurrentHp = _maxHp;
         
         InitStateMachine();
     }
@@ -82,7 +86,7 @@ public class EnemyController : MonoBehaviour
         IdleState idleState = new(ctx);
 
         EnterKnockback = new TriggerPredicate();
-        ExitKnockback = new TriggerPredicate();
+        //ExitKnockback = new TriggerPredicate();
         StakedTrigger = new TriggerPredicate();
         NormalDeathTrigger = new TriggerPredicate();
         EnterStun= new TriggerPredicate();
@@ -91,6 +95,10 @@ public class EnemyController : MonoBehaviour
 
         At(chaseState, hitAndKnockbackedState, EnterKnockback);
         At(hitAndKnockbackedState, chaseState, ExitKnockback);
+        ReviveTrigger = new TriggerPredicate();
+
+        At(everythingState, hitAndKnockbackedState, EnterKnockback);
+        //At(hitAndKnockbackedState, everythingState, ExitKnockback);
         
         At(hitAndKnockbackedState, normalDeathState, NormalDeathTrigger);
         At(hitAndKnockbackedState, stakedState, StakedTrigger);
@@ -101,6 +109,11 @@ public class EnemyController : MonoBehaviour
         At(stunnedState, chaseState, ExitStun);
         At(idleState, chaseState, EnterChase);
         StateMachine.SetState(idleState);
+        At(everythingState, stunnedState, EnterStun);
+        At(stunnedState, everythingState, ExitStun);
+
+        At(normalDeathState, everythingState, ReviveTrigger);
+        StateMachine.SetState(everythingState);
     }
     
     void At(IState from, IState to, IStatePredicate condition) =>

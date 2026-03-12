@@ -3,6 +3,10 @@ using UnityEngine;
 public class NormalDeathState : EnemyBaseState
 {
     static readonly int NormalDeathTriggerAnim = Animator.StringToHash("NormalDeath");
+    static readonly int ReviveTriggerAnim = Animator.StringToHash("Revive");
+
+    float _reviveTime;
+    float _startTime;
     
     public NormalDeathState(EnemyStateContext ctx) : base(ctx)
     {
@@ -12,12 +16,11 @@ public class NormalDeathState : EnemyBaseState
     public override void OnEnter()
     {
         _ctx.EnemyController.Animator.SetBool(NormalDeathTriggerAnim, true);
-        _ctx.EnemyController.Die();
-
-        // TODO additional mini knockback and delayed simulation = false
-        // in which direction? Do i know player?
         
         _ctx.EnemyController.Knockback(_ctx.EnemyController.LatestHitVelocity);
+
+        _reviveTime = Random.Range(_ctx.EnemyController.ReviveRange.x, _ctx.EnemyController.ReviveRange.y);
+        _startTime = Time.time;
     }
 
     public override void Update()
@@ -25,6 +28,12 @@ public class NormalDeathState : EnemyBaseState
         if (_ctx.EnemyController.KnockbackVelocity.sqrMagnitude < 0.05)
         {
             _ctx.EnemyController.Rb.simulated = false;
+        }
+
+        if (Time.time - _startTime > _reviveTime)
+        {
+            // revive
+            _ctx.EnemyController.ReviveTrigger.Trigger();
         }
     }
     
@@ -41,6 +50,6 @@ public class NormalDeathState : EnemyBaseState
 
     public override void OnExit()
     {
-
+        _ctx.EnemyController.Animator.SetTrigger(ReviveTriggerAnim);
     }
 }
