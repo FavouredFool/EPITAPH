@@ -55,7 +55,8 @@ public class EnemyController : MonoBehaviour
 
     public TriggerPredicate EnterChase { get; private set; }
 
-
+    [SerializeField] public ParticleSystem GetParried;
+    [SerializeField] public ParticleSystem Anticipation;
 
     public Vector2 LatestHitVelocity { get; set; }
 
@@ -247,6 +248,7 @@ public class EnemyController : MonoBehaviour
 
         Vector2 decidedMovementVelocity = (_target.transform.position - transform.position).normalized * _chargeSpeed;
         yield return new WaitForSeconds(0.5f);
+        Anticipation.Play();
         _agent.speed = _chargeSpeed;
         Rb.linearVelocity = decidedMovementVelocity;
 
@@ -295,6 +297,7 @@ public class EnemyController : MonoBehaviour
         }
 
         yield return new WaitForSeconds(1);
+      
         Animator.SetBool("charging", false);
         _agent.speed = _speed;
         Rb.linearVelocity = Vector2.zero;
