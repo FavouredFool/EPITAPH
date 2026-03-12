@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnvObjAudioData
   interactionEvent:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -1053346241
+      Data2: 1120799567
+      Data3: -486443343
+      Data4: 836572513
+    Path: event:/SFX/Environment/GlassBreak

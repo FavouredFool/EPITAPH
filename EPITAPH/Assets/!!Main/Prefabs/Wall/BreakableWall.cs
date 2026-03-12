@@ -9,13 +9,13 @@ public class BreakableWall : MonoBehaviour
 
     private void Awake()
     {
-        audio = audioData.Setup(this.gameObject);
+        audio = audioData?.Setup(this.gameObject);
     }
 
     public void BreakWall()
     {
         Instantiate(GlassBreaking.gameObject, transform.position, transform.rotation);
         gameObject.SetActive(false);
-        audio.PlayInteractionEvent();
+        audio?.PlayInteractionEvent();
     }
 }
