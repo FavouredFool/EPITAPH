@@ -424,6 +424,7 @@ Transform:
   - {fileID: 8500348783263236695}
   - {fileID: 6832729491387809120}
   - {fileID: 6711845830664808249}
+  - {fileID: 4423164144439745223}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9193680919393893474
@@ -482,9 +483,11 @@ MonoBehaviour:
   <ExplosionVFXObject>k__BackingField: {fileID: 6103822573756688511}
   <RavageTime>k__BackingField: 1
   <ExplosionKnockbackStrength>k__BackingField: 200
+  ParryEffect: {fileID: 4095246488593112102}
   IsParrying: 0
   MaxParryTime: 0.3
   currentParryTime: 0
+  ParryCooldown: 1
 --- !u!50 &7293642660323857259
 Rigidbody2D:
   serializedVersion: 5
@@ -812,6 +815,73 @@ MonoBehaviour:
     - rid: 1465347929378390214
       type: {class: ShadowShape2DProvider_Collider2D, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
       data: 
+--- !u!1001 &4048619868445323530
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3967837825882570733}
+    m_Modifications:
+    - target: {fileID: 382148509192088525, guid: 4c3e86736a73fe14d91a0ce60afad673, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 382148509192088525, guid: 4c3e86736a73fe14d91a0ce60afad673, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 382148509192088525, guid: 4c3e86736a73fe14d91a0ce60afad673, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 382148509192088525, guid: 4c3e86736a73fe14d91a0ce60afad673, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 382148509192088525, guid: 4c3e86736a73fe14d91a0ce60afad673, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 382148509192088525, guid: 4c3e86736a73fe14d91a0ce60afad673, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 382148509192088525, guid: 4c3e86736a73fe14d91a0ce60afad673, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 382148509192088525, guid: 4c3e86736a73fe14d91a0ce60afad673, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 382148509192088525, guid: 4c3e86736a73fe14d91a0ce60afad673, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 382148509192088525, guid: 4c3e86736a73fe14d91a0ce60afad673, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 696522363868424142, guid: 4c3e86736a73fe14d91a0ce60afad673, type: 3}
+      propertyPath: m_Name
+      value: ParryEffect
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4c3e86736a73fe14d91a0ce60afad673, type: 3}
+--- !u!198 &4095246488593112102 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 70556392322739500, guid: 4c3e86736a73fe14d91a0ce60afad673, type: 3}
+  m_PrefabInstance: {fileID: 4048619868445323530}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4423164144439745223 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 382148509192088525, guid: 4c3e86736a73fe14d91a0ce60afad673, type: 3}
+  m_PrefabInstance: {fileID: 4048619868445323530}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5256979679533745534
 PrefabInstance:
   m_ObjectHideFlags: 0

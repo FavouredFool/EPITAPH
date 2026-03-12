@@ -78,7 +78,9 @@ public class PlayerController : MonoBehaviour
     public Transform BloodlineConnection => _bloodlineConnection;
 
     public BoltController ProjectileBlueprint => _projectileBlueprint;
-    
+
+    public ParticleSystem ParryEffect;
+
     InputActions _inputActions;
     public Rigidbody2D Rb { get; set; }
 
@@ -95,6 +97,7 @@ public class PlayerController : MonoBehaviour
     public bool IsParrying = false;
     public float MaxParryTime = 1;
     public float currentParryTime = 0;
+    public float ParryCooldown = 1;
     public bool BoltInChamber => PlayerVariableAnchor.PlayerVariables.Charge >= 1;
     
     // Lunge
@@ -250,6 +253,12 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         StateMachine.FixedUpdate();
+
+        if (ParryCooldown <= 1)
+        {
+            ParryCooldown += Time.deltaTime;
+        }
+
     }
 
     public void ReadInput()
