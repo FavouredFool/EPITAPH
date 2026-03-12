@@ -42,7 +42,7 @@ public class EnemyController : MonoBehaviour
     public TriggerPredicate StakedTrigger { get; private set; }
     public TriggerPredicate NormalDeathTrigger { get; private set; }
     public TriggerPredicate EnterKnockback { get; private set; }
-    //public TriggerPredicate ExitKnockback { get; private set; }
+   public TriggerPredicate ExitKnockback { get; private set; }
 
     public TriggerPredicate EnterStun { get; private set; }
     public TriggerPredicate ExitStun { get; private set; }
@@ -86,7 +86,7 @@ public class EnemyController : MonoBehaviour
         IdleState idleState = new(ctx);
 
         EnterKnockback = new TriggerPredicate();
-        //ExitKnockback = new TriggerPredicate();
+        ExitKnockback = new TriggerPredicate();
         StakedTrigger = new TriggerPredicate();
         NormalDeathTrigger = new TriggerPredicate();
         EnterStun= new TriggerPredicate();
@@ -97,7 +97,7 @@ public class EnemyController : MonoBehaviour
         At(hitAndKnockbackedState, chaseState, ExitKnockback);
         ReviveTrigger = new TriggerPredicate();
 
-        At(everythingState, hitAndKnockbackedState, EnterKnockback);
+        At(chaseState, hitAndKnockbackedState, EnterKnockback);
         //At(hitAndKnockbackedState, everythingState, ExitKnockback);
         
         At(hitAndKnockbackedState, normalDeathState, NormalDeathTrigger);
@@ -109,11 +109,11 @@ public class EnemyController : MonoBehaviour
         At(stunnedState, chaseState, ExitStun);
         At(idleState, chaseState, EnterChase);
         StateMachine.SetState(idleState);
-        At(everythingState, stunnedState, EnterStun);
-        At(stunnedState, everythingState, ExitStun);
+        At(chaseState, stunnedState, EnterStun);
+        At(stunnedState, chaseState, ExitStun);
 
-        At(normalDeathState, everythingState, ReviveTrigger);
-        StateMachine.SetState(everythingState);
+        At(normalDeathState, chaseState, ReviveTrigger);
+        StateMachine.SetState(chaseState);
     }
     
     void At(IState from, IState to, IStatePredicate condition) =>
