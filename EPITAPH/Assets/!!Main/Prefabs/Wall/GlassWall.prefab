@@ -207,6 +207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BreakableWall
   GlassBreaking: {fileID: 0}
+  audioData: {fileID: 0}
 --- !u!1 &5334964444843191086
 GameObject:
   m_ObjectHideFlags: 0
@@ -452,3 +453,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BreakableWall
   GlassBreaking: {fileID: 2774372810828526051, guid: 003740a952591344cb6d80429f0b97c0, type: 3}
+  audioData: {fileID: 11400000, guid: b370bc228e9e1f44c9ae94057e328b4d, type: 2}
