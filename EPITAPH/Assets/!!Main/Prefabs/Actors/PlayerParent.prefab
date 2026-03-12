@@ -5181,11 +5181,11 @@ MonoBehaviour:
   _spawnDist: 0.2
   _bloodlineConnection: {fileID: 3944289762324200595}
   <ReloadTimeCharge1>k__BackingField: 1
-  <ReloadTimeCharge2>k__BackingField: 1.75
-  <ReloadTimeCharge3>k__BackingField: 2.75
+  <ReloadTimeCharge2>k__BackingField: 1
+  <ReloadTimeCharge3>k__BackingField: 1
   <ShootSpeedCharge1>k__BackingField: 125
-  <ShootSpeedCharge2>k__BackingField: 250
-  <ShootSpeedCharge3>k__BackingField: 350
+  <ShootSpeedCharge2>k__BackingField: 200
+  <ShootSpeedCharge3>k__BackingField: 275
   _cameraFollow: {fileID: 6711845830664808249}
   _cameraAimOffset: 2.5
   PADScriptableObject: {fileID: 11400000, guid: 97171c05725167e438dded62167c2289, type: 2}

@@ -32,6 +32,7 @@ public class BoltController : MonoBehaviour
     BoltType _boltType;
 
     float _baseWidth;
+    Color _baseColor;
 
     public bool IsActivatable => IsSelected && IsLineOfSight && HasHitSomething /*&& IsStakeBolt*/;
     
@@ -60,6 +61,7 @@ public class BoltController : MonoBehaviour
         _pickupBox.enabled = false;
 
         _baseWidth = _lineRenderer.startWidth;
+        _baseColor = _lineRenderer.material.color;
         _lineRenderer.endWidth = _baseWidth;
     }
 
@@ -84,18 +86,33 @@ public class BoltController : MonoBehaviour
         playerPos.y = position.y;
         
         _lineRenderer.SetPosition(1, playerPos);
+
+        _lineRenderer.colorGradient = _activatableGradient;
         
         if (IsActivatable)
         {
-            _lineRenderer.colorGradient = _activatableGradient;
+            //_lineRenderer.colorGradient = _activatableGradient;
             _lineRenderer.startWidth = _baseWidth*3;
             _lineRenderer.endWidth = _baseWidth*3;
+            _lineRenderer.material.color = _baseColor;
+        }
+        else if (IsLineOfSight)
+        {
+            _lineRenderer.startWidth = _baseWidth;
+            _lineRenderer.endWidth = _baseWidth;
+            _lineRenderer.material.color = _baseColor;
         }
         else
         {
-            _lineRenderer.colorGradient = IsLineOfSight ? _mainGradient : _blockedGradient;
+            // = IsLineOfSight ? _mainGradient : _blockedGradient;
+            //_lineRenderer.startWidth = 0;
+            //_lineRenderer.endWidth = 0;
             _lineRenderer.startWidth = _baseWidth;
             _lineRenderer.endWidth = _baseWidth;
+
+            Color transparentColor = _baseColor;
+            transparentColor.a = 0.4f;
+            _lineRenderer.material.color = transparentColor;
         }
     }
 
@@ -150,7 +167,10 @@ public class BoltController : MonoBehaviour
         // only if there is a clear line of sight to the enemy
         Vector2 diff = Player.BloodlineConnection.position - _endPoint.position;
         //Vector2 dir = diff.normalized;
-        RaycastHit2D hit = Physics2D.Raycast(_endPoint.position, diff.normalized, diff.magnitude, _blockLayers);
+        
+        // TODO magic number, not sure if correct
+        float failsaveCastReduction = 0.3f;
+        RaycastHit2D hit = Physics2D.Raycast(_endPoint.position, diff.normalized, diff.magnitude - failsaveCastReduction, _blockLayers);
         return hit.collider == null;
         
         //Vector2 start = _endPoint.position;

@@ -15122,7 +15122,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.05}
+  m_Offset: {x: 0, y: -0.1}
   m_Radius: 0.2
 --- !u!1 &7183739022380324408
 GameObject:
@@ -20210,7 +20210,7 @@ MonoBehaviour:
   _knockbackResistance: 5
   <ReviveRange>k__BackingField: {x: 2, y: 5}
   <BoltBone>k__BackingField: {fileID: 8553025245396779203}
-  <KnockbackMagnitudeThreshold>k__BackingField: 10
+  <KnockbackMagnitudeThreshold>k__BackingField: 5
   _deadSprite: {fileID: 7276502925574245455}
   <Animator>k__BackingField: {fileID: 8439757380821537968}
   GetParried: {fileID: 5637113363338436039}
@@ -20222,7 +20222,7 @@ MonoBehaviour:
   _chargeAttackRange: 1.5
   _chargeDuration: 0.5
   _chargeCooldown: 12
-  _meleeAttackAntipicationTime: 0.6
+  _meleeAttackAntipicationTime: 0.8
 --- !u!195 &6147159875537704608
 NavMeshAgent:
   m_ObjectHideFlags: 0
