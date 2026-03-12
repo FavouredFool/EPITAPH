@@ -130,7 +130,7 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         StateMachine.Update();
-        Debug.Log(StateMachine.CurrentState);
+        //Debug.Log(StateMachine.CurrentState);
     }
 
     // please dont add anything here, use methods below

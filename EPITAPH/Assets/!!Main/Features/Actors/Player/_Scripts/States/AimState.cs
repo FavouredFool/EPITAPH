@@ -26,6 +26,11 @@ public class AimState : VampireBaseState
     {
         _ctx.PlayerController.ReadInput();
         _ctx.PlayerController.UpdateActiveBolt(false);
+
+        Vector2 localDir = _ctx.PlayerController.transform.InverseTransformDirection(_ctx.PlayerController.MovementInput);
+        //Debug.Log(localDir);
+        _ctx.PlayerController.CharacterAnimator.SetFloat(PlayerController.AimDirXFloatAnim, localDir.x);
+        _ctx.PlayerController.CharacterAnimator.SetFloat(PlayerController.AimDirYFloatAnim, localDir.y);
     }
     
     public override void FixedUpdate()

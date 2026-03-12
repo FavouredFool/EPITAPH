@@ -32,9 +32,13 @@ public class NormalDeathState : EnemyBaseState
         if (!_finishedKnockback && _ctx.EnemyController.KnockbackVelocity.sqrMagnitude < 0.05)
         {
             _finishedKnockback = true;
+
+            if (_ctx.EnemyController.CurrentlyStickingBolt != null)
+            {
+                _ctx.EnemyController.CurrentlyStickingBolt.StickToNothing();
+                _ctx.EnemyController.CurrentlyStickingBolt = null;
+            }
             
-            _ctx.EnemyController.CurrentlyStickingBolt.StickToNothing();
-            _ctx.EnemyController.CurrentlyStickingBolt = null;
             _ctx.EnemyController.Rb.simulated = false;
         }
 
