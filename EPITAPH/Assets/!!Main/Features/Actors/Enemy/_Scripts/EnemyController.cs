@@ -344,7 +344,7 @@ public class EnemyController : MonoBehaviour
  
     public void Die()
     {
-        _deadSprite.SetActive(true);
+        //_deadSprite.SetActive(true);
     }
 
     public void Knockback(Vector2 velocity)
