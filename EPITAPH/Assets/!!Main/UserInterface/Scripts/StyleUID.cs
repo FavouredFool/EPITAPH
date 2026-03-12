@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -38,7 +37,13 @@ public class StyleUID : MonoBehaviour
         Debug.Log("STYLE UI");
         SetText(coolWords[signal.variables.Style]);
         Color color = _timerFill.color;
-        _timerFill.color = Color.white;
-        _timerFill.DOColor(color, 0.5f).SetEase(Ease.InOutSine);
+
+        DOTween.Kill(this, true);
+        Sequence seq= DOTween.Sequence(this);
+        seq.OnPlay(() =>
+        {
+            _timerFill.color = Color.white;
+        });
+        seq.Insert(0, _timerFill.DOColor(color, 0.5f).SetEase(Ease.InOutSine));
     }
 }
