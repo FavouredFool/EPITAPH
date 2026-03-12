@@ -12,12 +12,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask _boltLayer;
     
     [Header("Hit")]
-    [SerializeField, Range(1, 20)] int _maxHP;
     [field: SerializeField, Range(1, 6)] public float HitSpeedMultiplier { get; set; } = 2.5f;
     [field: SerializeField, Range(0.1f, 10)] public float BatTime { get; set; } = 2f;
     [field: SerializeField] public GameObject Visual3DMesh { get; set; }
     [field: SerializeField] public GameObject VFXObject { get; set; }
-    [field: SerializeField] public Collider2D Collider { get; set; }
+    [field: SerializeField] public Collider2D MainCollider { get; set; }
     [field: SerializeField, Range(0, 10)] public float KnockbackStrength { get; set; }
     
     [Header("Movement")]
@@ -56,6 +55,8 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField, Range(1, 6)] public float LungePower { get; private set; } = 3;
     [field: SerializeField, Range(0, 1)] public float InitalDelay { get; private set; } = 0.1f;
     [field: SerializeField, Range(0, 30)] public float FailsaveExitTime { get; private set; } = 10f;
+    [field: SerializeField] public Collider2D LungeCollider { get; private set; }
+    [SerializeField, Range(0, 200)] float _lungeKnockbackStrength = 100;
     
     public float Speed => _speed;
     public float SpeedAimReduction => _speedAimReduction;
@@ -80,16 +81,13 @@ public class PlayerController : MonoBehaviour
     // Dir
     public Vector2 LookDirection { get; set; }
     
-    // HP
-    // TODO gotta hook this up to the UI
-    public int CurrentHP { get; set; }
     public Vector2 LastHitDir { get; set; }
     
-    // Bolts
-    public bool BoltInChamber { get; set; } = true;
-    public Dictionary<BoltType, BoltController> CurrentBoltsHeld { get; private set; }
-    
     bool IsAiming => RotateInput.magnitude > _moveLockThreshold;
+    public bool IsParrying = false;
+    public float MaxParryTime = 1;
+    public float currentParryTime = 0;
+    public bool BoltInChamber => PlayerVariableAnchor.PlayerVariables.Charge >= 1;
     
     // Lunge
     // TODO i really dislike doing this but i dont know how else i can convey the info to the state
@@ -147,7 +145,7 @@ public class PlayerController : MonoBehaviour
 
         Rb = GetComponent<Rigidbody2D>();
 
-        CurrentBoltsHeld = new Dictionary<BoltType, BoltController>
+        PlayerVariableAnchor.PlayerVariables.CurrentBoltsHeld = new Dictionary<BoltType, BoltController>
         {
             [BoltType.DOWN] = null,
             [BoltType.LEFT] = null,
@@ -159,8 +157,9 @@ public class PlayerController : MonoBehaviour
         
         Assert.IsNotNull(_characterAnimator);
         Assert.IsNotNull(_crossbowAnimator);
-
-        CurrentHP = _maxHP;
+            
+        PlayerVariableAnchor.PlayerVariables.Health = PlayerVariableAnchor.PlayerVariables.HealthMax;
+        PlayerVariableAnchor.PlayerVariables.Charge = 1;
 
         InitStateMachine();
     }
@@ -226,6 +225,7 @@ public class PlayerController : MonoBehaviour
     
     void FixedUpdate()
     {
+       
         StateMachine.FixedUpdate();
     }
 
@@ -304,9 +304,9 @@ public class PlayerController : MonoBehaviour
     
     public void LungeToBolt(BoltType boltType)
     {
-        if (CurrentBoltsHeld[boltType] == null) return;
+        if (PlayerVariableAnchor.PlayerVariables.CurrentBoltsHeld[boltType] == null) return;
         
-        BoltController boltToLunge = CurrentBoltsHeld[boltType];
+        BoltController boltToLunge = PlayerVariableAnchor.PlayerVariables.CurrentBoltsHeld[boltType];
 
         if (!boltToLunge.IsLineOfSight) return;
  
@@ -326,7 +326,7 @@ public class PlayerController : MonoBehaviour
     public void StartReload()
     {
         if (BoltInChamber) return;
-        if (CurrentBoltsHeld.Values.All(e => e != null)) return;
+        if (PlayerVariableAnchor.PlayerVariables.CurrentAmmoCount == 0) return;
         
         StartReloadTrigger.Trigger();
     }
@@ -334,7 +334,7 @@ public class PlayerController : MonoBehaviour
 
     public BoltType GetBoltTypeToShoot()
     {
-        foreach (var kv in CurrentBoltsHeld.Where(kv => kv.Value == null))
+        foreach (var kv in PlayerVariableAnchor.PlayerVariables.CurrentBoltsHeld.Where(kv => kv.Value == null))
         {
             return kv.Key;
         }
@@ -344,7 +344,7 @@ public class PlayerController : MonoBehaviour
 
     public void PickupBolt(BoltController bolt)
     {
-        CurrentBoltsHeld[bolt.BoltType] = null;
+        PlayerVariableAnchor.PlayerVariables.AddAmmo(bolt.BoltType);
         
         FinishLungeTrigger.Trigger();
         
@@ -364,7 +364,7 @@ public class PlayerController : MonoBehaviour
 
     public void UpdateActiveBolt(bool toggleAllOff)
     {
-        BoltController[] bolts = CurrentBoltsHeld.Select(e => e.Value).Where(e => e != null).ToArray();
+        BoltController[] bolts = PlayerVariableAnchor.PlayerVariables.CurrentBoltsHeld.Select(e => e.Value).Where(e => e != null).ToArray();
 
         BoltController bestBolt = null;
         float bestAngle = float.PositiveInfinity;
@@ -398,7 +398,7 @@ public class PlayerController : MonoBehaviour
 
     public void UseActiveBolt()
     {
-        BoltController activeBolt = CurrentBoltsHeld.FirstOrDefault(e => e.Value != null && e.Value.IsActivatable).Value;
+        BoltController activeBolt = PlayerVariableAnchor.PlayerVariables.CurrentBoltsHeld.FirstOrDefault(e => e.Value != null && e.Value.IsActivatable).Value;
 
         if (activeBolt == null) return;
         
@@ -418,7 +418,27 @@ public class PlayerController : MonoBehaviour
 
         if (LayerUtil.MaskContainsLayer(_hitLayer, other.gameObject.layer))
         {
-            Hit();
+            // I hate guarding like this, but its easy and stuff like this is hard to delegate into the states.
+            // Maybe this will make problems or more states have to get added later.
+            if (StateMachine.CurrentState is not LungeState)
+            {
+                Hit();
+            }
+        }
+        
+        if (other.GetComponentInParent<EnemyController>() is { } enemy)
+        {
+            // same comment as above
+            if (StateMachine.CurrentState is LungeState)
+            {
+                // i opted away from a normal push in favour of an instant kill thing for the lunge
+                
+                Vector2 dir = (enemy.Rb.position - Rb.position).normalized;
+                //enemy.Hit(dir * _lungeKnockbackStrength);
+
+                enemy.LatestHitVelocity = dir * _lungeKnockbackStrength;
+                enemy.NormalDeathTrigger.Trigger();
+            }
         }
     }
 

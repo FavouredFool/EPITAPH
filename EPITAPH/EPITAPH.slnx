@@ -14,6 +14,7 @@
   <Project Path="Unity.Burst.csproj" />
   <Project Path="YarnSpinner.Unity.csproj" />
   <Project Path="Unity.VisualScripting.Flow.Editor.csproj" />
+  <Project Path="Unity.Recorder.Editor.csproj" />
   <Project Path="Unity.2D.SpriteShape.Editor.csproj" />
   <Project Path="Unity.VisualStudio.Editor.csproj" />
   <Project Path="Unity.InputSystem.csproj" />
@@ -47,6 +48,7 @@
   <Project Path="Unity.AI.Navigation.Editor.csproj" />
   <Project Path="FMODUnityResonanceEditor.csproj" />
   <Project Path="Unity.2D.PixelPerfect.Editor.csproj" />
+  <Project Path="Unity.Recorder.csproj" />
   <Project Path="FMODUnityEditor.csproj" />
   <Project Path="Assembly-CSharp-firstpass.csproj" />
   <Project Path="FMODUnity.csproj" />
@@ -64,11 +66,13 @@
   <Project Path="Unity.InputSystem.TestFramework.csproj" />
   <Project Path="EZhex1991.EZSoftBone.csproj" />
   <Project Path="Unity.VisualScripting.Shared.Editor.csproj" />
+  <Project Path="Unity.Recorder.Base.csproj" />
   <Project Path="YarnSpinner.Addons.TextAnimatorIntegration.csproj" />
   <Project Path="Unity.2D.Aseprite.Common.csproj" />
   <Project Path="Unity.RenderPipelines.Core.Samples.Editor.csproj" />
   <Project Path="FMODUnityResonance.csproj" />
   <Project Path="Unity.CollabProxy.Editor.csproj" />
+  <Project Path="Unity.Bindings.OpenImageIO.Editor.csproj" />
   <Project Path="Unity.2D.PixelPerfect.csproj" />
   <Project Path="Unity.InputSystem.DocCodeSamples.csproj" />
   <Project Path="Unity.VisualScripting.DocCodeExamples.csproj" />

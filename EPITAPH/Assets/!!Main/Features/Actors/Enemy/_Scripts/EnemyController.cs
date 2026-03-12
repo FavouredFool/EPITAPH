@@ -11,17 +11,24 @@ public class EnemyController : MonoBehaviour
    
     [SerializeField] Transform _target;
     [SerializeField] LayerMask _wallLayers;
-    [SerializeField, UnityEngine.Range(1, 6)] int _maxHp;
+    //[SerializeField, UnityEngine.Range(1, 6)] int _maxHp;
     [SerializeField, UnityEngine.Range(0, 20)] float _speed;
     [SerializeField, UnityEngine.Range(1, 20)] float _knockbackDecay;
     [SerializeField, UnityEngine.Range(1, 20)] float _knockbackResistance = 1;
-    [SerializeField, UnityEngine.Range(0.01f, 10)] float _pinKnockbackMagnitudeThreshold = 0.1f;
+    //[field: SerializeField, UnityEngine.Range(1, 20)] public float FinalCollapsePush { get; set; } = 1;
+    [field: SerializeField] public Vector2 ReviveRange { get; set; } = new(2, 5);
+    
+    
+    [Header("3D Stuff")]
+    [field: SerializeField] public Transform BoltBone { get; set; }
+
+    [field: SerializeField, UnityEngine.Range(0.01f, 100)] public float KnockbackMagnitudeThreshold { get; set; } = 1f;
     [SerializeField] GameObject _deadSprite;
 
     public float KnockbackDecay => _knockbackDecay;
     
     public Rigidbody2D Rb { get; set; }
-    public int CurrentHp { get; set; }
+    //public int CurrentHp { get; set; }
 
     Vector2 _movementVelocity;
     public Vector2 KnockbackVelocity { get; set; }
@@ -35,9 +42,18 @@ public class EnemyController : MonoBehaviour
     public TriggerPredicate StakedTrigger { get; private set; }
     public TriggerPredicate NormalDeathTrigger { get; private set; }
     public TriggerPredicate EnterKnockback { get; private set; }
-    public TriggerPredicate ExitKnockback { get; private set; }
+   public TriggerPredicate ExitKnockback { get; private set; }
 
-    public Vector2 LatestHitVelocity { get; private set; }
+    public TriggerPredicate EnterStun { get; private set; }
+    public TriggerPredicate ExitStun { get; private set; }
+    
+    public TriggerPredicate ReviveTrigger { get; private set; }
+
+    public TriggerPredicate EnterChase { get; private set; }
+
+
+
+    public Vector2 LatestHitVelocity { get; set; }
     
     void Awake()
     {
@@ -50,34 +66,54 @@ public class EnemyController : MonoBehaviour
         _agent.updateUpAxis = false;
         _agent.speed = _speed;
 
-        CurrentHp = _maxHp;
+        //CurrentHp = _maxHp;
         
         InitStateMachine();
     }
-    
+
+
     void InitStateMachine()
     {
         StateMachine = new StateMachine();
         
         EnemyStateContext ctx = new(this);
         
-        EverythingState everythingState = new(ctx);
+        EverythingState chaseState = new(ctx);
         HitAndKnockbackedState hitAndKnockbackedState = new(ctx);
         NormalDeathState normalDeathState = new(ctx);
         StakedState stakedState = new(ctx);
+        StunnedState stunnedState = new(ctx);
+        IdleState idleState = new(ctx);
 
         EnterKnockback = new TriggerPredicate();
         ExitKnockback = new TriggerPredicate();
         StakedTrigger = new TriggerPredicate();
         NormalDeathTrigger = new TriggerPredicate();
-        
-        At(everythingState, hitAndKnockbackedState, EnterKnockback);
-        At(hitAndKnockbackedState, everythingState, ExitKnockback);
+        EnterStun= new TriggerPredicate();
+        ExitStun = new TriggerPredicate();
+        EnterChase=new TriggerPredicate();
+
+        At(chaseState, hitAndKnockbackedState, EnterKnockback);
+        At(hitAndKnockbackedState, chaseState, ExitKnockback);
+        ReviveTrigger = new TriggerPredicate();
+
+        At(chaseState, hitAndKnockbackedState, EnterKnockback);
+        //At(hitAndKnockbackedState, everythingState, ExitKnockback);
         
         At(hitAndKnockbackedState, normalDeathState, NormalDeathTrigger);
         At(hitAndKnockbackedState, stakedState, StakedTrigger);
         
-        StateMachine.SetState(everythingState);
+        At(chaseState, normalDeathState, NormalDeathTrigger);
+
+        At(chaseState, stunnedState, EnterStun);
+        At(stunnedState, chaseState, ExitStun);
+        At(idleState, chaseState, EnterChase);
+        StateMachine.SetState(idleState);
+        At(chaseState, stunnedState, EnterStun);
+        At(stunnedState, chaseState, ExitStun);
+
+        At(normalDeathState, chaseState, ReviveTrigger);
+        StateMachine.SetState(idleState);
     }
     
     void At(IState from, IState to, IStatePredicate condition) =>
@@ -268,7 +304,16 @@ public class EnemyController : MonoBehaviour
         {
             if(e.transform.TryGetComponent<PlayerController>(out var player))
             {
-                player.Hit((player.transform.position - transform.position).normalized);
+                if (player.IsParrying)
+                {
+                    EnterStun.Trigger();
+
+                }
+                else
+                {
+                    player.Hit((player.transform.position - transform.position).normalized);
+
+                }
             }
         });
     }
@@ -285,6 +330,11 @@ public class EnemyController : MonoBehaviour
     public bool IsTargetInRangeForMelee()
     {
         return Vector2.Distance(transform.position, _target.transform.position) < _chargeAttackRange;
+    }
+
+    public bool IsTargetInRangeForChaseBegin()
+    {
+        return Vector2.Distance(transform.position, _target.transform.position) < 8;
     }
 
     #endregion

@@ -19,6 +19,9 @@ public class LungeState : VampireBaseState
         
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsLungingBoolAnim, true);
         _ctx.PlayerController.MovementVelocity = Vector2.zero;
+
+        _ctx.PlayerController.MainCollider.enabled = false;
+        _ctx.PlayerController.LungeCollider.enabled = true;
         
         _startLungeTime = Time.time;
 
@@ -90,5 +93,13 @@ public class LungeState : VampireBaseState
     {
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsLungingBoolAnim, false);
         _ctx.PlayerController.MovementVelocity = Vector2.zero;
+        
+        _ctx.PlayerController.MainCollider.enabled = true;
+        _ctx.PlayerController.LungeCollider.enabled = false;
+
+        if (PlayerVariableAnchor.PlayerVariables.Charge < 1)
+        {
+            PlayerVariableAnchor.PlayerVariables.Charge = 1;
+        }
     }
 }
