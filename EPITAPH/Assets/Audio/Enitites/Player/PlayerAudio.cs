@@ -36,6 +36,8 @@ public class PlayerAudio : MonoBehaviour
         lungeInstance = RuntimeManager.CreateInstance(data.lunge);
         RuntimeManager.AttachInstanceToGameObject(lungeInstance, gameObject);
 
+
+
     }
 
 
@@ -128,5 +130,12 @@ public class PlayerAudio : MonoBehaviour
         RuntimeManager.AttachInstanceToGameObject(instance.lungeInstance, instance.gameObject, instance.gameObject.GetComponent<Rigidbody2D>());
 
         instance.lungeInstance.start();
+    }
+
+    public static void PlayBoltPickup()
+    {
+        EventInstance boltPickup = RuntimeManager.CreateInstance(instance.data.boltPickup);
+        RuntimeManager.AttachInstanceToGameObject(boltPickup, instance.gameObject);
+        boltPickup.start();
     }
 }
