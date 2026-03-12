@@ -24,7 +24,7 @@ public class HitRecoveryState : VampireBaseState
         _ctx.PlayerController.MainCollider.enabled = false;
         _ctx.PlayerController.BatVFXObject.SetActive(true);
         
-        _ctx.PlayerController.Knockback(_ctx.PlayerController.LastHitDir * _ctx.PlayerController.KnockbackStrength);
+        _ctx.PlayerController.Knockback(_ctx.PlayerController.LastHitDir * _ctx.PlayerController.HitKnockbackStrength);
     }
 
     public override void Update()

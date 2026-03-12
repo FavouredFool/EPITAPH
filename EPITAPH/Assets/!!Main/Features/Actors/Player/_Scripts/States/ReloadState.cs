@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 public class ReloadState : VampireBaseState
 {
     float _reloadStart = float.PositiveInfinity;
-    
     public ReloadState(VampireStateContext ctx) : base(ctx)
     {
 
@@ -15,30 +14,32 @@ public class ReloadState : VampireBaseState
         _ctx.InputActions.Player.Reload.canceled += ReloadInputStop;
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsReloadingBoolAnim, true);
         _ctx.PlayerController.CrossbowAnimator.SetBool(PlayerController.IsReloadBoolAnim, true);
-        
         _reloadStart = Time.time;
         
         PlayerAudio.StartCharging();
-
-        _ctx.PlayerController.IsParrying = true;
-        _ctx.PlayerController.currentParryTime = 0;
+        if (_ctx.PlayerController.ParryCooldown >= 1)
+        {
+            _ctx.PlayerController.IsParrying = true;
+            _ctx.PlayerController.currentParryTime = 0;
+            _ctx.PlayerController.ParryEffect.Play();
+        }
     }
 
     public override void Update()
     {
         _ctx.PlayerController.ReadInput();
-
-        if (_ctx.PlayerController.currentParryTime < _ctx.PlayerController.MaxParryTime)
+        if (_ctx.PlayerController.ParryCooldown >= 1)
         {
-            //Debug.Log("IsParrying");
-            _ctx.PlayerController.IsParrying = true;
-            _ctx.PlayerController.currentParryTime += Time.deltaTime;
+            if (_ctx.PlayerController.currentParryTime < _ctx.PlayerController.MaxParryTime)
+            {
+                _ctx.PlayerController.IsParrying = true;
+                _ctx.PlayerController.currentParryTime += Time.deltaTime;
+            }
+            else
+            {
+                _ctx.PlayerController.IsParrying = false;
+            }
         }
-        else
-        {
-            _ctx.PlayerController.IsParrying = false;
-        }
-
         UpdateReload();
     }
     
@@ -52,9 +53,13 @@ public class ReloadState : VampireBaseState
 
     public override void OnExit()
     {
-        _ctx.PlayerController.IsParrying = false;
-        _ctx.PlayerController.currentParryTime = 0;
-
+        if (_ctx.PlayerController.ParryCooldown >= 1)
+        {
+            _ctx.PlayerController.IsParrying = false;
+            _ctx.PlayerController.currentParryTime = 0;
+            _ctx.PlayerController.ParryEffect.Stop();
+            _ctx.PlayerController.ParryCooldown = 0;
+        }
         _ctx.InputActions.Player.Reload.canceled -= ReloadInputStop;
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsReloadingBoolAnim, false);
         _ctx.PlayerController.CrossbowAnimator.SetBool(PlayerController.IsReloadBoolAnim, false);

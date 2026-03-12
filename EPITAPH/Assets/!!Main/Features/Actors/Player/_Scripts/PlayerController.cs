@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField] public GameObject Visual3DMesh { get; set; }
     [field: SerializeField] public GameObject BatVFXObject { get; set; }
     [field: SerializeField] public Collider2D MainCollider { get; set; }
-    [field: SerializeField, Range(0, 10)] public float KnockbackStrength { get; set; }
+    [field: SerializeField, Range(0, 10)] public float HitKnockbackStrength { get; set; }
     
     [Header("Movement")]
     [SerializeField, Range(1, 20)] float _speed;
@@ -29,13 +29,16 @@ public class PlayerController : MonoBehaviour
     //[SerializeField] AimAssistV3 _aimAssist;
     
     [Header("Shooting")]
-    [SerializeField, Range(0, 50)] float _knockbackStrength = 2;
+    [SerializeField, Range(0, 50)] float _shootKnockbackStrength = 2;
     [SerializeField] BoltController _projectileBlueprint;
     [SerializeField, Range(0, 4)] float _spawnDist;
     [SerializeField] Transform _bloodlineConnection;
     [field: SerializeField, Range(0.1f, 10)] public float ReloadTimeCharge1 { get; private set; }
     [field: SerializeField, Range(0.1f, 10)] public float ReloadTimeCharge2 { get; private set; }
     [field: SerializeField, Range(0.1f, 10)] public float ReloadTimeCharge3 { get; private set; }
+    [field: SerializeField, Range(1, 1000)] public float ShootSpeedCharge1 { get; private set; } = 150;
+    [field: SerializeField, Range(1, 1000)] public float ShootSpeedCharge2 { get; private set; } = 150;
+    [field: SerializeField, Range(1, 1000)] public float ShootSpeedCharge3 { get; private set; } = 150;
     
     [Header("Cam")]
     [SerializeField] Transform _cameraFollow;
@@ -75,7 +78,9 @@ public class PlayerController : MonoBehaviour
     public Transform BloodlineConnection => _bloodlineConnection;
 
     public BoltController ProjectileBlueprint => _projectileBlueprint;
-    
+
+    public ParticleSystem ParryEffect;
+
     InputActions _inputActions;
     public Rigidbody2D Rb { get; set; }
 
@@ -92,6 +97,7 @@ public class PlayerController : MonoBehaviour
     public bool IsParrying = false;
     public float MaxParryTime = 1;
     public float currentParryTime = 0;
+    public float ParryCooldown = 1;
     public bool BoltInChamber => PlayerVariableAnchor.PlayerVariables.Charge >= 1;
     
     // Lunge
@@ -247,6 +253,12 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         StateMachine.FixedUpdate();
+
+        if (ParryCooldown <= 1)
+        {
+            ParryCooldown += Time.deltaTime;
+        }
+
     }
 
     public void ReadInput()
@@ -289,7 +301,7 @@ public class PlayerController : MonoBehaviour
     
     public void Knockback(Vector2 dir)
     {
-        KnockbackVelocity += dir * _knockbackStrength;
+        KnockbackVelocity += dir * _shootKnockbackStrength;
     }
     
     public void ShootBoltInput(InputAction.CallbackContext ctx)

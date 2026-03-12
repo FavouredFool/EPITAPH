@@ -14,6 +14,15 @@ public class ShootState : VampireBaseState
         BoltController bolt = Object.Instantiate(_ctx.PlayerController.ProjectileBlueprint, _ctx.PlayerController.transform.position + _ctx.PlayerController.transform.forward * _ctx.PlayerController.SpawnDist, _ctx.PlayerController.transform.rotation);
         bolt.BoltType = type;
         bolt.Player = _ctx.PlayerController;
+
+        float shootStrength = PlayerVariableAnchor.PlayerVariables.Charge switch
+        {
+            1 => _ctx.PlayerController.ShootSpeedCharge1,
+            2 => _ctx.PlayerController.ShootSpeedCharge2,
+            _ => _ctx.PlayerController.ShootSpeedCharge3
+        };
+
+        bolt.GetShot(shootStrength);
         
         PlayerVariableAnchor.PlayerVariables.LoseAmmo(bolt);
         

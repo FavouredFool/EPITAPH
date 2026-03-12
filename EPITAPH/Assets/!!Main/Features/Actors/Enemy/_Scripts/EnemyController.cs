@@ -10,7 +10,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Rigidbody2D), typeof(NavMeshAgent))]
 public class EnemyController : MonoBehaviour
 {
-   
+
     [SerializeField] Transform _target;
     [SerializeField] LayerMask _wallLayers;
     //[SerializeField, UnityEngine.Range(1, 6)] int _maxHp;
@@ -19,8 +19,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField, UnityEngine.Range(1, 20)] float _knockbackResistance = 1;
     //[field: SerializeField, UnityEngine.Range(1, 20)] public float FinalCollapsePush { get; set; } = 1;
     [field: SerializeField] public Vector2 ReviveRange { get; set; } = new(2, 5);
-    
-    
+
+
     [Header("3D Stuff")]
     [field: SerializeField] public Transform BoltBone { get; set; }
 
@@ -28,7 +28,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] GameObject _deadSprite;
 
     public float KnockbackDecay => _knockbackDecay;
-    
+
     public Rigidbody2D Rb { get; set; }
     //public int CurrentHp { get; set; }
 
@@ -36,31 +36,32 @@ public class EnemyController : MonoBehaviour
     public Vector2 KnockbackVelocity { get; set; }
 
     NavMeshAgent _agent;
-    
+
     public BoltController CurrentlyStickingBolt { get; set; }
 
     [field: SerializeField] public Animator Animator { get; set; }
-    
+
     public StateMachine StateMachine { get; set; }
-    
+
     public TriggerPredicate StakedTrigger { get; private set; }
     public TriggerPredicate NormalDeathTrigger { get; private set; }
     public TriggerPredicate EnterKnockback { get; private set; }
-   public TriggerPredicate ExitKnockback { get; private set; }
+    public TriggerPredicate ExitKnockback { get; private set; }
 
     public TriggerPredicate EnterStun { get; private set; }
     public TriggerPredicate ExitStun { get; private set; }
-    
+
     public TriggerPredicate ReviveTrigger { get; private set; }
 
     public TriggerPredicate EnterChase { get; private set; }
 
     [SerializeField] public ParticleSystem GetParried;
     [SerializeField] public ParticleSystem Anticipation;
+    [SerializeField] public ParticleSystem ChargeAnticipation;
 
     public Vector2 LatestHitVelocity { get; set; }
 
-   public Vector3 offset;
+    public Vector3 offset;
     void Awake()
     {
         Rb = GetComponent<Rigidbody2D>();
@@ -72,7 +73,7 @@ public class EnemyController : MonoBehaviour
         _agent.updateUpAxis = false;
         _agent.speed = _speed;
 
-        offset=UnityEngine.Random.insideUnitCircle.normalized;
+        offset = UnityEngine.Random.insideUnitCircle.normalized;
 
 
         //CurrentHp = _maxHp;
@@ -102,7 +103,7 @@ public class EnemyController : MonoBehaviour
         ExitStun = new TriggerPredicate();
         EnterChase = new TriggerPredicate();
         ReviveTrigger = new TriggerPredicate();
-        
+
         //At(hitAndKnockbackedState, chaseState, ExitKnockback);
 
         Any(hitAndKnockbackedState, EnterKnockback);
@@ -122,11 +123,11 @@ public class EnemyController : MonoBehaviour
 
     void At(IState from, IState to, IStatePredicate condition) =>
         StateMachine.AddTransition(from, to, condition);
-    
+
     void Any(IState to, IStatePredicate condition) =>
         StateMachine.AddAnyTransition(to, condition);
-    
-    
+
+
     // please dont add anything here, use methods below
     void Update()
     {
@@ -139,20 +140,20 @@ public class EnemyController : MonoBehaviour
     {
         StateMachine.FixedUpdate();
     }
-    
+
     public void EverythingUpdate()
     {
         ChaseBehaviourUpdateTick();
         _agent.nextPosition = transform.position;
     }
-    
+
     public void EverythingFixedUpdate()
     {
         ChaseBehaviourFixedUpdateTick();
         _agent.nextPosition = transform.position;
     }
-    
-    
+
+
     void TranslateMovement()
     {
         _movementVelocity = _agent.desiredVelocity;
@@ -179,11 +180,12 @@ public class EnemyController : MonoBehaviour
     [SerializeField, UnityEngine.Range(0, 15)] float _chargeAttackRange;
     [SerializeField, UnityEngine.Range(0, 15)] float _chargeDuration;
     [SerializeField, UnityEngine.Range(0, 15)] float _chargeCooldown;
+    [SerializeField, UnityEngine.Range(0, 15)] float _meleeAttackAntipicationTime;
 
 
     public void ChaseBehaviourUpdateTick()
     {
-       
+
         if (Rb.linearVelocity.magnitude > 0.1f)
         {
             Animator.SetBool("walking", true);
@@ -196,21 +198,21 @@ public class EnemyController : MonoBehaviour
 
         if (!charging)
         {
-         
-                _agent.destination = _target.position+offset*0.5f;
+
+            _agent.destination = _target.position + offset * 0.5f;
         }
     }
 
     public void ChaseBehaviourFixedUpdateTick()
     {
-        if (IsTargetInRangeForCharge() && IsTargetVisible() && !charging && Time.time >= _lastChargeTime + _chargeCooldown )
+        if (IsTargetInRangeForCharge() && IsTargetVisible() && !charging && Time.time >= _lastChargeTime + _chargeCooldown)
         {
             StartCoroutine(MeleeChaseAttackLoop());
         }
 
         if (IsTargetInRangeForMelee() && !charging && !attacking)
         {
-            
+
             StartCoroutine(NormalAttackLoop());
 
         }
@@ -227,9 +229,10 @@ public class EnemyController : MonoBehaviour
     {
         attacking = true;
         Rb.linearVelocity = Vector2.zero;
-        yield return new WaitForSeconds(0.2f);
+        Anticipation.Play();
+        yield return new WaitForSeconds(_meleeAttackAntipicationTime);
         Animator.SetTrigger("attack");
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.8f);
         attacking = false;
     }
 
@@ -247,7 +250,8 @@ public class EnemyController : MonoBehaviour
 
 
         Vector2 decidedMovementVelocity = (_target.transform.position - transform.position).normalized * _chargeSpeed;
-        yield return new WaitForSeconds(0.5f);
+        ChargeAnticipation.Play();
+        yield return new WaitForSeconds(1);
         Anticipation.Play();
         _agent.speed = _chargeSpeed;
         Rb.linearVelocity = decidedMovementVelocity;
@@ -284,7 +288,7 @@ public class EnemyController : MonoBehaviour
             yield return null;
         }
 
-        
+
 
         if (!attacked)
         {
@@ -296,8 +300,8 @@ public class EnemyController : MonoBehaviour
             attacked = true;
         }
 
-        yield return new WaitForSeconds(1);
-      
+        yield return new WaitForSeconds(0.5f);
+
         Animator.SetBool("charging", false);
         _agent.speed = _speed;
         Rb.linearVelocity = Vector2.zero;
@@ -307,13 +311,22 @@ public class EnemyController : MonoBehaviour
     }
 
 
+    private void OnDrawGizmos()
+    {
+      
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position + transform.up * 1f, 1.5f);
+    }
     public void Attack(float attackRadius)
     {
-        Physics2D.CircleCastAll(transform.position, attackRadius, Vector2.zero).ToList().ForEach(e =>
+        Physics2D.CircleCastAll(transform.position+transform.up * 1f, attackRadius, Vector2.zero).ToList().ForEach(e =>
         {
-            if(e.transform.TryGetComponent<PlayerController>(out var player))
+            if (e.transform.TryGetComponent<PlayerController>(out var player))
             {
-                if (player.IsParrying)
+                Vector2 dirToPlayer = (player.transform.position - transform.position).normalized;
+
+                Debug.Log(Vector2.Angle(transform.right, dirToPlayer));
+                    if (player.IsParrying)
                 {
                     EnterStun.Trigger();
 
@@ -353,7 +366,7 @@ public class EnemyController : MonoBehaviour
         LatestHitVelocity = velocity;
         EnterKnockback.Trigger();
     }
- 
+
     public void Die()
     {
         SignalBus.Fire(new Signal_EnemyDeath(this));
