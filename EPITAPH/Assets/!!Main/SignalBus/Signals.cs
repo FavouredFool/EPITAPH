@@ -123,3 +123,13 @@ public struct Signal_StartDialogue
         this.nodeName=nodeName;
     }
 }
+
+public struct Signal_EnemyDeath
+{
+    public EnemyController enemy;
+
+    public Signal_EnemyDeath(EnemyController enemy)
+    {
+        this.enemy=enemy;
+    }
+}

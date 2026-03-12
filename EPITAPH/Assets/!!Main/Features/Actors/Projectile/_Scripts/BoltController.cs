@@ -12,7 +12,7 @@ public class BoltController : MonoBehaviour
     [SerializeField] Collider2D _hitbox;
     [SerializeField] Collider2D _pickupBox;
 
-    [SerializeField] Gradient _mainGradient;
+    [SerializeField] Gradient _mainGradient; 
     [SerializeField] Gradient _blockedGradient;
     [SerializeField] Gradient _activatableGradient;
     [SerializeField] LineRenderer _lineRenderer;
@@ -34,12 +34,13 @@ public class BoltController : MonoBehaviour
 
     float _baseWidth;
 
-    public bool IsActivatable => IsSelected && IsLineOfSight && HasHitSomething;
+    public bool IsActivatable => IsSelected && IsLineOfSight && HasHitSomething && IsStakeBolt;
     
     public bool IsSelected { get; set; }
     
     public bool IsLineOfSight { get; set; }
     public bool HasHitSomething { get; set; } = false;
+    public bool IsStakeBolt { get; set; } = false;
     
     public BoltType BoltType
     {

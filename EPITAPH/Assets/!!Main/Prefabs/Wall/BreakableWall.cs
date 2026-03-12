@@ -5,6 +5,7 @@ public class BreakableWall : MonoBehaviour
     [SerializeField] ParticleSystem GlassBreaking;
     public void BreakWall()
     {
+        Instantiate(GlassBreaking.gameObject, transform.position, transform.rotation);
         gameObject.SetActive(false);
     }
 }
