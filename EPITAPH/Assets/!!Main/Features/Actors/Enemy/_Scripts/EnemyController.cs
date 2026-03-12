@@ -113,7 +113,7 @@ public class EnemyController : MonoBehaviour
         At(stunnedState, chaseState, ExitStun);
 
         At(normalDeathState, chaseState, ReviveTrigger);
-        StateMachine.SetState(chaseState);
+        StateMachine.SetState(idleState);
     }
     
     void At(IState from, IState to, IStatePredicate condition) =>
@@ -334,7 +334,7 @@ public class EnemyController : MonoBehaviour
 
     public bool IsTargetInRangeForChaseBegin()
     {
-        return Vector2.Distance(transform.position, _target.transform.position) < 10;
+        return Vector2.Distance(transform.position, _target.transform.position) < 8;
     }
 
     #endregion
