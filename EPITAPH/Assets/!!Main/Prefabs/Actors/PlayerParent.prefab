@@ -5184,8 +5184,8 @@ MonoBehaviour:
   <ReloadTimeCharge2>k__BackingField: 1
   <ReloadTimeCharge3>k__BackingField: 1
   <ShootSpeedCharge1>k__BackingField: 125
-  <ShootSpeedCharge2>k__BackingField: 200
-  <ShootSpeedCharge3>k__BackingField: 275
+  <ShootSpeedCharge2>k__BackingField: 250
+  <ShootSpeedCharge3>k__BackingField: 400
   _cameraFollow: {fileID: 6711845830664808249}
   _cameraAimOffset: 2.5
   PADScriptableObject: {fileID: 11400000, guid: 97171c05725167e438dded62167c2289, type: 2}
