@@ -14,7 +14,7 @@ public class PlayerVariables : ScriptableObject
     //[SerializeField] int _ammoMax;
 
 [Header("Charge")]
-    [SerializeField] float _charge;
+    [SerializeField] float _charge,_chargeProgress;
     [SerializeField] float _chargeMax;
 
     public int Health
@@ -32,6 +32,15 @@ public class PlayerVariables : ScriptableObject
         set
         {
             _charge=Mathf.Clamp(value,0,_chargeMax);
+            SignalBus.Fire(new Signal_RefreshUI_Charge(this));
+        }
+    }
+        public float ChargeProgress
+    {
+        get=> _chargeProgress;
+        set
+        {
+            _chargeProgress=Mathf.Clamp01(value);
             SignalBus.Fire(new Signal_RefreshUI_Charge(this));
         }
     }
@@ -81,15 +90,4 @@ public class PlayerVariables : ScriptableObject
         Health -= 1;
     }
     [ContextMenu("Heal Health Test")] public void HealTest() => HealMax();
-
-    //[ContextMenu("Shoot Ammo Test")]
-    //public void ShootTest()
-    //{
-    //    AmmoCount -= 1;
-    //}
-    //[ContextMenu("Retrieve Ammo Test")]
-    //public void RetrieveTest()
-    //{
-    //    AmmoCount += 1;
-    //}
 }

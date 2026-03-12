@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using NUnit.Framework;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -57,7 +58,8 @@ public class EnemyController : MonoBehaviour
 
 
     public Vector2 LatestHitVelocity { get; set; }
-    
+
+   public Vector3 offset;
     void Awake()
     {
         Rb = GetComponent<Rigidbody2D>();
@@ -69,8 +71,11 @@ public class EnemyController : MonoBehaviour
         _agent.updateUpAxis = false;
         _agent.speed = _speed;
 
+        offset=UnityEngine.Random.insideUnitCircle.normalized;
+
+
         //CurrentHp = _maxHp;
-        
+
         InitStateMachine();
     }
 
@@ -125,7 +130,7 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         StateMachine.Update();
-        Debug.Log(StateMachine.CurrentState);
+        //Debug.Log(StateMachine.CurrentState);
     }
 
     // please dont add anything here, use methods below
@@ -174,6 +179,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField, UnityEngine.Range(0, 15)] float _chargeDuration;
     [SerializeField, UnityEngine.Range(0, 15)] float _chargeCooldown;
 
+
     public void ChaseBehaviourUpdateTick()
     {
        
@@ -189,13 +195,14 @@ public class EnemyController : MonoBehaviour
 
         if (!charging)
         {
-            _agent.destination = _target.position;
+         
+                _agent.destination = _target.position+offset*0.5f;
         }
     }
 
     public void ChaseBehaviourFixedUpdateTick()
     {
-        if (IsTargetInRangeForCharge() && IsTargetVisible() && !charging && Time.time >= _lastChargeTime + _chargeCooldown)
+        if (IsTargetInRangeForCharge() && IsTargetVisible() && !charging && Time.time >= _lastChargeTime + _chargeCooldown )
         {
             StartCoroutine(MeleeChaseAttackLoop());
         }
@@ -239,7 +246,7 @@ public class EnemyController : MonoBehaviour
 
 
         Vector2 decidedMovementVelocity = (_target.transform.position - transform.position).normalized * _chargeSpeed;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         _agent.speed = _chargeSpeed;
         Rb.linearVelocity = decidedMovementVelocity;
 
@@ -323,7 +330,7 @@ public class EnemyController : MonoBehaviour
 
     public bool IsTargetInRangeForCharge()
     {
-        return Vector2.Distance(transform.position, _target.transform.position) < _chargeStartRange;
+        return Vector2.Distance(transform.position, _target.transform.position) < _chargeStartRange && Vector2.Distance(transform.position, _target.transform.position) > 2;
     }
 
     public bool IsTargetInRangeForMelee()

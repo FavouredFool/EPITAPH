@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 public class RavageState : VampireBaseState
 {
@@ -10,8 +11,6 @@ public class RavageState : VampireBaseState
 
     public override void OnEnter()
     {
-        Debug.Log("enter ravage");
-        
         _startTime = Time.time;
         
         _ctx.PlayerController.CharacterAnimator.SetTrigger(PlayerController.RavageTriggerAnim);
@@ -19,6 +18,8 @@ public class RavageState : VampireBaseState
         _hasEaten = false;
 
         Explode();
+        
+        _ctx.PlayerController.ExplosionVFXObject.gameObject.SetActive(true);
     }
     
     public override void Update()
@@ -35,13 +36,26 @@ public class RavageState : VampireBaseState
         }
     }
 
+    public override void FixedUpdate()
+    {
+        _ctx.PlayerController.MovementVelocity = Vector2.zero;
+        _ctx.PlayerController.CalculateVelocity();
+    }
+
     void Explode()
     {
+        Collider2D[] enemiesHit = Physics2D.OverlapCircleAll(_ctx.PlayerController.Rb.position, _ctx.PlayerController.ExplosionRadius);
         
+        foreach (EnemyController enemy in enemiesHit.Select(e => e.GetComponentInParent<EnemyController>()).Where(e => e !=null))
+        {
+            Vector2 dir = (enemy.Rb.position - _ctx.PlayerController.Rb.position).normalized;
+            enemy.LatestHitVelocity = dir * _ctx.PlayerController.ExplosionKnockbackStrength;
+            enemy.NormalDeathTrigger.Trigger();
+        }
     }
 
     public override void OnExit()
     {
-        Debug.Log("exit ravage");
+        _ctx.PlayerController.ExplosionVFXObject.gameObject.SetActive(false);
     }
 }

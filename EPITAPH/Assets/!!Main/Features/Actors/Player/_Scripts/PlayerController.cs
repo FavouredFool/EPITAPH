@@ -55,12 +55,13 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField, Range(0, 1)] public float InitalDelay { get; private set; } = 0.1f;
     [field: SerializeField, Range(0, 30)] public float FailsaveExitTime { get; private set; } = 10f;
     [field: SerializeField] public Collider2D LungeCollider { get; private set; }
-    [SerializeField, Range(0, 200)] float _lungeKnockbackStrength = 100;
+    [field: SerializeField, Range(0, 200)] public float LungeKnockbackStrength { get; private set; } = 100;
     
     [field: Header("Ravage")]
-    [field: SerializeField, Range(0, 10)] public float ExplosionDistance { get; private set; } = 3;
+    [field: SerializeField, Range(0, 10)] public float ExplosionRadius { get; private set; } = 3;
     [field: SerializeField] public GameObject ExplosionVFXObject { get; set; }
     [field: SerializeField, Range(0, 10)] public float RavageTime { get; private set; } = 1;
+    [field: SerializeField, Range(0, 500)] public float ExplosionKnockbackStrength { get; private set; } = 200;
     
     public float Speed => _speed;
     public float SpeedAimReduction => _speedAimReduction;
@@ -124,7 +125,8 @@ public class PlayerController : MonoBehaviour
     public static readonly int EnterIdle = Animator.StringToHash("EnterIdle");
     public static readonly int ShotCharacterTriggerAnim = Animator.StringToHash("Shot");
     public static readonly int RavageTriggerAnim = Animator.StringToHash("Ravage");
-    
+    public static readonly int AimDirXFloatAnim = Animator.StringToHash("AimDirX");
+    public static readonly int AimDirYFloatAnim = Animator.StringToHash("AimDirY");
 
     public Vector2 AimAssistedLookDirection
     {
@@ -425,7 +427,7 @@ public class PlayerController : MonoBehaviour
                 Vector2 dir = (enemy.Rb.position - Rb.position).normalized;
                 //enemy.Hit(dir * _lungeKnockbackStrength);
 
-                enemy.LatestHitVelocity = dir * _lungeKnockbackStrength;
+                enemy.LatestHitVelocity = dir * LungeKnockbackStrength;
                 enemy.NormalDeathTrigger.Trigger();
             }
         }
