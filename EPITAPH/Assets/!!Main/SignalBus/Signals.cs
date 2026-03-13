@@ -48,22 +48,20 @@ public struct Signal_RefreshUI_Style
 public struct Signal_ShowBoltMarker
 {
     public Transform parent;
-    public BoltType type;
     public bool dash, feed;
-    public Signal_ShowBoltMarker(Transform parent, BoltType type, bool dash, bool feed)
+    public Signal_ShowBoltMarker(Transform parent, bool dash, bool feed)
     {
         this.parent = parent;
-        this.type = type;
         this.dash = dash;
         this.feed = feed;
     }
 }
 public struct Signal_TriggerBoltMarker
 {
-    public BoltType type;
-    public Signal_TriggerBoltMarker(BoltType type)
+    public Transform parent;
+    public Signal_TriggerBoltMarker(Transform parent)
     {
-        this.type = type;
+        this.parent = parent;
     }
 }
 public struct Hit_Enemy
