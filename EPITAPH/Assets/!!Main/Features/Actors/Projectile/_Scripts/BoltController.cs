@@ -42,6 +42,8 @@ public class BoltController : MonoBehaviour
     public bool HasHitSomething { get; set; } = false;
     public bool IsStakeBolt { get; set; } = false;
     
+    public float KnockbackMultiplier { get; set; } 
+    
     public BoltType BoltType
     {
         get => _boltType;
@@ -161,7 +163,7 @@ public class BoltController : MonoBehaviour
             if (other.GetComponentInParent<EnemyController>() is { } enemy)
             {
                 StickToEnemy(enemy);
-                enemy.EvaluateBoltHit(velocity);
+                enemy.EvaluateBoltHit(velocity * KnockbackMultiplier);
             }
             else
             {
@@ -187,8 +189,8 @@ public class BoltController : MonoBehaviour
         //Vector2 dir = diff.normalized;
         
         // TODO magic number, not sure if correct
-        float failsaveCastReduction = 0.3f;
-        RaycastHit2D hit = Physics2D.Raycast(_endPoint.position, diff.normalized, diff.magnitude - failsaveCastReduction, _blockLayers);
+        float failsaveCastReduction = 1f;
+        RaycastHit2D hit = Physics2D.Raycast(_endPoint.position , diff.normalized, diff.magnitude - failsaveCastReduction, _blockLayers);
         return hit.collider == null;
         
         //Vector2 start = _endPoint.position;

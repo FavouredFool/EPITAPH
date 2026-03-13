@@ -21,6 +21,15 @@ public class ShootState : VampireBaseState
             2 => _ctx.PlayerController.ShootSpeedCharge2,
             _ => _ctx.PlayerController.ShootSpeedCharge3
         };
+        
+        float knockbackMultiplier = PlayerVariableAnchor.PlayerVariables.Charge switch
+        {
+            1 => 1,
+            2 => _ctx.PlayerController.KnockbackMultiplier2,
+            _ => _ctx.PlayerController.KnockbackMultiplier3
+        };
+
+        bolt.KnockbackMultiplier = knockbackMultiplier;
 
         bolt.GetShot(shootStrength);
         

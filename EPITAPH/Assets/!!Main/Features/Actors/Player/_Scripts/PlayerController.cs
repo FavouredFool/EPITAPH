@@ -40,6 +40,8 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField, Range(1, 1000)] public float ShootSpeedCharge1 { get; private set; } = 150;
     [field: SerializeField, Range(1, 1000)] public float ShootSpeedCharge2 { get; private set; } = 150;
     [field: SerializeField, Range(1, 1000)] public float ShootSpeedCharge3 { get; private set; } = 150;
+    [field: SerializeField, Range(1, 10)] public float KnockbackMultiplier2 { get; private set; } = 2;
+    [field: SerializeField, Range(1, 10)] public float KnockbackMultiplier3 { get; private set; } = 2;
     
     [Header("Cam")]
     [SerializeField] Transform _cameraFollow;
