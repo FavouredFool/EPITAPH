@@ -9,6 +9,9 @@ public class NormalDeathState : EnemyBaseState
     float _startTime;
 
     bool _finishedKnockback;
+    bool _startedGetUp;
+    
+    const float _getUpTime = 1;
     
     public NormalDeathState(EnemyStateContext ctx) : base(ctx)
     {
@@ -25,6 +28,7 @@ public class NormalDeathState : EnemyBaseState
         _startTime = Time.time;
 
         _finishedKnockback = false;
+        _startedGetUp = false;
     }
 
     public override void Update()
@@ -41,6 +45,12 @@ public class NormalDeathState : EnemyBaseState
             }
             
             _ctx.EnemyController.Rb.simulated = false;
+        }
+
+        if (!_startedGetUp && Time.time - _startTime > _reviveTime - _getUpTime)
+        {
+            _startedGetUp = true;
+            _ctx.EnemyController.Animator.SetTrigger(ReviveTriggerAnim);
         }
 
         if (Time.time - _startTime > _reviveTime)
@@ -63,7 +73,6 @@ public class NormalDeathState : EnemyBaseState
 
     public override void OnExit()
     {
-        _ctx.EnemyController.Animator.SetTrigger(ReviveTriggerAnim);
         _ctx.EnemyController.Rb.simulated = true;
     }
 }
