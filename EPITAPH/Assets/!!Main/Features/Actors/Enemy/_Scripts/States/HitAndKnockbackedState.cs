@@ -14,7 +14,7 @@ public class HitAndKnockbackedState : EnemyBaseState
     {
         _ctx.EnemyController.Animator.SetTrigger(EnterKnockbackedTriggerAnim);
         _ctx.EnemyController.Knockback(_ctx.EnemyController.LatestHitVelocity);
-        
+        _ctx.EnemyController.BloodTrail.Play();
         PlayerAudio.PlayMeatHit(_ctx.EnemyController.transform.position);
         SignalBus.Fire(new Hit_Enemy(_ctx.EnemyController.Rb.position));
     }

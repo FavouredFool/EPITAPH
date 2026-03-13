@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SplatterManager
   EnemyBlood: {fileID: 2774372810828526051, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
+  PlayerBlood: {fileID: 2774372810828526051, guid: 9ff6ede3015f7f049993c08c2aa52994, type: 3}
