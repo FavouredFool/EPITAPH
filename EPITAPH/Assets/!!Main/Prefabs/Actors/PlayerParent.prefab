@@ -10108,7 +10108,7 @@ MonoBehaviour:
   <KnockbackMultiplier2>k__BackingField: 150
   <KnockbackMultiplier3>k__BackingField: 150
   _cameraFollow: {fileID: 6711845830664808249}
-  _cameraAimOffset: 2.5
+  _cameraAimOffset: 3
   PADScriptableObject: {fileID: 11400000, guid: 97171c05725167e438dded62167c2289, type: 2}
   _characterAnimator: {fileID: 507660546181610574}
   _crossbowAnimator: {fileID: 4327648699261966165}
