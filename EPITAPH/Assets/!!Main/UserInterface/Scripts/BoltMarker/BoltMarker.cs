@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.Assertions;
 
 public class BoltMarker : MonoBehaviour
 {
@@ -11,8 +12,19 @@ public class BoltMarker : MonoBehaviour
     public Transform Parent {get; set;}
     [SerializeField] GameObject _basicVisuals, _dashVisuals, _feedVisuals;
 
-    public Canvas Canvas { get; set; }
-    
+    Canvas _canvas;
+
+    public Canvas Canvas
+    {
+        get => _canvas;
+        set
+        {
+            Assert.IsNotNull(value);
+            _rectTransform = value.GetComponent<RectTransform>();
+            _canvas = value;
+        }
+    }
+
     void Awake()
     {
         rect = GetComponent<RectTransform>();
@@ -31,12 +43,7 @@ public class BoltMarker : MonoBehaviour
     }
 
     RectTransform _rectTransform;
-
-    void Start()
-    {
-        _rectTransform = Canvas.GetComponent<RectTransform>();
-    }
-
+    
     void Update()
     {
         if (Parent != null)

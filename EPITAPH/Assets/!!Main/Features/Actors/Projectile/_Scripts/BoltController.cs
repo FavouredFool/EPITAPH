@@ -65,6 +65,11 @@ public class BoltController : MonoBehaviour
         _lineRenderer.endWidth = _baseWidth;
     }
 
+    void OnDisable()
+    {
+        SignalBus.Fire(new Signal_TriggerBoltMarker(_visual3D.transform, true));
+    }
+
     public void GetShot(float shootSpeed)
     {
         Rb2D.AddForce(transform.up * shootSpeed, ForceMode2D.Impulse);
@@ -131,8 +136,13 @@ public class BoltController : MonoBehaviour
                 breakableWall.BreakWall();
                 return;
             }
-          
+
+            if (other.GetComponentInParent<PlayerController>())
+            {
+                return;
+            }
         }
+        
         Vector2 velocity = Rb2D.linearVelocity;
         
         Rb2D.bodyType = RigidbodyType2D.Kinematic;
@@ -237,7 +247,7 @@ public class BoltController : MonoBehaviour
 
     public void TriggerBoltMarker()
     {
-        SignalBus.Fire(new Signal_TriggerBoltMarker(_visual3D.transform));
+        SignalBus.Fire(new Signal_TriggerBoltMarker(_visual3D.transform, false));
     }
 }
 

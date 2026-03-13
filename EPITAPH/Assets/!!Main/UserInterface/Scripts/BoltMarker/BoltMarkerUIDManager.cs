@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
 public class BoltMarkerUIDManager : MonoBehaviour
@@ -48,17 +49,30 @@ public class BoltMarkerUIDManager : MonoBehaviour
     }
 
 //TRIGGER
-    public void TriggerMarker(Signal_TriggerBoltMarker signal) => TriggerMarker(signal.parent);
-    public void TriggerMarker(Transform parent)
+    public void TriggerMarker(Signal_TriggerBoltMarker signal) => TriggerMarker(signal.parent, signal.kill);
+    public void TriggerMarker(Transform parent, bool kill)
     {
+        if (parent == null)
+        {
+            Assert.IsTrue(false);
+            return;
+        }
+        
         BoltMarker marker = GetExistingMarker(parent);
 
-        if(marker!=null)
-            TriggerMarker(marker);
-    }
-    public void TriggerMarker(BoltMarker marker)
-    {
+        if (marker == null)
+        {
+            return;
+        }
+        
         _markers.Remove(marker);
+        
+        if (kill)
+        {
+            Destroy(marker.gameObject);
+            return;
+        }
+
         marker.TweenTrigger();
     }
 }

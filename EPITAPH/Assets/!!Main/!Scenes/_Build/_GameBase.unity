@@ -682,36 +682,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: HUDCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 3067152256239595393, guid: 5b9b9f198c512bd4fb0aca1c29f2738a, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3067152256239595393, guid: 5b9b9f198c512bd4fb0aca1c29f2738a, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3067152256239595393, guid: 5b9b9f198c512bd4fb0aca1c29f2738a, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3067152256239595393, guid: 5b9b9f198c512bd4fb0aca1c29f2738a, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3067152256239595393, guid: 5b9b9f198c512bd4fb0aca1c29f2738a, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3067152256239595393, guid: 5b9b9f198c512bd4fb0aca1c29f2738a, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3305135359757308108, guid: 5b9b9f198c512bd4fb0aca1c29f2738a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4659442158817578128, guid: 5b9b9f198c512bd4fb0aca1c29f2738a, type: 3}
-      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5590903903907264711, guid: 5b9b9f198c512bd4fb0aca1c29f2738a, type: 3}
@@ -740,10 +712,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5726607219456463329, guid: 5b9b9f198c512bd4fb0aca1c29f2738a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7001324790689772708, guid: 5b9b9f198c512bd4fb0aca1c29f2738a, type: 3}
-      propertyPath: m_MatchWidthOrHeight
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7130577518015614107, guid: 5b9b9f198c512bd4fb0aca1c29f2738a, type: 3}
