@@ -158,6 +158,7 @@ public class EnemyController : MonoBehaviour
 
     public void EverythingFixedUpdate()
     {
+        Debug.Log(Time.time+ " : everything fixed update");
         ChaseBehaviourFixedUpdateTick();
         _agent.nextPosition = transform.position;
     }
@@ -338,7 +339,18 @@ public class EnemyController : MonoBehaviour
                 
                 if (player.StateMachine.CurrentState is ParryState)
                 {
-                    EnterStun.Trigger();
+                    foreach(var enemy in FindObjectsOfType<EnemyController>())
+                    {
+                        if (enemy.StateMachine.CurrentState is StunnedState || Vector3.Distance(enemy.transform.position,player.transform.position)>2)
+                        {
+
+                        }
+                        else
+                        {
+                           enemy.EnterStun.Trigger();
+                         
+                        }
+                    }
                     player.ParrySuccessful();
                 }
                 else
@@ -347,6 +359,15 @@ public class EnemyController : MonoBehaviour
                 }
             }
         });
+    }
+
+    public void StunnedReset()
+    {
+
+        StopAllCoroutines();
+        charging = false;
+        attacking=false;
+        Debug.Log("entered state");
     }
     public bool IsTargetVisible()
     {
