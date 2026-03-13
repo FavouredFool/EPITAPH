@@ -16,6 +16,7 @@ public class StakedState : EnemyBaseState
         PlayerAudio.PlayWallHit(_ctx.EnemyController.transform.position);
         _ctx.EnemyController.StakedBlood.Play();
         _ctx.EnemyController.Rb.simulated = false;
+        CameraShake.Instance.TriggerBasicShake();
 
         _ctx.EnemyController.CurrentlyStickingBolt.IsStakeBolt = true;
         _ctx.EnemyController.CurrentlyStickingBolt.StickToNothing();
