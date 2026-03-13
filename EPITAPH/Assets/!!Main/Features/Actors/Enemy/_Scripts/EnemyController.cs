@@ -158,6 +158,7 @@ public class EnemyController : MonoBehaviour
     // please dont add anything here, use methods below
     void Update()
     {
+
         StateMachine.Update();
         //Debug.Log(StateMachine.CurrentState);
     }
@@ -165,17 +166,28 @@ public class EnemyController : MonoBehaviour
     // please dont add anything here, use methods below
     void FixedUpdate()
     {
+       
         StateMachine.FixedUpdate();
     }
 
     public void EverythingUpdate()
     {
+        //if (_agent.path.status != NavMeshPathStatus.PathComplete)
+        //{
+        //    return;
+
+        //}
         ChaseBehaviourUpdateTick();
         _agent.nextPosition = transform.position;
     }
 
     public void EverythingFixedUpdate()
     {
+        //if (_agent.path.status != NavMeshPathStatus.PathComplete)
+        //{
+        //    return;
+
+        //}
         //Debug.Log(Time.time+ " : everything fixed update");
         ChaseBehaviourFixedUpdateTick();
         _agent.nextPosition = transform.position;
@@ -184,12 +196,17 @@ public class EnemyController : MonoBehaviour
 
     void TranslateMovement()
     {
-        _movementVelocity = _agent.desiredVelocity;
+        if (_agent.path.status != NavMeshPathStatus.PathComplete)
+        {
+            return;
+        }
+            _movementVelocity = _agent.desiredVelocity;
         Rb.linearVelocity = _movementVelocity;
     }
 
     void Rotate()
     {
+
         if (_agent.speed == 0) return;
         Vector2 dir = Rb.linearVelocity;
         dir.Normalize();
@@ -213,22 +230,26 @@ public class EnemyController : MonoBehaviour
 
     public void ChaseBehaviourUpdateTick()
     {
+        Debug.Log(gameObject.name + _agent.path.status);
+        //If cant find path, stop trying to chase
+    
 
         if (Rb.linearVelocity.magnitude > 0.1f)
         {
-            Animator.SetBool("walking", true);
+          
+                Animator.SetBool("walking", true);
+           
+         
         }
         else
         {
             Animator.SetBool("walking", false);
         }
 
+  
 
-        if (!charging)
-        {
-
-            _agent.destination = _target.position + offset * 0.5f;
-        }
+         _agent.destination = _target.position + offset * 0.5f;
+        
     }
 
     public void ChaseBehaviourFixedUpdateTick()

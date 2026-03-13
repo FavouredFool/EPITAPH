@@ -17,7 +17,7 @@ public class ProgressionVariables : ScriptableObject
             _level = Mathf.Clamp(value, 0, _levelSceneNames.Count);
         }
     }
-    public string LevelName => _levelSceneNames[Level];
+    public string LevelName => Level>=_levelSceneNames.Count?"_End": _levelSceneNames[Level];
 
     public void SetLevel(string name)
     {

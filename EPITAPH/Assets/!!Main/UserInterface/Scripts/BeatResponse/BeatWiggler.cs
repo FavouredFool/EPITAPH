@@ -17,6 +17,7 @@ public class BeatWiggler : BeatResponderBase
 
     public override void BeatTrigger(EarlyBeatChanged e)
     {
+                DOTween.Kill(this, true);
         Sequence seq = DOTween.Sequence(this);
         seq.SetUpdate(true);
 

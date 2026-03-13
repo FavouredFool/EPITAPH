@@ -1,9 +1,10 @@
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
+using DG.Tweening;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class BoltController : MonoBehaviour
+public class BoltController : MonoBehaviour, AudioEventSubscriber<EarlyBeatChanged>
 {
     [SerializeField] LayerMask _glassLayer;
     [SerializeField] LayerMask _blockLayers;
@@ -12,9 +13,6 @@ public class BoltController : MonoBehaviour
     [SerializeField] Collider2D _hitbox;
     [SerializeField] Collider2D _pickupBox;
 
-    [SerializeField] Gradient _mainGradient; 
-    [SerializeField] Gradient _blockedGradient;
-    [SerializeField] Gradient _activatableGradient;
     [SerializeField] LineRenderer _lineRenderer;
     [SerializeField] Transform _endPoint;
     //[SerializeField, Range(0, 2)] public float _testBoltRayThickness = 1;
@@ -32,8 +30,6 @@ public class BoltController : MonoBehaviour
 
     BoltType _boltType;
 
-    float _baseWidth;
-    Color _baseColor;
 
     public bool IsActivatable => IsSelected && IsLineOfSight && HasHitSomething /*&& IsStakeBolt*/;
     
@@ -65,14 +61,16 @@ public class BoltController : MonoBehaviour
 
         _hitbox.enabled = true;
         _pickupBox.enabled = false;
-
-        _baseWidth = _lineRenderer.startWidth;
-        _baseColor = _lineRenderer.material.color;
-        _lineRenderer.endWidth = _baseWidth;
+    }
+   void OnEnable()
+    {
+        AudioBus.Subscribe<EarlyBeatChanged>(this);
     }
 
     void OnDisable()
     {
+                DOTween.Kill(this);
+        AudioBus.Unsubscribe<EarlyBeatChanged>(this);
         SignalBus.Fire(new Signal_TriggerBoltMarker(_visual3D.transform, true));
     }
 
@@ -85,46 +83,53 @@ public class BoltController : MonoBehaviour
     {
         IsLineOfSight = TestLineOfSight();
     }
+    
+        [SerializeField] Gradient _invisibleGradient,visibleGradient,targetedGradient;
 
+    public float invisibleLineWidth,visibleLineWidth,targetedLineWidth;
+    public Color invisibleLineCol,visibleLineCol,targetedLineCol;
+    public float pulseStrength;
+    float currentPulse;
     void LateUpdate()
     {
         _lineRenderer.SetPosition(0, _endPoint.position);
-        
-        Vector3 playerPos = _lineRenderer.GetPosition(1);
-        Vector2 position = Player.BloodlineConnection.position;
-        
-        playerPos.x = position.x;
-        playerPos.y = position.y;
-        
-        _lineRenderer.SetPosition(1, playerPos);
 
-        _lineRenderer.colorGradient = _activatableGradient;
-        
+        Vector2 position = Player.BloodlineConnection.position;
+
+        _lineRenderer.SetPosition(1, position);
+
+
+        float pulseMultiplier = 1 + currentPulse;
+
         if (IsActivatable)
         {
-            //_lineRenderer.colorGradient = _activatableGradient;
-            _lineRenderer.startWidth = _baseWidth*3;
-            _lineRenderer.endWidth = _baseWidth*3;
-            _lineRenderer.material.color = _baseColor;
+            _lineRenderer.startWidth = targetedLineWidth * pulseMultiplier;
+            _lineRenderer.endWidth = targetedLineWidth * pulseMultiplier;
+            _lineRenderer.colorGradient = targetedGradient;
+            _lineRenderer.material.color = targetedLineCol;
         }
         else if (IsLineOfSight)
         {
-            _lineRenderer.startWidth = _baseWidth;
-            _lineRenderer.endWidth = _baseWidth;
-            _lineRenderer.material.color = _baseColor;
+            _lineRenderer.startWidth = visibleLineWidth * pulseMultiplier;
+            _lineRenderer.endWidth = visibleLineWidth * pulseMultiplier;
+            _lineRenderer.colorGradient = visibleGradient;
+            _lineRenderer.material.color = visibleLineCol;
         }
         else
         {
-            // = IsLineOfSight ? _mainGradient : _blockedGradient;
-            //_lineRenderer.startWidth = 0;
-            //_lineRenderer.endWidth = 0;
-            _lineRenderer.startWidth = _baseWidth;
-            _lineRenderer.endWidth = _baseWidth;
-
-            Color transparentColor = _baseColor;
-            transparentColor.a = 0.4f;
-            _lineRenderer.material.color = transparentColor;
+            _lineRenderer.startWidth = invisibleLineWidth * pulseMultiplier;
+            _lineRenderer.endWidth = invisibleLineWidth * pulseMultiplier;
+            _lineRenderer.colorGradient = _invisibleGradient;
+            _lineRenderer.material.color = invisibleLineCol;
         }
+    }
+
+    public void OnEventHappened(EarlyBeatChanged e)
+    {
+        DOTween.Kill(_lineRenderer,true);
+        Sequence seq= DOTween.Sequence(_lineRenderer).SetUpdate(true);
+        seq.Insert(0, DOTween.To(() => currentPulse, x => currentPulse = x, pulseStrength, 0.25f).SetEase(Ease.OutBack));
+        seq.Append(DOTween.To(() => currentPulse, x => currentPulse = x, 0, 0.25f).SetEase(Ease.InBack));
     }
 
     void OnTriggerEnter2D(Collider2D other)

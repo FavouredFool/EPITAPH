@@ -1,7 +1,9 @@
 ﻿using System.Numerics;
+using UnityEngine;
 
 public class IdleState : EnemyBaseState
 {
+    RaycastHit hit;
     public IdleState(EnemyStateContext ctx) : base(ctx)
     {
     }
@@ -24,10 +26,10 @@ public class IdleState : EnemyBaseState
 
     public override void Update()
     {
-
+    
         if (_ctx.EnemyController.IsTargetInRangeForChaseBegin())
         {
-            _ctx.EnemyController.EnterChase.Trigger();
+                _ctx.EnemyController.EnterChase.Trigger();
 
         }
         base.Update();
