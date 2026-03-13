@@ -10,11 +10,13 @@ public class PlayerAudioData : ScriptableObject
     [SerializeField] public EventReference lockedEvent;
     [SerializeField] public EventReference releaseEvent;
     [SerializeField] public EventReference boltPickup;
+    [SerializeField] public EventReference parry;
     [Header("Hits")]
     [SerializeField] public EventReference hitMeat;
     [SerializeField] public EventReference hitWall;
     [Header("Movement")]
     [SerializeField] public EventReference lunge;   
+    [SerializeField] public EventReference hitRecovery;
 
     public PlayerAudio Setup(GameObject go)
     {

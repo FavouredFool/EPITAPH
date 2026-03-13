@@ -40,6 +40,13 @@ MonoBehaviour:
       Data3: -40039758
       Data4: -264810015
     Path: event:/SFX/Player/Crossbow/BoltPickup
+  parry:
+    Guid:
+      Data1: -1981034160
+      Data2: 1104725463
+      Data3: -362127728
+      Data4: 941325301
+    Path: event:/SFX/Player/Crossbow/Parry
   hitMeat:
     Guid:
       Data1: 551514837
@@ -61,3 +68,10 @@ MonoBehaviour:
       Data3: 2065848713
       Data4: 1820386780
     Path: event:/SFX/Player/Dash
+  hitRecovery:
+    Guid:
+      Data1: -1393923704
+      Data2: 1205310454
+      Data3: -1424084847
+      Data4: -1521715189
+    Path: event:/SFX/Player/BatState

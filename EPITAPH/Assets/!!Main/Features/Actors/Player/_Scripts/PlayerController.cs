@@ -378,6 +378,7 @@ public class PlayerController : MonoBehaviour
     public void ParrySuccessful()
     {
         SetCharge(Mathf.Clamp(PlayerVariableAnchor.PlayerVariables.Charge + 1, 0, 3));
+        PlayerAudio.PlayParry();
     }
     
     // TODO whyy is this not connected anymore?
