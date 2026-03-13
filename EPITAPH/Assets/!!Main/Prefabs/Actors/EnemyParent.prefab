@@ -20207,7 +20207,7 @@ MonoBehaviour:
     m_Bits: 1024
   _speed: 4.15
   _knockbackDecay: 6.26
-  _knockbackResistance: 5
+  _knockbackResistance: 3.5
   <ReviveRange>k__BackingField: {x: 2, y: 5}
   <BoltBone>k__BackingField: {fileID: 8553025245396779203}
   <KnockbackMagnitudeThreshold>k__BackingField: 5

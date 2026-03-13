@@ -26,8 +26,10 @@ public class RavageState : VampireBaseState
     {
         if (!_hasEaten &&(Time.time - _startTime) > _ctx.PlayerController.RavageTime / 2)
         {
-            PlayerVariableAnchor.PlayerVariables.Health += 1;
+            PlayerVariableAnchor.PlayerVariables.Health = PlayerVariableAnchor.PlayerVariables.HealthMax;
             _hasEaten = true;
+            
+            _ctx.PlayerController.SetCharge(3);
         }
         
         if ((Time.time - _startTime) > _ctx.PlayerController.RavageTime)

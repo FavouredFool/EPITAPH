@@ -280,9 +280,6 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         StateMachine.FixedUpdate();
-
-        
-
     }
 
     public void ReadInput()
@@ -377,7 +374,11 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    
+
+    public void ParrySuccessful()
+    {
+        SetCharge(Mathf.Clamp(PlayerVariableAnchor.PlayerVariables.Charge + 1, 0, 3));
+    }
     
     // TODO whyy is this not connected anymore?
     public void LungeToBolt(BoltType boltType)
@@ -486,6 +487,18 @@ public class PlayerController : MonoBehaviour
         
         CurrentLungeBolt = activeBolt;
         LungeTrigger.Trigger();
+    }
+
+    public void SetCharge(int chargeLevel)
+    {
+        // successful parry -> gain +1
+        // successful ravage -> 3 - done
+        // bat form -> ensure 1
+        
+        if (PlayerVariableAnchor.PlayerVariables.Charge < chargeLevel)
+        {
+            PlayerVariableAnchor.PlayerVariables.Charge = chargeLevel;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
