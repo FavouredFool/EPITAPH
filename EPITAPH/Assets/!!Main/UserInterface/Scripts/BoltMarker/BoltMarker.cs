@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public class BoltMarker : MonoBehaviour
 {
     RectTransform rect;
+    [SerializeField]Canvas canvas;
     public Transform Parent {get; set;}
     [SerializeField] GameObject _basicVisuals, _dashVisuals, _feedVisuals;
 
@@ -29,8 +30,23 @@ public class BoltMarker : MonoBehaviour
 
     void Update()
     {
-        if(Parent!=null)
-        rect.position= Camera.main.WorldToScreenPoint(Parent.transform.position);
+        if (Parent != null)
+        {
+        var ViewportPos = Camera.main.WorldToViewportPoint(Parent.transform.position);
+        rect.anchoredPosition = new Vector2(Screen.width * ViewportPos.x, Screen.height * ViewportPos.y);
+//              Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, Parent.transform.position);
+
+// // convert the screen position to the local anchored position
+
+// Vector2 anchoredPosition = transform.InverseTransformPoint(screenPoint); 
+// rect.position=anchoredPosition;
+// return;
+
+//             // var screen = Camera.main.WorldToScreenPoint(Parent.transform.position);
+//             // screen.z = (canvas.transform.position -);
+//             // RectTransformUtility.ScreenPointToLocalPointInRectangle(rect, , Camera.main, out Vector2 canvasPos);
+//             // rect.position = canvasPos;
+        }
     }
 
     public void TweenAppear(Transform parent, bool dash, bool feed)

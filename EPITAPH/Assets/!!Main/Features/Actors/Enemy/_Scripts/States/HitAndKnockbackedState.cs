@@ -17,7 +17,8 @@ public class HitAndKnockbackedState : EnemyBaseState
         _ctx.EnemyController.BloodTrail.Play();
         _ctx.EnemyController.HitByBolt.Play();
         PlayerAudio.PlayMeatHit(_ctx.EnemyController.transform.position);
-       
+        CameraShake.Instance.TriggerShake(new Vector3(0,0,1),3);
+
     }
 
     public override void Update()

@@ -25,13 +25,15 @@ public class CameraShake : MonoBehaviour
 
     public void TriggerBasicShake()
     {
-        TriggerShake(Random.insideUnitCircle, 2f);
+      
+        TriggerShake(Random.insideUnitCircle.normalized, 2f);
     }
 
 
     public void TriggerShake(Vector3 velocity,float intensity)
     {
         impulseSource.GenerateImpulse(velocity * intensity);
+        Debug.Log("CamShake?");
 
     }
 }
