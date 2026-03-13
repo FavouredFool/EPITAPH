@@ -1,6 +1,6 @@
 ﻿title: TutorialStart
 ---
-<<TogglePause true>>
+<<ToggleFreeze>>
 
 Use ["Left Joystick"] to move.
 Use ["Right Joystick"] to aim, then ["Right Trigger"] to shoot!
@@ -14,13 +14,13 @@ Hold ["Left Shoulder"] to reload! Keep holding it to empower your shot!
 
 title: TutorialExitLevel
 ---
-<<TogglePause true>>
+<<ToggleFreeze>>
 To enter the next level, hunt down all your prey.
 Downed enemies will recover, until you stake them into a wall.
 ===
 
 title: FontJest
 ---
-<<TogglePause true>>
+<<ToggleFreeze>>
 Lmao
 ===

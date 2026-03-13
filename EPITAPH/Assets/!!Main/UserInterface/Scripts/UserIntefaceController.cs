@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Yarn.Unity;
@@ -55,7 +56,8 @@ public class UserInterfaceController : MonoBehaviour
         Time.timeScale = _menuManager.IsOpen ? 0 : 1;
     }
 
-    [YarnCommand("ToggleFreeze")]public static void TogglePauseDialogue(bool on)
+    [YarnCommand("ToggleFreeze")]public static void TogglePauseDialogue(bool on = true)
     {
+        SignalBus.Fire(new Signal_ToggleFreeze(on));
     }
 }

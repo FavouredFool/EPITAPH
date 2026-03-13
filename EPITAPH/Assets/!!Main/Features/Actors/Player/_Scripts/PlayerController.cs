@@ -208,6 +208,19 @@ public class PlayerController : MonoBehaviour
         InitStateMachine();
     }
 
+        void OnEnable()
+    {
+        SignalBus.Subscribe<Signal_ToggleFreeze>(Freeze);
+    }
+    void OnDisable()
+    {
+        SignalBus.Unsubscribe<Signal_ToggleFreeze>(Freeze);        
+    }
+    public void Freeze(Signal_ToggleFreeze signal)
+    {
+        IsStopped=signal.on;
+    }
+
     void Start()
     {
         PlayerVariableAnchor.PlayerVariables.Health = PlayerVariableAnchor.PlayerVariables.HealthMax;
@@ -288,16 +301,6 @@ public class PlayerController : MonoBehaviour
     void Any(IState to, IStatePredicate condition) =>
         StateMachine.AddAnyTransition(to, condition);
 
-
-    void OnEnable()
-    {
-        
-    }
-
-    void OnDisable()
-    {
-        
-    }
 
     void Update()
     {

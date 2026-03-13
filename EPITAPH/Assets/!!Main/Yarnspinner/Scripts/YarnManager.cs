@@ -37,6 +37,7 @@ public class YarnManager : MonoBehaviour
     }
     public void OnEndDialogue()
     {
+        SignalBus.Fire(new Signal_ToggleFreeze(false));
         SignalBus.Fire(new Signal_DialogueToggled(false));
     }
 
