@@ -10123,7 +10123,7 @@ MonoBehaviour:
   <ExplosionRadius>k__BackingField: 3
   <ExplosionVFXObject>k__BackingField: {fileID: 363742632465798558}
   <RavageTime>k__BackingField: 1
-  <ExplosionKnockbackStrength>k__BackingField: 200
+  <ExplosionKnockbackStrength>k__BackingField: 130
   <ParryActiveTime>k__BackingField: 0.4
   <ParryCooldown>k__BackingField: 1.3
   <DressRenderer>k__BackingField: {fileID: 1275940287046022356}
