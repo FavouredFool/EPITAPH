@@ -24,6 +24,8 @@ public class ReloadState : VampireBaseState
         _reloadStart = Time.time;
         
         PlayerAudio.StartCharging();
+
+        PlayerCameraController.DoFOV(30,3,DG.Tweening.Ease.OutSine);
     }
 
     public override void Update()
