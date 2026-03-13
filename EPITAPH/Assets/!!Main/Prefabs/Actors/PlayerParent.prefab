@@ -5204,7 +5204,11 @@ MonoBehaviour:
   <RavageTime>k__BackingField: 1
   <ExplosionKnockbackStrength>k__BackingField: 200
   <ParryActiveTime>k__BackingField: 0.4
-  <ParryCooldown>k__BackingField: 1
+  <ParryCooldown>k__BackingField: 1.3
+  <DressRenderer>k__BackingField: {fileID: 1275940287046022356}
+  <CorsetRenderer>k__BackingField: {fileID: 982514966045538243}
+  <DressMatBase>k__BackingField: {fileID: 2100000, guid: 53fff5fb74c8e474bab1fd44d4c83697, type: 2}
+  <DressMatNoParry>k__BackingField: {fileID: 2100000, guid: 554ba48d4efbc6c45b44241319c44888, type: 2}
   ParryEffect: {fileID: 4095246488593112102}
   PlayerBlood: {fileID: 2774372810828526051, guid: 9ff6ede3015f7f049993c08c2aa52994, type: 3}
 --- !u!50 &7293642660323857259
@@ -20714,6 +20718,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 125.18299
       objectReference: {fileID: 0}
+    - target: {fileID: 6431571019784434090, guid: 12fdbae478cf04146a81b01e07811b60, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 53fff5fb74c8e474bab1fd44d4c83697, type: 2}
     - target: {fileID: 6434045881871418815, guid: 12fdbae478cf04146a81b01e07811b60, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -3.5396795
@@ -20747,6 +20755,16 @@ Animator:
 --- !u!4 &972692710750708601 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5011162746048620039, guid: 12fdbae478cf04146a81b01e07811b60, type: 3}
+  m_PrefabInstance: {fileID: 5256979679533745534}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &982514966045538243 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4996201785445610173, guid: 12fdbae478cf04146a81b01e07811b60, type: 3}
+  m_PrefabInstance: {fileID: 5256979679533745534}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &1275940287046022356 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6431571019784434090, guid: 12fdbae478cf04146a81b01e07811b60, type: 3}
   m_PrefabInstance: {fileID: 5256979679533745534}
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &4327648699261966165 stripped

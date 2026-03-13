@@ -74,9 +74,15 @@ public class PlayerController : MonoBehaviour
     [field: Header("Parry")]
     [field: SerializeField, Range(0, 10)] public float ParryActiveTime { get; set; } = 0.4f;
     [field: SerializeField, Range(0, 10)] public float ParryCooldown { get; set; } = 1f;
+    [field: SerializeField] public SkinnedMeshRenderer DressRenderer { get; set; } 
+    [field: SerializeField] public SkinnedMeshRenderer CorsetRenderer { get; set; } 
+    [field: SerializeField] public Material DressMatBase { get; set; } 
+    [field: SerializeField] public Material DressMatNoParry { get; set; } 
     
     public bool SuccessfulParryHappened { get; set; }
     public float LastParry  { get; set; } = float.NegativeInfinity;
+
+    public bool ParryAvailable { get; set; } = true;
     
     public float Speed => _speed;
     public float SpeedAimReduction => _speedAimReduction;
@@ -293,6 +299,12 @@ public class PlayerController : MonoBehaviour
         
         CrossbowAnimator.SetInteger(ChargeIntAnim, PlayerVariableAnchor.PlayerVariables.Charge);
         CharacterAnimator.SetInteger(ChargeIntAnim, PlayerVariableAnchor.PlayerVariables.Charge);
+        
+        if (!ParryAvailable && Time.time - LastParry > ParryCooldown)
+        {
+            ParryAvailable = true;
+            RefreshParryDress();
+        }
     }
     
     void FixedUpdate()
@@ -355,7 +367,7 @@ public class PlayerController : MonoBehaviour
     
     public void ParryEnter()
     {
-        if (Time.time - LastParry < ParryCooldown)
+        if (!ParryAvailable)
         {
             // Polish would have this have feedback
             return;
@@ -372,7 +384,19 @@ public class PlayerController : MonoBehaviour
         if (SuccessfulParryHappened) return;
         SuccessfulParryHappened = true;
         
+        LastParry = float.NegativeInfinity;
         SetChargeMin(Mathf.Clamp(PlayerVariableAnchor.PlayerVariables.Charge + 1, 0, 3));
+    }
+
+    public void RefreshParryDress()
+    {
+        DressRenderer.material = (ParryAvailable) ? DressMatBase : DressMatNoParry;
+
+        Material[] mats = CorsetRenderer.materials;
+        
+        mats[1] = ParryAvailable ? DressMatBase : DressMatNoParry;
+
+        CorsetRenderer.materials = mats;
     }
     
     public void ShootBolt()

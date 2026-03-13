@@ -12,6 +12,7 @@ public class ParryState : VampireBaseState
         _ctx.PlayerController.SuccessfulParryHappened = false;
         _ctx.PlayerController.ParryEffect.Play();
         _ctx.PlayerController.Rb.linearVelocity = Vector2.zero;
+        _ctx.PlayerController.ParryAvailable = false;
     }
 
     public override void Update()
@@ -31,5 +32,6 @@ public class ParryState : VampireBaseState
     public override void OnExit()
     {
         _ctx.PlayerController.ParryEffect.Stop();
+        _ctx.PlayerController.RefreshParryDress();
     }
 }
