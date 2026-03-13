@@ -23,6 +23,7 @@ public class StakedState : EnemyBaseState
         _ctx.EnemyController.CurrentlyStickingBolt.IsStakeBolt = true;
         _ctx.EnemyController.CurrentlyStickingBolt.StickToNothing();
         _ctx.EnemyController.CurrentlyStickingBolt.EnableBoltMarker(true);
+        _ctx.EnemyController.Light.gameObject.SetActive(false);
     }
 
     public override void Update()
