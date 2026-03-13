@@ -26,11 +26,16 @@ public class ChargeUID : MonoBehaviour
         RefreshBars(signal.variables);
 
         DOTween.Kill(this, true);
-        Sequence seq= DOTween.Sequence(this);
+        Sequence seq = DOTween.Sequence(this);
 
         for (int i = 0; i < _chargeMarkers.Length; i++)
-            seq.Insert(0,_chargeMarkers[i].DOScale(i==signal.variables.Charge - 1 ? Vector3.one : Vector3.one * 0.35f, 0.5f).SetEase(Ease.OutBack));
-        
+        {
+            bool focused = i == signal.variables.Charge - 1;
+            seq.Insert(0, _chargeMarkers[i].DOScale(focused ? Vector3.one : Vector3.one * 0.35f, 0.5f).SetEase(Ease.OutBack));
+            BeatResponderGroup group = _chargeMarkers[i].GetComponentInChildren<BeatResponderGroup>();
+            if (group != null) group.Toggle(focused);
+        }
+
         if (signal.variables.Charge == 3)
             seq.Insert(0, _chargeBarTip.DOPunchScale(Vector3.one * 0.15f, 0.5f).SetEase(Ease.OutCirc));
     }

@@ -6,6 +6,7 @@ public class BoltMarkerUIDManager : MonoBehaviour
     [SerializeField] BoltMarker _markerPrefab;
 
     [SerializeField] List<BoltMarker> _markers;
+    
 
     void OnEnable()
     {
