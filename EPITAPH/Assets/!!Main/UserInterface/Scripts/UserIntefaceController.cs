@@ -43,15 +43,19 @@ public class UserInterfaceController : MonoBehaviour
 
     public void MenuUIToggled(Signal_MenuUIToggled signal)
     {
-RefreshTimescale();
+        RefreshTimescale();
     }
     public void DialogueUIToggled(Signal_DialogueUIToggled signal)
     {
-        //RefreshTimescale();
+        RefreshTimescale();
     }
 
     public void RefreshTimescale()
     {
-                        Time.timeScale = IsAnyOpen ? 0 : 1;
+        Time.timeScale = _menuManager.IsOpen ? 0 : 1;
+    }
+
+    [YarnCommand("ToggleFreeze")]public static void TogglePauseDialogue(bool on)
+    {
     }
 }

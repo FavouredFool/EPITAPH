@@ -31,7 +31,7 @@ public class DialogueUIDManager : MonoBehaviour
 
 Debug.Log("Dialogue "+on);
 
-        DOTween.Kill(this);
+        DOTween.Kill(this,true);
         Sequence seq = DOTween.Sequence(this);
         seq.SetUpdate(true);
 

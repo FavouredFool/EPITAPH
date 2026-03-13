@@ -27,8 +27,9 @@ public class YarnManager : MonoBehaviour
     {
         if (_dialogueRunner.IsDialogueRunning)
         {
+            await _dialogueRunner.Stop();
             Debug.LogWarning("Dialogue started while it was already running!");
-            return;
+            
         }
         ToggleDefaultDialogueContinue(true);
         SignalBus.Fire(new Signal_DialogueToggled( true));

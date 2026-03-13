@@ -147,7 +147,8 @@ public struct Signal_EnemyDeath
     {
         this.enemy=enemy;
     }
-}public struct Signal_PlayerDamage
+}
+public struct Signal_PlayerDamage
 {
     public PlayerController player;
 
@@ -155,4 +156,8 @@ public struct Signal_EnemyDeath
     {
         this.player=enemy;
     }
+}
+public struct Signal_PlayerDeath
+{
+
 }

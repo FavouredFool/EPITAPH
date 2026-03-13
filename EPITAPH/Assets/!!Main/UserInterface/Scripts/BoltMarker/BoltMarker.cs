@@ -58,7 +58,7 @@ public class BoltMarker : MonoBehaviour
         _feedVisuals.SetActive(feed);
         _basicVisuals.SetActive(!dash&&!feed);
         
-        DOTween.Kill(gameObject);
+        DOTween.Kill(gameObject, true);
         Sequence seq = DOTween.Sequence(gameObject);
         seq.SetUpdate(true);
         seq.Insert(0, transform.DOScale(1,0.3f).SetEase(Ease.OutBack));
@@ -66,7 +66,7 @@ public class BoltMarker : MonoBehaviour
 
     public void TweenTrigger()
     {
-        DOTween.Kill(gameObject);
+        DOTween.Kill(gameObject,true);
         Sequence seq = DOTween.Sequence(gameObject);
                 seq.SetUpdate(true);
         seq.Insert(0, transform.DOScale(0,0.3f).SetEase(Ease.InBack));
