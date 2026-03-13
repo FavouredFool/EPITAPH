@@ -102,7 +102,9 @@ public class PlayerController : MonoBehaviour
     public float currentParryTime = 0;
     public float ParryCooldown = 1;
     public bool BoltInChamber => PlayerVariableAnchor.PlayerVariables.Charge >= 1;
-    
+
+    [SerializeField] public ParticleSystem PlayerBlood;
+
     // Lunge
     // TODO i really dislike doing this but i dont know how else i can convey the info to the state
     public BoltController CurrentLungeBolt { get; set; }
@@ -428,6 +430,8 @@ public class PlayerController : MonoBehaviour
         
         LastHitDir = dir;
         GetHitTrigger.Trigger();
+        ParticleSystem playerBlood = Instantiate(PlayerBlood, transform.position, transform.rotation);
+
     }
 
     public void UpdateActiveBolt(bool toggleAllOff)
