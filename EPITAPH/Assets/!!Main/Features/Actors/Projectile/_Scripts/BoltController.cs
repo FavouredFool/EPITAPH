@@ -162,8 +162,11 @@ public class BoltController : MonoBehaviour
             
             if (other.GetComponentInParent<EnemyController>() is { } enemy)
             {
-                StickToEnemy(enemy);
-                enemy.EvaluateBoltHit(velocity * KnockbackMultiplier);
+                if (enemy.StateMachine.CurrentState is IdleState or StunnedState or EverythingState)
+                {
+                    StickToEnemy(enemy);
+                    enemy.EvaluateBoltHit(velocity * KnockbackMultiplier);
+                }
             }
             else
             {

@@ -443,7 +443,7 @@ public class EnemyController : MonoBehaviour
         attacking = false;
     }
 
-    void CheckForStake()
+    bool CheckForStake()
     {
         Collider2D[] contacts = new Collider2D[12];
         Rb.GetContacts(ContactFilter2D.noFilter, contacts);
@@ -451,13 +451,18 @@ public class EnemyController : MonoBehaviour
         if (contacts.Any(e => e != null && LayerUtil.MaskContainsLayer(_wallLayers, e.gameObject.layer)))
         {
             StakedTrigger.Trigger();
+            return true;
         }
+
+        return false;
     }
 
     public void EvaluateBoltHit(Vector2 velocity)
     {
-        Hit(velocity);
-        CheckForStake();
+        if (!CheckForStake())
+        {
+            Hit(velocity);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D other)
