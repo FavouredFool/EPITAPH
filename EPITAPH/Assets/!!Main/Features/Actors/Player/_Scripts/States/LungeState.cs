@@ -25,7 +25,7 @@ public class LungeState : VampireBaseState
         _ctx.PlayerController.WallCollider.enabled = false;
         
         _startLungeTime = Time.time;
-
+        _ctx.PlayerController.BatDash.Play();
         // AUDIO
         PlayerAudio.PlayLunge();
     }

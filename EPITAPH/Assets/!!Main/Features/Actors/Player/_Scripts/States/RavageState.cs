@@ -18,7 +18,6 @@ public class RavageState : VampireBaseState
         _hasEaten = false;
 
         Explode();
-
         _ctx.PlayerController.ExplosionVFXObject.Play();
     }
     
