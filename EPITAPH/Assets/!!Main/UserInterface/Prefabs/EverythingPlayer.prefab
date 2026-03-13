@@ -206,11 +206,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3967837825882570733, guid: 130d36d3141c7d04aa62618a11161f1d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.65
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3967837825882570733, guid: 130d36d3141c7d04aa62618a11161f1d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.95
+      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 3967837825882570733, guid: 130d36d3141c7d04aa62618a11161f1d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -283,9 +283,13 @@ PrefabInstance:
       value: PlayerCam
       objectReference: {fileID: 0}
     - target: {fileID: 2264037776274591177, guid: 228859a0131af3c4d860d4c9a8364d8e, type: 3}
-      propertyPath: Target.TrackingTarget
+      propertyPath: Target.LookAtTarget
       value: 
       objectReference: {fileID: 9012051603596204608}
+    - target: {fileID: 2264037776274591177, guid: 228859a0131af3c4d860d4c9a8364d8e, type: 3}
+      propertyPath: Target.TrackingTarget
+      value: 
+      objectReference: {fileID: 1667719916909200020}
     - target: {fileID: 6210916519401389345, guid: 228859a0131af3c4d860d4c9a8364d8e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.65
