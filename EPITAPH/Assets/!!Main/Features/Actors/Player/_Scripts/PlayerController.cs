@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
     
     [field: Header("Ravage")]
     [field: SerializeField, Range(0, 10)] public float ExplosionRadius { get; private set; } = 3;
-    [field: SerializeField] public GameObject ExplosionVFXObject { get; set; }
+    [field: SerializeField] public ParticleSystem ExplosionVFXObject { get; set; }
     [field: SerializeField, Range(0, 10)] public float RavageTime { get; private set; } = 1;
     [field: SerializeField, Range(0, 500)] public float ExplosionKnockbackStrength { get; private set; } = 200;
     
@@ -137,6 +137,8 @@ public class PlayerController : MonoBehaviour
     public TriggerPredicate FinishRavageTrigger { get; private set; }
     public TriggerPredicate ParryTrigger { get; private set; }
     public TriggerPredicate ParryExitTrigger { get; private set; }
+
+    public bool IsStopped { get; private set; }
     
     // Hashes
     // Crossbow
@@ -227,6 +229,7 @@ public class PlayerController : MonoBehaviour
         HitRecoveryState hitRecoveryState = new(ctx);
         RavageState ravageState = new(ctx);
         ParryState parryState = new(ctx);
+        NullPlayerState nullState = new(ctx);
 
         ShootTrigger = new TriggerPredicate();
         LungeTrigger = new TriggerPredicate();
@@ -272,6 +275,9 @@ public class PlayerController : MonoBehaviour
         At(reloadState, hitRecoveryState, GetHitTrigger);
         
         At(hitRecoveryState, moveState, FinishBatTrigger);
+        
+        Any(nullState, new FuncStatePredicate(() => IsStopped));
+        At(nullState, moveState, new FuncStatePredicate(() => !IsStopped));
         
         StateMachine.SetState(moveState);
     }

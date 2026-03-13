@@ -70,6 +70,8 @@ public class EnemyController : MonoBehaviour
 
     public Vector2 LatestHitVelocity { get; set; }
 
+    public bool IsStopped { get; private set; }
+    
     public Vector3 offset;
     void Awake()
     {
@@ -103,6 +105,7 @@ public class EnemyController : MonoBehaviour
         StakedState stakedState = new(ctx);
         StunnedState stunnedState = new(ctx);
         IdleState idleState = new(ctx);
+        NullEnemyState nullState = new(ctx);
 
         EnterKnockback = new TriggerPredicate();
         ExitKnockback = new TriggerPredicate();
@@ -127,6 +130,10 @@ public class EnemyController : MonoBehaviour
         At(chaseState, stunnedState, EnterStun);
 
         At(normalDeathState, chaseState, ReviveTrigger);
+        
+        Any(nullState, new FuncStatePredicate(() => IsStopped));
+        At(nullState, chaseState, new FuncStatePredicate(() => !IsStopped));
+        
         StateMachine.SetState(idleState);
     }
 
@@ -158,6 +165,7 @@ public class EnemyController : MonoBehaviour
 
     public void EverythingFixedUpdate()
     {
+        Debug.Log(Time.time+ " : everything fixed update");
         ChaseBehaviourFixedUpdateTick();
         _agent.nextPosition = transform.position;
     }
@@ -338,15 +346,43 @@ public class EnemyController : MonoBehaviour
                 
                 if (player.StateMachine.CurrentState is ParryState)
                 {
-                    EnterStun.Trigger();
+                    foreach(var enemy in FindObjectsOfType<EnemyController>())
+                    {
+                        if (enemy.StateMachine.CurrentState is StunnedState || Vector3.Distance(enemy.transform.position,player.transform.position)>2)
+                        {
+
+                        }
+                        else
+                        {
+                           enemy.EnterStun.Trigger();
+                         
+                        }
+                    }
                     player.ParrySuccessful();
                 }
                 else
                 {
-                    player.Hit((player.transform.position - transform.position).normalized);
+                    if(StateMachine.CurrentState is StunnedState)
+                    {
+
+                    }
+                    else
+                    {
+                        player.Hit((player.transform.position - transform.position).normalized);
+
+                    }
                 }
             }
         });
+    }
+
+    public void StunnedReset()
+    {
+
+        StopAllCoroutines();
+        charging = false;
+        attacking=false;
+        Debug.Log("entered state");
     }
     public bool IsTargetVisible()
     {

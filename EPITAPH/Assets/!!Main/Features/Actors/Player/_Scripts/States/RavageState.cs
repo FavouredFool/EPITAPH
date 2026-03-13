@@ -18,8 +18,8 @@ public class RavageState : VampireBaseState
         _hasEaten = false;
 
         Explode();
-        
-        _ctx.PlayerController.ExplosionVFXObject.gameObject.SetActive(true);
+
+        _ctx.PlayerController.ExplosionVFXObject.Play();
     }
     
     public override void Update()
@@ -58,6 +58,6 @@ public class RavageState : VampireBaseState
 
     public override void OnExit()
     {
-        _ctx.PlayerController.ExplosionVFXObject.gameObject.SetActive(false);
+      //  _ctx.PlayerController.ExplosionVFXObject.gameObject.SetActive(false);
     }
 }

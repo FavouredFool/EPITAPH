@@ -26,6 +26,7 @@ public class StunnedState : EnemyBaseState
         time = 0;
         _ctx.EnemyController.Animator.SetTrigger("EnterStun");
         _ctx.EnemyController.GetParried.Play();
+        _ctx.EnemyController.StunnedReset();
         base.OnEnter();
     }
 

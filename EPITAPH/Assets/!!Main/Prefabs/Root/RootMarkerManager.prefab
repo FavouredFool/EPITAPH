@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593d6d0f76ff2c34e98306f555dd0c6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoltMarkerUIDManager
-  _markerPrefab: {fileID: 2162607364039788118, guid: 19e7a4b9e8aa48744a0dc6b0a838e761, type: 3}
+  _markerPrefab: {fileID: 7585468652049786413, guid: 19e7a4b9e8aa48744a0dc6b0a838e761, type: 3}
   _markers: []
