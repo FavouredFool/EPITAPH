@@ -61,6 +61,7 @@ public class BoltMarker : MonoBehaviour
         
         DOTween.Kill(gameObject);
         Sequence seq = DOTween.Sequence(gameObject);
+        seq.SetUpdate(true);
         seq.Insert(0, transform.DOScale(1,0.3f).SetEase(Ease.OutBack));
     }
 
@@ -68,6 +69,7 @@ public class BoltMarker : MonoBehaviour
     {
         DOTween.Kill(gameObject);
         Sequence seq = DOTween.Sequence(gameObject);
+                seq.SetUpdate(true);
         seq.Insert(0, transform.DOScale(0,0.3f).SetEase(Ease.InBack));
         seq.OnComplete(()=>        Destroy(gameObject));
     }

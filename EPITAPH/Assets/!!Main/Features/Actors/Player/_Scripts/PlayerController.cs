@@ -70,6 +70,20 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField, Range(0, 10)] public float RavageTime { get; private set; } = 1;
     [field: SerializeField, Range(0, 500)] public float ExplosionKnockbackStrength { get; private set; } = 200;
     
+    
+    [field: Header("Parry")]
+    [field: SerializeField, Range(0, 10)] public float ParryActiveTime { get; set; } = 0.4f;
+    [field: SerializeField, Range(0, 10)] public float ParryCooldown { get; set; } = 1f;
+    [field: SerializeField] public SkinnedMeshRenderer DressRenderer { get; set; } 
+    [field: SerializeField] public SkinnedMeshRenderer CorsetRenderer { get; set; } 
+    [field: SerializeField] public Material DressMatBase { get; set; } 
+    [field: SerializeField] public Material DressMatNoParry { get; set; } 
+    
+    public bool SuccessfulParryHappened { get; set; }
+    public float LastParry  { get; set; } = float.NegativeInfinity;
+
+    public bool ParryAvailable { get; set; } = true;
+    
     public float Speed => _speed;
     public float SpeedAimReduction => _speedAimReduction;
     public float ReloadAimReduction => _reloadAimReduction;
@@ -97,10 +111,10 @@ public class PlayerController : MonoBehaviour
     
     bool IsAiming => RotateInput.magnitude > _moveLockThreshold;
     
-    public bool IsParrying = false;
-    public float MaxParryTime = 1;
-    public float currentParryTime = 0;
-    public float ParryCooldown = 1;
+    
+    
+    
+    
     public bool BoltInChamber => PlayerVariableAnchor.PlayerVariables.Charge >= 1;
 
     [SerializeField] public ParticleSystem PlayerBlood;
@@ -113,6 +127,7 @@ public class PlayerController : MonoBehaviour
     public StateMachine StateMachine { get; set; }
     
     // State Triggers
+    // could build a lil ui that displays these for debugging purposes like with the animator window?
     public TriggerPredicate ShootTrigger { get; private set; }
     public TriggerPredicate LungeTrigger { get; private set; }
     public TriggerPredicate LungeToRavageTrigger { get; private set; }
@@ -120,6 +135,8 @@ public class PlayerController : MonoBehaviour
     public TriggerPredicate GetHitTrigger { get; private set; }
     public TriggerPredicate FinishBatTrigger { get; private set; }
     public TriggerPredicate FinishRavageTrigger { get; private set; }
+    public TriggerPredicate ParryTrigger { get; private set; }
+    public TriggerPredicate ParryExitTrigger { get; private set; }
     
     // Hashes
     // Crossbow
@@ -209,6 +226,7 @@ public class PlayerController : MonoBehaviour
         LungeState lungeState = new(ctx);
         HitRecoveryState hitRecoveryState = new(ctx);
         RavageState ravageState = new(ctx);
+        ParryState parryState = new(ctx);
 
         ShootTrigger = new TriggerPredicate();
         LungeTrigger = new TriggerPredicate();
@@ -217,6 +235,8 @@ public class PlayerController : MonoBehaviour
         FinishBatTrigger = new TriggerPredicate();
         FinishRavageTrigger = new TriggerPredicate();
         LungeToMoveTrigger = new TriggerPredicate();
+        ParryTrigger = new TriggerPredicate();
+        ParryExitTrigger = new TriggerPredicate();
         
         At(moveState, aimState, new FuncStatePredicate(() => IsAiming));
         At(aimState, moveState, new FuncStatePredicate(() => !IsAiming));
@@ -226,6 +246,12 @@ public class PlayerController : MonoBehaviour
         
         At(reloadState, moveState, new FuncStatePredicate(() => !RequestsReload() && !IsAiming));
         At(reloadState, aimState, new FuncStatePredicate(() => !RequestsReload() && IsAiming));
+
+        At(moveState, parryState, ParryTrigger);
+        At(aimState, parryState, ParryTrigger);
+        At(reloadState, parryState, ParryTrigger);
+        
+        At(parryState, moveState, ParryExitTrigger);
         
         At(aimState, shootState, ShootTrigger);
         At(reloadState, shootState, ShootTrigger);
@@ -259,23 +285,26 @@ public class PlayerController : MonoBehaviour
 
     void OnEnable()
     {
-        _inputActions.Player.Parry.performed += ParryInput;
+        
     }
 
     void OnDisable()
     {
-        _inputActions.Player.Parry.performed -= ParryInput;
+        
     }
 
     void Update()
     {
         StateMachine.Update();
-        //Debug.Log(StateMachine.CurrentState);
         
         CrossbowAnimator.SetInteger(ChargeIntAnim, PlayerVariableAnchor.PlayerVariables.Charge);
         CharacterAnimator.SetInteger(ChargeIntAnim, PlayerVariableAnchor.PlayerVariables.Charge);
-
-        ParryUpdate();
+        
+        if (!ParryAvailable && Time.time - LastParry > ParryCooldown)
+        {
+            ParryAvailable = true;
+            RefreshParryDress();
+        }
     }
     
     void FixedUpdate()
@@ -330,7 +359,7 @@ public class PlayerController : MonoBehaviour
     {
         ShootBolt();
     }
-
+    
     public void ParryInput(InputAction.CallbackContext ctx)
     {
         ParryEnter();
@@ -338,48 +367,36 @@ public class PlayerController : MonoBehaviour
     
     public void ParryEnter()
     {
-        if (ParryCooldown >= 1)
+        if (!ParryAvailable)
         {
-            IsParrying = true;
-            currentParryTime = 0;
-            ParryEffect.Play();
-        }
-    }
-
-    void ParryUpdate()
-    {
-        if (ParryCooldown <= 1)
-        {
-            ParryCooldown += Time.deltaTime;
-        }
-        
-        if (!IsParrying)
-        {
+            // Polish would have this have feedback
             return;
         }
         
-        if (ParryCooldown >= 1)
-        {
-            if (currentParryTime < MaxParryTime)
-            {
-                IsParrying = true;
-                currentParryTime += Time.deltaTime;
-            }
-            else
-            {
-                // is it right here?
-                IsParrying = false;
-                currentParryTime = 0;
-                ParryEffect.Stop();
-                ParryCooldown = 0;
-            }
-        }
+        ParryTrigger.Trigger();
     }
-
+    
     public void ParrySuccessful()
     {
-        SetChargeMin(Mathf.Clamp(PlayerVariableAnchor.PlayerVariables.Charge + 1, 0, 3));
         PlayerAudio.PlayParry();
+        
+        // Can't gain the gains of a successful parry multiple times
+        if (SuccessfulParryHappened) return;
+        SuccessfulParryHappened = true;
+        
+        LastParry = float.NegativeInfinity;
+        SetChargeMin(Mathf.Clamp(PlayerVariableAnchor.PlayerVariables.Charge + 1, 0, 3));
+    }
+
+    public void RefreshParryDress()
+    {
+        DressRenderer.material = (ParryAvailable) ? DressMatBase : DressMatNoParry;
+
+        Material[] mats = CorsetRenderer.materials;
+        
+        mats[1] = ParryAvailable ? DressMatBase : DressMatNoParry;
+
+        CorsetRenderer.materials = mats;
     }
     
     public void ShootBolt()

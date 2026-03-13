@@ -27,6 +27,7 @@ public class ChargeUID : MonoBehaviour
 
         DOTween.Kill(this, true);
         Sequence seq = DOTween.Sequence(this);
+                seq.SetUpdate(true);
 
         for (int i = 0; i < _chargeMarkers.Length; i++)
         {

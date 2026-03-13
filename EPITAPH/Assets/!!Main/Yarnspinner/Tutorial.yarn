@@ -1,4 +1,4 @@
-﻿title: Tutorial
+﻿title: TutorialStart
 ---
 //<<SetDefaultContinue false>>
 Use ["Left Joystick"] to move!
@@ -6,4 +6,19 @@ Hold ["Left Shoulder"] to reload! You ahve 4 bolts.
 Use ["Right Joystick"] to aim!
 Pinning enemies into the wall will kill them immedeately. Press ["Right Shoulder"] to shoot!
 You must retrieve your bolts. Press ["Any Button"] to dash and feed!
+===
+
+title: TutorialReload
+---
+Hold ["Left Shoulder"] to reload! You have 3 bolts.
+===
+
+title: TutorialExitLevel
+---
+Kill all enemies to exit the level
+===
+
+title: FontJest
+---
+Lmao
 ===

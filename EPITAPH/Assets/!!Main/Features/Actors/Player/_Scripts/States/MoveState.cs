@@ -10,6 +10,7 @@ public class MoveState : VampireBaseState
     public override void OnEnter()
     {
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsMovingBoolAnim, true);
+        _ctx.InputActions.Player.Parry.performed += _ctx.PlayerController.ParryInput;
     }
 
     public override void Update()
@@ -35,5 +36,6 @@ public class MoveState : VampireBaseState
     public override void OnExit()
     {
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsMovingBoolAnim, false);
+        _ctx.InputActions.Player.Parry.performed -= _ctx.PlayerController.ParryInput;
     }
 }

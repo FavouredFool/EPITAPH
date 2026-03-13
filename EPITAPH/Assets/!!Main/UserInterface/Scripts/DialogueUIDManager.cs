@@ -1,6 +1,7 @@
 using UnityEngine;
 using Yarn.Unity;
 using DG.Tweening;
+using Yarn;
 
 public class DialogueUIDManager : MonoBehaviour
 {
@@ -10,8 +11,7 @@ public class DialogueUIDManager : MonoBehaviour
 
     void Awake()
     {
-        _dialogueWindowsRect.anchoredPosition = new Vector2(2500, 0);
-        _cornerRect.anchoredPosition = new Vector2(3000, -1125);
+        _dialogueWindowsRect.anchoredPosition = new Vector2(1000, 1124);
     }
 
     void OnEnable()
@@ -29,22 +29,22 @@ public class DialogueUIDManager : MonoBehaviour
         if (IsOpen == on) return;
         IsOpen = on;
 
-        //DOTween.Kill(this);
+Debug.Log("Dialogue "+on);
+
+        DOTween.Kill(this);
         Sequence seq = DOTween.Sequence(this);
         seq.SetUpdate(true);
 
         if (IsOpen)
         {
             Debug.Log("GO");
-            seq.Insert(0, _dialogueWindowsRect.DOAnchorPosX(0,2f).SetEase(Ease.OutCirc));
-            seq.Insert(0, _cornerRect.DOAnchorPosX(2000,1f).SetEase(Ease.OutCirc));
+            seq.Insert(0, _dialogueWindowsRect.DOAnchorPosX(-2000,2f).SetEase(Ease.OutCirc));
         }
         else
         {
                         Debug.Log("NO");
 
-            seq.Insert(0, _dialogueWindowsRect.DOAnchorPosX(2500,1f).SetEase(Ease.InSine));
-            seq.Insert(0, _cornerRect.DOAnchorPosX(3000,0.5f).SetEase(Ease.InSine));
+            seq.Insert(0, _dialogueWindowsRect.DOAnchorPosX(1000,1f).SetEase(Ease.InSine));
         }
 
         SignalBus.Fire(new Signal_DialogueUIToggled(IsOpen));

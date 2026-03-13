@@ -13,6 +13,7 @@ public class ReloadState : VampireBaseState
     {
         _ctx.InputActions.Player.Shoot.performed += _ctx.PlayerController.ShootBoltInput;
         _ctx.InputActions.Player.UseBolt.performed += UseActiveBoltInput;
+        _ctx.InputActions.Player.Parry.performed += _ctx.PlayerController.ParryInput;
         
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsReloadingBoolAnim, true);
         _ctx.PlayerController.CrossbowAnimator.SetBool(PlayerController.IsReloadBoolAnim, true);
@@ -57,10 +58,9 @@ public class ReloadState : VampireBaseState
         _ctx.PlayerController.UpdateActiveBolt(true);
         _ctx.PlayerController.SetCameraFollow(false);
         
-        
-
         _ctx.InputActions.Player.Shoot.performed -= _ctx.PlayerController.ShootBoltInput;
         _ctx.InputActions.Player.UseBolt.performed -= UseActiveBoltInput;
+        _ctx.InputActions.Player.Parry.performed -= _ctx.PlayerController.ParryInput;
         
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsReloadingBoolAnim, false);
         _ctx.PlayerController.CrossbowAnimator.SetBool(PlayerController.IsReloadBoolAnim, false);

@@ -43,9 +43,15 @@ public class UserInterfaceController : MonoBehaviour
 
     public void MenuUIToggled(Signal_MenuUIToggled signal)
     {
-        Time.timeScale = _menuManager.IsOpen ? 0 : 1;
+RefreshTimescale();
     }
     public void DialogueUIToggled(Signal_DialogueUIToggled signal)
     {
+        //RefreshTimescale();
+    }
+
+    public void RefreshTimescale()
+    {
+                        Time.timeScale = IsAnyOpen ? 0 : 1;
     }
 }
