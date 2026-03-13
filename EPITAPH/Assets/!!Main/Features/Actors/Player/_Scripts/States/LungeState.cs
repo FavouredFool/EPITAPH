@@ -28,8 +28,6 @@ public class LungeState : VampireBaseState
         _ctx.PlayerController.BatDash.Play();
         // AUDIO
         PlayerAudio.PlayLunge();
-
-        PlayerCameraController.DoFOV(30,1,DG.Tweening.Ease.OutCirc);
     }
 
     public override void Update()
@@ -99,8 +97,6 @@ public class LungeState : VampireBaseState
         _ctx.PlayerController.LungeCollider.enabled = false;
         _ctx.PlayerController.WallCollider.enabled = true;
         CameraShake.Instance.TriggerShake(_ctx.PlayerController.transform.forward, 0.5f);
-
-        PlayerCameraController.DoFOV(35,1f,DG.Tweening.Ease.InOutSine);
 
         //if (PlayerVariableAnchor.PlayerVariables.Charge < 1)
         //{
