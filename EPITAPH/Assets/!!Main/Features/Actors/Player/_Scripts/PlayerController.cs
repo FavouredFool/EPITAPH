@@ -379,6 +379,7 @@ public class PlayerController : MonoBehaviour
     public void ParrySuccessful()
     {
         SetChargeMin(Mathf.Clamp(PlayerVariableAnchor.PlayerVariables.Charge + 1, 0, 3));
+        PlayerAudio.PlayParry();
     }
     
     public void ShootBolt()

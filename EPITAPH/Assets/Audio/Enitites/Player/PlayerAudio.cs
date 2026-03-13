@@ -13,6 +13,7 @@ public class PlayerAudio : MonoBehaviour
     EventInstance releasedInstance;
 
     EventInstance lungeInstance;
+    EventInstance hitRecoveryInstance;
 
     public static PlayerAudio instance;
     
@@ -34,6 +35,9 @@ public class PlayerAudio : MonoBehaviour
         RuntimeManager.AttachInstanceToGameObject(lockedInstance, gameObject);
 
         lungeInstance = RuntimeManager.CreateInstance(data.lunge);
+        RuntimeManager.AttachInstanceToGameObject(lungeInstance, gameObject);
+
+        hitRecoveryInstance = RuntimeManager.CreateInstance(data.lunge);
         RuntimeManager.AttachInstanceToGameObject(lungeInstance, gameObject);
 
 
@@ -121,6 +125,8 @@ public class PlayerAudio : MonoBehaviour
 
     public static void PlayLunge()
     {
+        PlayRecovery();
+        return;
         PLAYBACK_STATE state;
         instance.lungeInstance.getPlaybackState(out state);
         if (state == PLAYBACK_STATE.PLAYING)
@@ -137,5 +143,30 @@ public class PlayerAudio : MonoBehaviour
         EventInstance boltPickup = RuntimeManager.CreateInstance(instance.data.boltPickup);
         RuntimeManager.AttachInstanceToGameObject(boltPickup, instance.gameObject);
         boltPickup.start();
+    }
+
+    public static void PlayRecovery()
+    {
+        PLAYBACK_STATE state;
+        instance.hitRecoveryInstance.getPlaybackState(out state);
+        if (state == PLAYBACK_STATE.PLAYING)
+        {
+            instance.hitRecoveryInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        }
+        instance.hitRecoveryInstance = RuntimeManager.CreateInstance(instance.data.hitRecovery);
+        RuntimeManager.AttachInstanceToGameObject(instance.hitRecoveryInstance, instance.gameObject);
+        instance.hitRecoveryInstance.start();
+    }
+
+    public static void StopRecovery()
+    {
+        instance.hitRecoveryInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+    }
+
+    public static void PlayParry()
+    {
+        EventInstance parryInstance = RuntimeManager.CreateInstance(instance.data.parry);
+        RuntimeManager.AttachInstanceToGameObject(parryInstance, instance.gameObject);
+        parryInstance.start();
     }
 }

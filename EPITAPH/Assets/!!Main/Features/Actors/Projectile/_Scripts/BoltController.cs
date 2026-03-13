@@ -156,18 +156,18 @@ public class BoltController : MonoBehaviour
             else
             {
                 EnablePickup();
-                SignalBus.Fire(new Signal_ShowBoltMarker(_visual3D.transform,_boltType,true,false));
+                SignalBus.Fire(new Signal_ShowBoltMarker(_visual3D.transform,true,false));
             }
 		}
         else
         {
-            SignalBus.Fire(new Signal_ShowBoltMarker(_visual3D.transform,_boltType,true,false));
+            SignalBus.Fire(new Signal_ShowBoltMarker(_visual3D.transform,true,false));
         }
     }
 
     public void EnableBoltMarker(bool allowFeed)
     {
-        SignalBus.Fire(new Signal_ShowBoltMarker(_visual3D.transform, _boltType, true, allowFeed));
+        SignalBus.Fire(new Signal_ShowBoltMarker(_visual3D.transform, true, allowFeed));
     }
 
     public bool TestLineOfSight()
@@ -237,7 +237,7 @@ public class BoltController : MonoBehaviour
 
     public void TriggerBoltMarker()
     {
-        SignalBus.Fire(new Signal_TriggerBoltMarker(_boltType));
+        SignalBus.Fire(new Signal_TriggerBoltMarker(_visual3D.transform));
     }
 }
 

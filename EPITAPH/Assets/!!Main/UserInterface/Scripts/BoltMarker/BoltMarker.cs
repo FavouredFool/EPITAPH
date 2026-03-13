@@ -6,11 +6,14 @@ using System.Collections.Generic;
 
 public class BoltMarker : MonoBehaviour
 {
-    public BoltType type;
+    RectTransform rect;
+    public Transform Parent {get; set;}
     [SerializeField] GameObject _basicVisuals, _dashVisuals, _feedVisuals;
-    [SerializeField] Image _typeImage;
-    [SerializeField] List<Sprite> _typePrompts;
 
+    void Awake()
+    {
+        rect = GetComponent<RectTransform>();
+    }
 
     public void SetSleep()
     {
@@ -21,21 +24,25 @@ public class BoltMarker : MonoBehaviour
         _feedVisuals.SetActive(false);
 
         gameObject.SetActive(false);
+
     }
 
-    public void TweenAppear(Transform parent, BoltType type, bool dash, bool feed)
+    void Update()
+    {
+        if(Parent!=null)
+        rect.position= Camera.main.WorldToScreenPoint(Parent.transform.position);
+    }
+
+    public void TweenAppear(Transform parent, bool dash, bool feed)
     {
         gameObject.SetActive(true);
-        transform.SetParent(parent);
+        this.Parent=parent;
         transform.localPosition = Vector3.zero;
 
-        this.type=type;
         _dashVisuals.SetActive(dash);
         _feedVisuals.SetActive(feed);
         _basicVisuals.SetActive(!dash&&!feed);
         
-        _typeImage.sprite = _typePrompts[(int)type];
-
         DOTween.Kill(gameObject);
         Sequence seq = DOTween.Sequence(gameObject);
         seq.Insert(0, transform.DOScale(1,0.3f).SetEase(Ease.OutBack));
@@ -46,10 +53,14 @@ public class BoltMarker : MonoBehaviour
         DOTween.Kill(gameObject);
         Sequence seq = DOTween.Sequence(gameObject);
         seq.Insert(0, transform.DOScale(0,0.3f).SetEase(Ease.InBack));
-        seq.OnComplete(()=>SetSleep());
+        seq.OnComplete(()=>        Destroy(gameObject));
     }
 
     void OnDisable()
+    {
+        DOTween.Kill(gameObject);
+    }
+    void OnDestroy()
     {
         DOTween.Kill(gameObject);
     }

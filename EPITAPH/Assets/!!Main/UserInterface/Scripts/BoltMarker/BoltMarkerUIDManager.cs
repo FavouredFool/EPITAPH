@@ -18,46 +18,37 @@ public class BoltMarkerUIDManager : MonoBehaviour
         SignalBus.Unsubscribe<Signal_TriggerBoltMarker>(TriggerMarker);
     }
 
-    void Start()
-    {
-        //SignalBus.Fire(new Signal_ShowBoltMarker(transform,BoltType.DOWN,true, true));
-    }
-    [ContextMenu("Trigger Test")] void TriggerTest()
-    {
-        SignalBus.Fire(new Signal_TriggerBoltMarker(BoltType.DOWN));
-    }
-
     public BoltMarker GetNewMarker()
     {
-        BoltMarker result = Instantiate(_markerPrefab);
+        BoltMarker result = Instantiate(_markerPrefab, transform);
         result.SetSleep();
         _markers.Add(result);
 
         return result;
     }
-    public BoltMarker GetExistingMarker(BoltType type)
+    public BoltMarker GetExistingMarker(Transform parent)
     {
         foreach(BoltMarker marker in _markers)
         {
-            if(marker.type == type)
+            if(marker.Parent == parent)
                 return marker;
         }
         return null;
     }
 
 //SHOW
-    public void ShowMarker(Signal_ShowBoltMarker signal) => ShowMarker(signal.parent, signal.type,signal.dash,signal.feed);
-    public void ShowMarker(Transform parent, BoltType type, bool dash, bool feed)
+    public void ShowMarker(Signal_ShowBoltMarker signal) => ShowMarker(signal.parent,signal.dash,signal.feed);
+    public void ShowMarker(Transform parent, bool dash, bool feed)
     {
         BoltMarker marker= GetNewMarker();
-        marker.TweenAppear(parent, type, dash, feed);
+        marker.TweenAppear(parent, dash, feed);
     }
 
 //TRIGGER
-    public void TriggerMarker(Signal_TriggerBoltMarker signal) => TriggerMarker(signal.type);
-    public void TriggerMarker(BoltType type)
+    public void TriggerMarker(Signal_TriggerBoltMarker signal) => TriggerMarker(signal.parent);
+    public void TriggerMarker(Transform parent)
     {
-        BoltMarker marker = GetExistingMarker(type);
+        BoltMarker marker = GetExistingMarker(parent);
 
         if(marker!=null)
             TriggerMarker(marker);

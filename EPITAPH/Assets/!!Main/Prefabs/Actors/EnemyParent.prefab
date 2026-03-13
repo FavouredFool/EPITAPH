@@ -25667,15 +25667,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4606017987025332985, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.30592
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4606017987025332985, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.12199998
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4606017987025332985, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.36442
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4606017987025332985, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
       propertyPath: m_LocalRotation.w
@@ -25856,6 +25856,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2774372810828526051, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774372810828526051, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
       propertyPath: VelocityModule.enabled
       value: 1
       objectReference: {fileID: 0}
@@ -25945,15 +25949,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4606017987025332985, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.30592
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4606017987025332985, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.12199998
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4606017987025332985, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.36442
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4606017987025332985, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
       propertyPath: m_LocalRotation.w
@@ -26453,11 +26457,11 @@ PrefabInstance:
     m_TransformParent: {fileID: 3615438809422013557}
     m_Modifications:
     - target: {fileID: 2774372810828526051, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
-      propertyPath: playOnAwake
-      value: 0
+      propertyPath: lengthInSec
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2774372810828526051, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
-      propertyPath: scalingMode
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2774372810828526051, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
@@ -26470,11 +26474,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2774372810828526051, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
       propertyPath: ShapeModule.radius.value
-      value: 0.16
+      value: 0.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774372810828526051, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
+      propertyPath: EmissionModule.m_BurstCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774372810828526051, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2774372810828526051, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
       propertyPath: InitialModule.startSize.minScalar
-      value: 0.5
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774372810828526051, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774372810828526051, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2774372810828526051, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
       propertyPath: InitialModule.startSize.minMaxState
@@ -26494,31 +26514,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2774372810828526051, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
       propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2774372810828526051, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
       propertyPath: EmissionModule.m_Bursts.Array.data[1].countCurve.scalar
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4265057758572246730, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
       propertyPath: m_Name
       value: BloodTrail
       objectReference: {fileID: 0}
-    - target: {fileID: 4265057758572246730, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4606017987025332985, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.07
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4606017987025332985, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.04
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4606017987025332985, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.36442
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4606017987025332985, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
       propertyPath: m_LocalRotation.w
@@ -26550,10 +26566,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
+    - {fileID: 1919477482845165174, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
     - {fileID: 1292116686450559801, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
     - {fileID: 7243062998273812574, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
     - {fileID: 3798620613569683645, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
-    - {fileID: 1919477482845165174, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
