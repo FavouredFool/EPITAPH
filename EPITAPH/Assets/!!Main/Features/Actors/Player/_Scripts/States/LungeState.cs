@@ -36,7 +36,7 @@ public class LungeState : VampireBaseState
     {
         if ((Time.time - _startLungeTime) > _ctx.PlayerController.FailsaveExitTime)
         {
-            _ctx.PlayerController.LungeToRavageTrigger.Trigger();
+            _ctx.PlayerController.LungeToMoveTrigger.Trigger();
             _ctx.PlayerController.CharacterAnimator.SetTrigger(PlayerController.EnterIdle);
         }
     }

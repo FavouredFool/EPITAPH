@@ -441,15 +441,21 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("PickupBolt");
         PlayerAudio.PlayBoltPickup();
 
-        if (bolt.IsStakeBolt)
-        {
-            LungeToRavageTrigger.Trigger();
-        }
-        else
-        {
-            LungeToMoveTrigger.Trigger();
-        }
+        //Debug.Log("PICKUP HERE");
 
+        if (StateMachine.CurrentState is LungeState)
+        {
+            if (bolt.IsStakeBolt)
+            {
+                // only when lunge
+                LungeToRavageTrigger.Trigger();
+            }
+            else
+            {
+                LungeToMoveTrigger.Trigger();
+            }
+        }
+        
         Destroy(bolt.gameObject);
     }
 
@@ -547,12 +553,7 @@ public class PlayerController : MonoBehaviour
 
         if (LayerUtil.MaskContainsLayer(_hitLayer, other.gameObject.layer))
         {
-            // I hate guarding like this, but its easy and stuff like this is hard to delegate into the states.
-            // Maybe this will make problems or more states have to get added later.
-            if (StateMachine.CurrentState is not LungeState)
-            {
-                Hit();
-            }
+            Hit();
         }
         
         if (other.GetComponentInParent<EnemyController>() is { } enemy)
@@ -580,7 +581,7 @@ public class PlayerController : MonoBehaviour
         float bestDiff = Mathf.Infinity;
         float bestAngle = playerAimAngle;
         
-        foreach (var enemy in Enemies)
+        foreach (var enemy in Enemies.Where(e => e.StateMachine.CurrentState is not StakedState or NormalDeathState))
         {
             if (!enemy) continue;
 
