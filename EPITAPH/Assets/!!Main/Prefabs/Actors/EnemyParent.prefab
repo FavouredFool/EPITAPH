@@ -25649,13 +25649,25 @@ PrefabInstance:
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 964136234077123873, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1728260581147840605, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1728260581147840605, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2774372810828526051, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
       propertyPath: playOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774372810828526051, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4265057758572246730, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
       propertyPath: m_Name
@@ -25709,9 +25721,17 @@ PrefabInstance:
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6064403478888550720, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8257561217746921732, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
       propertyPath: playOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8257561217746921732, guid: 62586ccf8c20d9a4abe160f130f32e08, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
