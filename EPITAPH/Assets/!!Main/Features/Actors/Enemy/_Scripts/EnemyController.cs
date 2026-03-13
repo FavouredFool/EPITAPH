@@ -92,7 +92,19 @@ public class EnemyController : MonoBehaviour
         InitStateMachine();
     }
 
-
+    void OnEnable()
+    {
+        SignalBus.Subscribe<Signal_ToggleFreeze>(Freeze);
+    }
+    void OnDisable()
+    {
+        SignalBus.Unsubscribe<Signal_ToggleFreeze>(Freeze);        
+    }
+    public void Freeze(Signal_ToggleFreeze signal)
+    {
+        IsStopped=signal.on;
+    }
+    
     void InitStateMachine()
     {
         StateMachine = new StateMachine();

@@ -147,12 +147,25 @@ public struct Signal_EnemyDeath
     {
         this.enemy=enemy;
     }
-}public struct Signal_PlayerDamage
+}
+public struct Signal_PlayerDamage
 {
     public PlayerController player;
 
     public Signal_PlayerDamage(PlayerController enemy)
     {
         this.player=enemy;
+    }
+}
+public struct Signal_PlayerDeath
+{
+    
+}
+public struct Signal_ToggleFreeze
+{
+    public bool on;
+    public Signal_ToggleFreeze(bool on)
+    {
+        this.on=on;
     }
 }
