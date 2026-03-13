@@ -15,4 +15,7 @@ MonoBehaviour:
   _level: 0
   _levelSceneNames:
   - 0_Tutorial
-  - Level1
+  - 1_Level
+  - 2_Level
+  - 3_Level
+  - _End
