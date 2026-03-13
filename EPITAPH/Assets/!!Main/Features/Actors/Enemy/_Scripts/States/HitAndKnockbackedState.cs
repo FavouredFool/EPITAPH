@@ -15,8 +15,9 @@ public class HitAndKnockbackedState : EnemyBaseState
         _ctx.EnemyController.Animator.SetTrigger(EnterKnockbackedTriggerAnim);
         _ctx.EnemyController.Knockback(_ctx.EnemyController.LatestHitVelocity);
         _ctx.EnemyController.BloodTrail.Play();
+        _ctx.EnemyController.HitByBolt.Play();
         PlayerAudio.PlayMeatHit(_ctx.EnemyController.transform.position);
-        SignalBus.Fire(new Hit_Enemy(_ctx.EnemyController.Rb.position));
+       
     }
 
     public override void Update()
@@ -55,6 +56,7 @@ public class HitAndKnockbackedState : EnemyBaseState
 
     public override void OnExit()
     {
+        _ctx.EnemyController.BloodTrail.Stop();
         _ctx.EnemyController.Rb.linearVelocity = Vector2.zero;
     }
 }
