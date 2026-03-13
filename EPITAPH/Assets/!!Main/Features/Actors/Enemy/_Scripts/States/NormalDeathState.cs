@@ -20,6 +20,8 @@ public class NormalDeathState : EnemyBaseState
 
     public override void OnEnter()
     {
+        _ctx.EnemyController.Rb.simulated = false;
+        
         _ctx.EnemyController.Animator.SetBool(NormalDeathTriggerAnim, true);
         
         _ctx.EnemyController.Knockback(_ctx.EnemyController.LatestHitVelocity);
@@ -51,6 +53,7 @@ public class NormalDeathState : EnemyBaseState
         {
             _startedGetUp = true;
             _ctx.EnemyController.Animator.SetTrigger(ReviveTriggerAnim);
+            _ctx.EnemyController.Rb.simulated = true;
         }
 
         if (Time.time - _startTime > _reviveTime)

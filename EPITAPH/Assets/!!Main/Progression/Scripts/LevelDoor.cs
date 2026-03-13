@@ -61,8 +61,6 @@ public class LevelDoor : MonoBehaviour
     {
         if (!other.GetComponentInParent<PlayerController>()) return;
 
-        Debug.Log("byee");
-
         counterObject.SetActive(AllEnemiesDefeated);
     }
 

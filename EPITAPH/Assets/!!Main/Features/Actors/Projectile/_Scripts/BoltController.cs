@@ -162,7 +162,8 @@ public class BoltController : MonoBehaviour
             
             if (other.GetComponentInParent<EnemyController>() is { } enemy)
             {
-                if (enemy.StateMachine.CurrentState is IdleState or StunnedState or EverythingState)
+                // Normal Death because you can shoot enemies when they get back up. If there's a bug, maybe it's here.
+                if (enemy.StateMachine.CurrentState is IdleState or StunnedState or EverythingState or NormalDeathState)
                 {
                     StickToEnemy(enemy);
                     enemy.EvaluateBoltHit(velocity * KnockbackMultiplier);
