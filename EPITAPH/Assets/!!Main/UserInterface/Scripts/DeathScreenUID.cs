@@ -18,7 +18,6 @@ public class DeathScreenUID : MonoBehaviour
 
     void Awake()
     {
-        _rect.anchoredPosition = new Vector2(6500, 0);
         _rect.gameObject.SetActive(false);
     }
 
@@ -34,11 +33,6 @@ public class DeathScreenUID : MonoBehaviour
     public void Show(Signal_PlayerDeath signal)
     {
         _rect.gameObject.SetActive(true);
-        DOTween.Kill(this, true);
-        Sequence seq = DOTween.Sequence(this).SetUpdate(true);
-
-        seq.Insert(0, _rect.DOAnchorPosX(0, 2).SetEase(Ease.OutCirc));
-        seq.SetDelay(1);
 
         _button.Select();
     }
