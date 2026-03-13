@@ -336,7 +336,7 @@ public class EnemyController : MonoBehaviour
 
                 //Debug.Log(Vector2.Angle(transform.right, dirToPlayer));
                 
-                if (player.IsParrying)
+                if (player.StateMachine.CurrentState is ParryState)
                 {
                     EnterStun.Trigger();
                     player.ParrySuccessful();
