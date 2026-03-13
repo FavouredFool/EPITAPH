@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class BoltController : MonoBehaviour
 {
+    [SerializeField] LayerMask _glassLayer;
     [SerializeField] LayerMask _blockLayers;
     [SerializeField] LayerMask _boltPickup;
 
@@ -42,7 +43,10 @@ public class BoltController : MonoBehaviour
     public bool HasHitSomething { get; set; } = false;
     public bool IsStakeBolt { get; set; } = false;
     
-    public float KnockbackMultiplier { get; set; } 
+    public float KnockbackMultiplier { get; set; }
+
+    public Vector2 RaycastPosition  { get; set; }
+    public Quaternion RaycastRotation { get; set; }
     
     public BoltType BoltType
     {
@@ -128,6 +132,23 @@ public class BoltController : MonoBehaviour
         HitSomething(other);
     }
 
+    public void CacheRaycast(Vector2 shootPosition, Vector2 shootDirection)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(shootPosition, shootDirection, float.PositiveInfinity, _blockLayers);
+        Vector2 dir = (hit.point - shootPosition).normalized;
+        RaycastPosition = hit.point;
+        
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
+        RaycastRotation = Quaternion.Euler(0f, 0f, angle);
+        
+        // Check glass
+        RaycastHit2D glassHit = Physics2D.Raycast(shootPosition, shootDirection, float.PositiveInfinity, _glassLayer);
+        if (glassHit.collider != null && glassHit.collider.GetComponentInParent<BreakableWall>() is {} glass)
+        {
+            glass.BreakWall();
+        }
+    }
+    
     public void HitSomething(Collider2D other = null)
     {
         if (other != null)
@@ -149,7 +170,7 @@ public class BoltController : MonoBehaviour
         
         Rb2D.bodyType = RigidbodyType2D.Kinematic;
         Rb2D.linearVelocity = Vector2.zero;
-
+        
         _rb3D.GetComponent<Bolt3DVisual>().StopPhysics();
         LayerUtil.SetLayerRecursively(gameObject, LayerUtil.ExtractLayerFromMask(_boltPickup));
         
@@ -171,12 +192,16 @@ public class BoltController : MonoBehaviour
             }
             else
             {
+                // test if this works
+                transform.position = RaycastPosition;
+                transform.rotation = RaycastRotation;
                 EnablePickup();
                 SignalBus.Fire(new Signal_ShowBoltMarker(_visual3D.transform,true,false));
             }
 		}
         else
         {
+            EnablePickup();
             SignalBus.Fire(new Signal_ShowBoltMarker(_visual3D.transform,true,false));
         }
     }
@@ -248,6 +273,7 @@ public class BoltController : MonoBehaviour
 
     public void EnablePickup()
     {
+        _hitbox.enabled = false;
         _pickupBox.enabled = true;
     }
 

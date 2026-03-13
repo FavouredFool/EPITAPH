@@ -34,8 +34,11 @@ public class BoltMarkerUIDManager : MonoBehaviour
     {
         foreach(BoltMarker marker in _markers)
         {
-            if(marker.Parent == parent)
+            if (marker.Parent == parent)
+            {
                 return marker;
+            }
+                
         }
         return null;
     }
@@ -44,6 +47,7 @@ public class BoltMarkerUIDManager : MonoBehaviour
     public void ShowMarker(Signal_ShowBoltMarker signal) => ShowMarker(signal.parent,signal.dash,signal.feed);
     public void ShowMarker(Transform parent, bool dash, bool feed)
     {
+        Debug.Log("show");
         BoltMarker marker= GetNewMarker();
         marker.TweenAppear(parent, dash, feed);
     }

@@ -15,6 +15,12 @@ public class ShootState : VampireBaseState
         bolt.BoltType = type;
         bolt.Player = _ctx.PlayerController;
 
+
+        //float shootAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
+        //RaycastRotation = Quaternion.Euler(0f, 0f, angle);
+        
+        bolt.CacheRaycast(_ctx.PlayerController.Rb.position, _ctx.PlayerController.AimAssistedLookDirection);
+
         float shootStrength = PlayerVariableAnchor.PlayerVariables.Charge switch
         {
             1 => _ctx.PlayerController.ShootSpeedCharge1,

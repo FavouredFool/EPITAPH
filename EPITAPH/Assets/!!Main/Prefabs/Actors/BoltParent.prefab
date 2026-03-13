@@ -302,6 +302,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fc89197df4892641b18d13e53dc6df9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoltController
+  _glassLayer:
+    serializedVersion: 2
+    m_Bits: 32768
   _blockLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -725,8 +728,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.17221653}
-  m_Size: {x: 0.68723047, y: 1.4309165}
+  m_Offset: {x: 0, y: 0.075793505}
+  m_Size: {x: 0.68723047, y: 1.6237626}
   m_Direction: 0
 --- !u!1 &8486439071630514552
 GameObject:
@@ -757,8 +760,8 @@ Transform:
   m_GameObject: {fileID: 8486439071630514552}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: -0.195, z: 0}
-  m_LocalScale: {x: 0.0805697, y: 0.049965706, z: 0.24315031}
+  m_LocalPosition: {x: -0, y: -0.301, z: 0}
+  m_LocalScale: {x: 0.0805697, y: 0.049965706, z: 0.45894623}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3749756239153944255}

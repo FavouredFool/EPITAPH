@@ -10105,8 +10105,8 @@ MonoBehaviour:
   <ShootSpeedCharge1>k__BackingField: 82.5
   <ShootSpeedCharge2>k__BackingField: 165
   <ShootSpeedCharge3>k__BackingField: 264
-  <KnockbackMultiplier2>k__BackingField: 150
-  <KnockbackMultiplier3>k__BackingField: 150
+  <KnockbackMultiplier2>k__BackingField: 1.8
+  <KnockbackMultiplier3>k__BackingField: 2.25
   _cameraFollow: {fileID: 6711845830664808249}
   _cameraAimOffset: 3
   PADScriptableObject: {fileID: 11400000, guid: 97171c05725167e438dded62167c2289, type: 2}
