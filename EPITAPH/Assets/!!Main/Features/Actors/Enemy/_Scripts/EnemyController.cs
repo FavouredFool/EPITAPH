@@ -230,16 +230,13 @@ public class EnemyController : MonoBehaviour
 
     public void ChaseBehaviourUpdateTick()
     {
-        Debug.Log(gameObject.name + _agent.path.status);
+        //Debug.Log(gameObject.name + _agent.path.status);
         //If cant find path, stop trying to chase
     
 
         if (Rb.linearVelocity.magnitude > 0.1f)
         {
-          
-                Animator.SetBool("walking", true);
-           
-         
+            Animator.SetBool("walking", true);
         }
         else
         {

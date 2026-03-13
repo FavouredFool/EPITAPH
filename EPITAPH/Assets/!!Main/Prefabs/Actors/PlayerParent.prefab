@@ -10026,7 +10026,6 @@ Transform:
   - {fileID: 7332334064450866052}
   - {fileID: 1391417103570129746}
   - {fileID: 5117734560985976967}
-  - {fileID: 6711845830664808249}
   m_Father: {fileID: 3967837825882570733}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &2902068242822157332
@@ -10063,6 +10062,7 @@ Transform:
   - {fileID: 8500348783263236695}
   - {fileID: 6832729491387809120}
   - {fileID: 4423164144439745223}
+  - {fileID: 6711845830664808249}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9193680919393893474
@@ -10108,7 +10108,7 @@ MonoBehaviour:
   <KnockbackMultiplier2>k__BackingField: 1.8
   <KnockbackMultiplier3>k__BackingField: 2.25
   _cameraFollow: {fileID: 6711845830664808249}
-  _cameraAimOffset: 3
+  _cameraAimOffset: 2.5
   PADScriptableObject: {fileID: 11400000, guid: 97171c05725167e438dded62167c2289, type: 2}
   _characterAnimator: {fileID: 507660546181610574}
   _crossbowAnimator: {fileID: 4327648699261966165}
@@ -10130,7 +10130,7 @@ MonoBehaviour:
   <CorsetRenderer>k__BackingField: {fileID: 982514966045538243}
   <DressMatBase>k__BackingField: {fileID: 2100000, guid: 53fff5fb74c8e474bab1fd44d4c83697, type: 2}
   <DressMatNoParry>k__BackingField: {fileID: 2100000, guid: 554ba48d4efbc6c45b44241319c44888, type: 2}
-  _maxDistance: 8
+  _maxDistance: 12
   _maxAssistAngle: 15
   _smoothingPower: 1
   ParryEffect: {fileID: 4095246488593112102}
@@ -39824,12 +39824,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7861930429062187677}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8500348783263236695}
+  m_Father: {fileID: 3967837825882570733}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7941295860257194943
 GameObject:
