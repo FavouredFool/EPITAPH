@@ -235,6 +235,5 @@ public enum BoltType
     DOWN,
     LEFT,
     UP,
-    RIGHT,
     NONE
 }

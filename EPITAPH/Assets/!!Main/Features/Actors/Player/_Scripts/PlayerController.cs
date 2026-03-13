@@ -177,7 +177,6 @@ public class PlayerController : MonoBehaviour
             [BoltType.DOWN] = null,
             [BoltType.LEFT] = null,
             [BoltType.UP] = null,
-            [BoltType.RIGHT] = null
         };
 
         PADScriptableObject.Setup(this.gameObject);
