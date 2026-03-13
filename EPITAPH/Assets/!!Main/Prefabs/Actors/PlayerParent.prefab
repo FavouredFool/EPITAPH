@@ -10131,7 +10131,7 @@ MonoBehaviour:
   <DressMatBase>k__BackingField: {fileID: 2100000, guid: 53fff5fb74c8e474bab1fd44d4c83697, type: 2}
   <DressMatNoParry>k__BackingField: {fileID: 2100000, guid: 554ba48d4efbc6c45b44241319c44888, type: 2}
   _maxDistance: 8
-  _maxAssistAngle: 10
+  _maxAssistAngle: 15
   _smoothingPower: 1
   ParryEffect: {fileID: 4095246488593112102}
   BatDash: {fileID: 5573530521736914947}

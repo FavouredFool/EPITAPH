@@ -223,7 +223,7 @@ public class BoltController : MonoBehaviour, AudioEventSubscriber<EarlyBeatChang
         //Vector2 dir = diff.normalized;
         
         // TODO magic number, not sure if correct
-        float failsaveCastReduction = 1f;
+        float failsaveCastReduction = 2f;
         RaycastHit2D hit = Physics2D.Raycast(_endPoint.position , diff.normalized, diff.magnitude - failsaveCastReduction, _blockLayers);
         return hit.collider == null;
         
