@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour
     public BoltController ProjectileBlueprint => _projectileBlueprint;
 
     public ParticleSystem ParryEffect;
-
+    public ParticleSystem BatDash;
     InputActions _inputActions;
     public Rigidbody2D Rb { get; set; }
 
