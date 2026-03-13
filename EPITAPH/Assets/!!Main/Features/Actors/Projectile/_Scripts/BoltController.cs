@@ -156,10 +156,18 @@ public class BoltController : MonoBehaviour
             else
             {
                 EnablePickup();
+                SignalBus.Fire(new Signal_ShowBoltMarker(_visual3D.transform,_boltType,true,false));
             }
 		}
+        else
+        {
+            SignalBus.Fire(new Signal_ShowBoltMarker(_visual3D.transform,_boltType,true,false));
+        }
+    }
 
-        SignalBus.Fire(new Signal_ShowBoltMarker(transform,_boltType,true,false));
+    public void EnableBoltMarker(bool allowFeed)
+    {
+        SignalBus.Fire(new Signal_ShowBoltMarker(_visual3D.transform, _boltType, true, allowFeed));
     }
 
     public bool TestLineOfSight()
@@ -210,11 +218,10 @@ public class BoltController : MonoBehaviour
 
     public void StickToNothing()
     {
-        
         transform.SetParent(null, true);
         transform.position = _visual3D.position;
         _visual3D.SetParent(transform, true);
-        // reductive tecnically
+        // reductive technically
         _visual3D.localPosition = Vector3.zero;
         
         // do i want to keep the rotation maybe? Probably not.
@@ -227,6 +234,11 @@ public class BoltController : MonoBehaviour
     {
         _pickupBox.enabled = true;
     }
+
+    public void TriggerBoltMarker()
+    {
+        SignalBus.Fire(new Signal_TriggerBoltMarker(_boltType));
+    }
 }
 
 
@@ -235,6 +247,5 @@ public enum BoltType
     DOWN,
     LEFT,
     UP,
-    RIGHT,
     NONE
 }

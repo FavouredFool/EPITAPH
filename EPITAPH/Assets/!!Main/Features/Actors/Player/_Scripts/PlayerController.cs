@@ -102,7 +102,9 @@ public class PlayerController : MonoBehaviour
     public float currentParryTime = 0;
     public float ParryCooldown = 1;
     public bool BoltInChamber => PlayerVariableAnchor.PlayerVariables.Charge >= 1;
-    
+
+    [SerializeField] public ParticleSystem PlayerBlood;
+
     // Lunge
     // TODO i really dislike doing this but i dont know how else i can convey the info to the state
     public BoltController CurrentLungeBolt { get; set; }
@@ -177,7 +179,6 @@ public class PlayerController : MonoBehaviour
             [BoltType.DOWN] = null,
             [BoltType.LEFT] = null,
             [BoltType.UP] = null,
-            [BoltType.RIGHT] = null
         };
 
         PADScriptableObject.Setup(this.gameObject);
@@ -377,21 +378,7 @@ public class PlayerController : MonoBehaviour
 
     public void ParrySuccessful()
     {
-        SetCharge(Mathf.Clamp(PlayerVariableAnchor.PlayerVariables.Charge + 1, 0, 3));
-        PlayerAudio.PlayParry();
-    }
-    
-    // TODO whyy is this not connected anymore?
-    public void LungeToBolt(BoltType boltType)
-    {
-        if (PlayerVariableAnchor.PlayerVariables.CurrentBoltsHeld[boltType] == null) return;
-        
-        BoltController boltToLunge = PlayerVariableAnchor.PlayerVariables.CurrentBoltsHeld[boltType];
-
-        if (!boltToLunge.IsLineOfSight) return;
- 
-        CurrentLungeBolt = boltToLunge;
-        LungeTrigger.Trigger();
+        SetChargeMin(Mathf.Clamp(PlayerVariableAnchor.PlayerVariables.Charge + 1, 0, 3));
     }
     
     public void ShootBolt()
@@ -438,8 +425,13 @@ public class PlayerController : MonoBehaviour
     
     public void Hit(Vector2 dir)
     {
+        // Terrible code, add more manually if relevant
+        if (StateMachine.CurrentState is LungeState or HitRecoveryState or RavageState) return;
+        
         LastHitDir = dir;
         GetHitTrigger.Trigger();
+        ParticleSystem playerBlood = Instantiate(PlayerBlood, transform.position, transform.rotation);
+
     }
 
     public void UpdateActiveBolt(bool toggleAllOff)
@@ -486,11 +478,12 @@ public class PlayerController : MonoBehaviour
 
         if (activeBolt == null) return;
         
+        activeBolt.TriggerBoltMarker();
         CurrentLungeBolt = activeBolt;
         LungeTrigger.Trigger();
     }
 
-    public void SetCharge(int chargeLevel)
+    public void SetChargeMin(int chargeLevel)
     {
         // successful parry -> gain +1
         // successful ravage -> 3 - done

@@ -27,25 +27,25 @@ public class BoltMarker : MonoBehaviour
     {
         gameObject.SetActive(true);
         transform.SetParent(parent);
-        transform.localPosition=Vector3.zero;
+        transform.localPosition = Vector3.zero;
 
         this.type=type;
         _dashVisuals.SetActive(dash);
         _feedVisuals.SetActive(feed);
         _basicVisuals.SetActive(!dash&&!feed);
-
-        _typeImage.sprite=_typePrompts[(int)type];
+        
+        _typeImage.sprite = _typePrompts[(int)type];
 
         DOTween.Kill(gameObject);
         Sequence seq = DOTween.Sequence(gameObject);
-        seq.Insert(0, transform.DOScale(1,1f).SetEase(Ease.OutBack));
+        seq.Insert(0, transform.DOScale(1,0.3f).SetEase(Ease.OutBack));
     }
 
     public void TweenTrigger()
     {
         DOTween.Kill(gameObject);
         Sequence seq = DOTween.Sequence(gameObject);
-        seq.Insert(0, transform.DOScale(0,1f).SetEase(Ease.InBack));
+        seq.Insert(0, transform.DOScale(0,0.3f).SetEase(Ease.InBack));
         seq.OnComplete(()=>SetSleep());
     }
 

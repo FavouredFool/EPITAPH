@@ -28,9 +28,7 @@ public class HitRecoveryState : VampireBaseState
         
         _ctx.PlayerController.Knockback(_ctx.PlayerController.LastHitDir * _ctx.PlayerController.HitKnockbackStrength);
         
-        _ctx.PlayerController.SetCharge(1);
-        PlayerAudio.PlayRecovery();
-
+        _ctx.PlayerController.SetChargeMin(1);
     }
 
     public override void Update()
@@ -63,6 +61,5 @@ public class HitRecoveryState : VampireBaseState
         _ctx.PlayerController.Visual3DMesh.SetActive(true);
         _ctx.PlayerController.MainCollider.enabled = true;
         _ctx.PlayerController.BatVFXObject.SetActive(false);
-        PlayerAudio.StopRecovery();
     }
 }

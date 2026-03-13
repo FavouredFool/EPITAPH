@@ -59,6 +59,10 @@ public class EnemyController : MonoBehaviour
     [SerializeField] public ParticleSystem Anticipation;
     [SerializeField] public ParticleSystem ChargeAnticipation;
 
+    [SerializeField] public ParticleSystem StakedBlood;
+    [SerializeField] public ParticleSystem BloodTrail;
+    [SerializeField] public ParticleSystem HitByBolt;
+
     public Vector2 LatestHitVelocity { get; set; }
 
     public Vector3 offset;

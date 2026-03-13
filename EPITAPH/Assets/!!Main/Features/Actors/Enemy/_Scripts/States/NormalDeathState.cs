@@ -36,6 +36,7 @@ public class NormalDeathState : EnemyBaseState
             if (_ctx.EnemyController.CurrentlyStickingBolt != null)
             {
                 _ctx.EnemyController.CurrentlyStickingBolt.StickToNothing();
+                _ctx.EnemyController.CurrentlyStickingBolt.EnableBoltMarker(false);
                 _ctx.EnemyController.CurrentlyStickingBolt = null;
             }
             

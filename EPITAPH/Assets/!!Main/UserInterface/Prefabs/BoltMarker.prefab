@@ -233,7 +233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BeatHueShifter
   modulo: {x: 1, y: 1}
   play: 0
-  _graphic: {fileID: 0}
+  _graphic: {fileID: 7637036357578974796}
   hues:
   - {r: 0.25882354, g: 0, b: 0.21960786, a: 1}
   - {r: 1, g: 0, b: 0.30980393, a: 1}
@@ -379,7 +379,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2976335192859822487}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -390,7 +390,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1.7399902}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2162607364039788118
@@ -405,17 +405,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6681f5292ebe58e448ec3b38e3bf486d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoltMarker
-  type: 4
+  type: 3
   _basicVisuals: {fileID: 7567877864037390067}
   _dashVisuals: {fileID: 6710842107450580907}
   _feedVisuals: {fileID: 2642315196719465258}
-  _typeImage: {fileID: 0}
+  _typeImage: {fileID: 7637036357578974796}
   _typePrompts:
-  - {fileID: 21300000, guid: ea5691556a250dd488b7c126ddbe498b, type: 3}
-  - {fileID: 21300000, guid: c5eabaeeb2df71c488bd191b81eef0f7, type: 3}
-  - {fileID: 21300000, guid: 3edcd2072f710434ea645a201080f356, type: 3}
-  - {fileID: 21300000, guid: 85803b9899066fc48b845ee921ad3c58, type: 3}
-  - {fileID: 21300000, guid: ea5691556a250dd488b7c126ddbe498b, type: 3}
+  - {fileID: 21300000, guid: abaad8277dec9a24a801d6e3f80a3382, type: 3}
+  - {fileID: 21300000, guid: abaad8277dec9a24a801d6e3f80a3382, type: 3}
+  - {fileID: 21300000, guid: abaad8277dec9a24a801d6e3f80a3382, type: 3}
+  - {fileID: 21300000, guid: abaad8277dec9a24a801d6e3f80a3382, type: 3}
 --- !u!223 &2510603034684995862
 Canvas:
   m_ObjectHideFlags: 0
@@ -436,8 +435,8 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1469225617
+  m_SortingOrder: 32755
   m_TargetDisplay: 0
 --- !u!114 &40755274997703174
 MonoBehaviour:
