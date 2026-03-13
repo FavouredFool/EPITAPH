@@ -18,6 +18,7 @@ public class AimState : VampireBaseState
         
         _ctx.InputActions.Player.Shoot.performed += _ctx.PlayerController.ShootBoltInput;
         _ctx.InputActions.Player.UseBolt.performed += UseActiveBoltInput;
+        _ctx.InputActions.Player.Parry.performed += _ctx.PlayerController.ParryInput;
     }
 
     public override void Update()
@@ -43,6 +44,7 @@ public class AimState : VampireBaseState
     {
         _ctx.InputActions.Player.Shoot.performed -= _ctx.PlayerController.ShootBoltInput;
         _ctx.InputActions.Player.UseBolt.performed -= UseActiveBoltInput;
+        _ctx.InputActions.Player.Parry.performed -= _ctx.PlayerController.ParryInput;
         
         _ctx.PlayerController.SetCameraFollow(false);
         _ctx.PlayerController.CharacterAnimator.SetBool(PlayerController.IsAimingBoolAnim, false);

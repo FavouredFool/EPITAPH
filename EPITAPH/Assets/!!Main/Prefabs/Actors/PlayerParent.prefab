@@ -5180,9 +5180,9 @@ MonoBehaviour:
   _projectileBlueprint: {fileID: 3159500885758386700, guid: ab0c37ca8bfc3e04289b07f66f8f1814, type: 3}
   _spawnDist: 0.2
   _bloodlineConnection: {fileID: 3944289762324200595}
-  <ReloadTimeCharge1>k__BackingField: 0.5
-  <ReloadTimeCharge2>k__BackingField: 1
-  <ReloadTimeCharge3>k__BackingField: 2
+  <ReloadTimeCharge1>k__BackingField: 0.35
+  <ReloadTimeCharge2>k__BackingField: 0.75
+  <ReloadTimeCharge3>k__BackingField: 1.7
   <ShootSpeedCharge1>k__BackingField: 82.5
   <ShootSpeedCharge2>k__BackingField: 165
   <ShootSpeedCharge3>k__BackingField: 264
@@ -5203,11 +5203,10 @@ MonoBehaviour:
   <ExplosionVFXObject>k__BackingField: {fileID: 6103822573756688511}
   <RavageTime>k__BackingField: 1
   <ExplosionKnockbackStrength>k__BackingField: 200
+  <ParryActiveTime>k__BackingField: 0.4
+  <ParryCooldown>k__BackingField: 1
   ParryEffect: {fileID: 4095246488593112102}
-  IsParrying: 0
-  MaxParryTime: 0.3
-  currentParryTime: 0
-  ParryCooldown: 1
+  PlayerBlood: {fileID: 2774372810828526051, guid: 9ff6ede3015f7f049993c08c2aa52994, type: 3}
 --- !u!50 &7293642660323857259
 Rigidbody2D:
   serializedVersion: 5
