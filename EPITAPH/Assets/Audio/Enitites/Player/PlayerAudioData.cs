@@ -17,6 +17,7 @@ public class PlayerAudioData : ScriptableObject
     [Header("Movement")]
     [SerializeField] public EventReference lunge;   
     [SerializeField] public EventReference hitRecovery;
+    [SerializeField] public EventReference bite;
 
     public PlayerAudio Setup(GameObject go)
     {

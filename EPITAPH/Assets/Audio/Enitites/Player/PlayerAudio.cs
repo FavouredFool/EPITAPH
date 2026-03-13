@@ -168,4 +168,11 @@ public class PlayerAudio : MonoBehaviour
         RuntimeManager.AttachInstanceToGameObject(parryInstance, instance.gameObject);
         parryInstance.start();
     }
+
+    public static void PlayBite()
+    {
+        EventInstance biteInstance = RuntimeManager.CreateInstance(instance.data.bite);
+        RuntimeManager.AttachInstanceToGameObject(biteInstance, instance.gameObject);
+        biteInstance.start();
+    }
 }
