@@ -48,13 +48,10 @@ public class LevelDoor : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.gameObject.name);
-
         PlayerController player = other.GetComponentInParent<PlayerController>();
 
         if (player == null) return;
 
-        Debug.Log("OKE");
         if (AllEnemiesDefeated)
             ProgressionManager.LoadNextLevel();
 

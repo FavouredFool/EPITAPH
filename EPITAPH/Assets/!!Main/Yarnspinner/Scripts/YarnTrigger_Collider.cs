@@ -3,10 +3,14 @@ using UnityEngine;
 
 public class YarnTrigger_Collider : YarnTriggerBase
 {
-    public void OnTriggerEnter2D()
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (_hasPlayed) return;
-        
+
+        PlayerController player = other.GetComponentInParent<PlayerController>();
+
+        if (player == null) return;
+
         SpinYarn();
     }
 }
