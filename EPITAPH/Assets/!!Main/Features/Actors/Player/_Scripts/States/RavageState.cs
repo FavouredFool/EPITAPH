@@ -19,8 +19,6 @@ public class RavageState : VampireBaseState
 
         Explode();
         _ctx.PlayerController.ExplosionVFXObject.Play();
-
-        PlayerCameraController.DoFOV(25,_ctx.PlayerController.RavageTime,DG.Tweening.Ease.OutSine);
     }
     
     public override void Update()
@@ -60,6 +58,5 @@ public class RavageState : VampireBaseState
     public override void OnExit()
     {
       //  _ctx.PlayerController.ExplosionVFXObject.gameObject.SetActive(false);
-        PlayerCameraController.DoFOV(35,2,DG.Tweening.Ease.InOutSine);
     }
 }

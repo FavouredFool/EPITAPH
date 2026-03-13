@@ -18,6 +18,8 @@ public class HitAndKnockbackedState : EnemyBaseState
         _ctx.EnemyController.HitByBolt.Play();
         PlayerAudio.PlayMeatHit(_ctx.EnemyController.transform.position);
         CameraShake.Instance.TriggerShake(new Vector3(0,0,1),3);
+
+        _ctx.EnemyController.GlassCrusher.enabled = true;
     }
 
     public override void Update()
@@ -56,6 +58,8 @@ public class HitAndKnockbackedState : EnemyBaseState
 
     public override void OnExit()
     {
+        _ctx.EnemyController.GlassCrusher.enabled = false;
+        
         _ctx.EnemyController.BloodTrail.Stop();
         _ctx.EnemyController.Rb.linearVelocity = Vector2.zero;
     }

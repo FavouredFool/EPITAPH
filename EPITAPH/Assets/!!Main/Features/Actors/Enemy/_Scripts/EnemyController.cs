@@ -24,6 +24,10 @@ public class EnemyController : MonoBehaviour
     [SerializeField] SkinnedMeshRenderer _meshRenderer;
     [SerializeField] Color _bloodColor;
     [SerializeField] Material _bloodMaterial;
+
+    [Header("Defenestration")]
+    [field: SerializeField] public Collider2D GlassCrusher { get; set; }
+    
   public Light2D Light;
     
 
@@ -157,11 +161,14 @@ public class EnemyController : MonoBehaviour
     void Any(IState to, IStatePredicate condition) =>
         StateMachine.AddAnyTransition(to, condition);
 
+    void Start()
+    {
+        GlassCrusher.enabled = false;
+    }
 
     // please dont add anything here, use methods below
     void Update()
     {
-
         StateMachine.Update();
         //Debug.Log(StateMachine.CurrentState);
     }
