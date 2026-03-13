@@ -75,3 +75,10 @@ MonoBehaviour:
       Data3: -1424084847
       Data4: -1521715189
     Path: event:/SFX/Player/BatState
+  bite:
+    Guid:
+      Data1: -1068031368
+      Data2: 1174311145
+      Data3: -909596740
+      Data4: 2059012902
+    Path: event:/SFX/Player/Bite
