@@ -1,28 +1,23 @@
 ﻿title: TutorialStart
 ---
-Use <sprite name="L"> to move.
-Use <sprite name="R"> to aim, then <sprite name="RT"> to shoot!
-===
-
-title: TutorialReload
----
+<<SetDefaultContinue false>>
+<sprite name="L"> Move. 
+<sprite name="R"> Aim, then <sprite name="RT"> shoot.
+Hold <sprite name="LT"> Reload to empower your bolt.
+Retrieve shot bolts. You have only 3!
 <<ToggleFreeze>>
-You have 3 bolts and need to retrieve them.
-Hold <sprite name="LT"> to reload! Keep holding it to empower your shot!
-===
-
-title: TutorialExitLevel
----
-<<ToggleFreeze>>
-To enter the next level, hunt down all your prey.
-Downed enemies will recover, until you stake them into a wall.
-Use <sprite name="R"> to aim at shot bolts, then <sprite name="RB"> to dash to them!
-Dash to staked enemies to feed on their blood and regenerate health.
+<<SetDefaultContinue true>>
+Attention: Downed enemies will recover, unless staked into a wall!
+<<ToggleFreeze false>>
 ===
 
 title: TutorialParry
 ---
 <<ToggleFreeze>>
-Use <sprite name="LB"> to parry enemy attacks!
-Now feast, find the exit and stake your prey into the wall.
+<<SetDefaultContinue true>>
+Attention: <sprite name="LB"> Parry enemy attacks!
+<<ToggleFreeze false>>
+<<SetDefaultContinue false>>
+<sprite name="R"> Aim, then <sprite name="RB"> Dash to bolts.
+<sprite name="RB"> Dash to staked enemies and regain health.
 ===
