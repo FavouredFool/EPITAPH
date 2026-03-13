@@ -1,6 +1,5 @@
 ﻿title: TutorialStart
 ---
-<<ToggleFreeze>>
 Use <sprite name="L"> to move.
 Use <sprite name="R"> to aim, then <sprite name="RT"> to shoot!
 ===

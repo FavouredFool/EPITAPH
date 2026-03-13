@@ -32,6 +32,9 @@ public class LevelDoor : MonoBehaviour
     {
         deadEnemyCount++;
         RefreshUI();
+
+        if(AllEnemiesDefeated)
+            SignalBus.Fire(new Signal_StartDialogue("LevelOver"));
     }
 
     public void RefreshUI()

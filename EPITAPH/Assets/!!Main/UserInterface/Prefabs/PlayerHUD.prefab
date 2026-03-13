@@ -915,7 +915,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -1081,6 +1081,7 @@ GameObject:
   - component: {fileID: 8573813662161876759}
   - component: {fileID: 5986473152642153283}
   - component: {fileID: 5529851655160059975}
+  - component: {fileID: 801248045165080062}
   m_Layer: 5
   m_Name: Bar
   m_TagString: Untagged
@@ -1133,7 +1134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.25882354, g: 0, b: 0.21960786, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1150,6 +1151,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &801248045165080062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772617980793586382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 945813c2f3ac8e541b0e621c29017e99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BeatHueShifter
+  modulo: {x: 2, y: 2}
+  play: 1
+  _graphic: {fileID: 5529851655160059975}
+  hues:
+  - {r: 0.25882354, g: 0, b: 0.21960786, a: 1}
+  - {r: 0.5, g: 0, b: 0.33333325, a: 1}
+  punchy: 1
 --- !u!1 &1926794355385028964
 GameObject:
   m_ObjectHideFlags: 0
@@ -1222,7 +1242,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -2719,7 +2739,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0

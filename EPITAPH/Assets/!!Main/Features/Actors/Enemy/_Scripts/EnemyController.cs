@@ -5,6 +5,8 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Experimental.GlobalIllumination;
+using UnityEngine.Rendering.Universal;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(NavMeshAgent))]
 public class EnemyController : MonoBehaviour
@@ -22,6 +24,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] SkinnedMeshRenderer _meshRenderer;
     [SerializeField] Color _bloodColor;
     [SerializeField] Material _bloodMaterial;
+  public Light2D Light;
     
 
 

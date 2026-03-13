@@ -31,6 +31,7 @@ public class NormalDeathState : EnemyBaseState
 
         _finishedKnockback = false;
         _startedGetUp = false;
+        _ctx.EnemyController.Light.gameObject.SetActive(false);
     }
 
     public override void Update()
