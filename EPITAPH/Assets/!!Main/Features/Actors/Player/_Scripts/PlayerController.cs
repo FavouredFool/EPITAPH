@@ -79,6 +79,11 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField] public Material DressMatBase { get; set; } 
     [field: SerializeField] public Material DressMatNoParry { get; set; } 
     
+    [field: Header("AimAssist")]
+    [Range(0f, 15f)] [SerializeField] float _maxDistance = 10f;
+    [Range(0f, 30f)] [SerializeField] float _maxAssistAngle = 10f;
+    [Range(0f, 16f)] [SerializeField] float _smoothingPower = 1;
+    
     public bool SuccessfulParryHappened { get; set; }
     public float LastParry  { get; set; } = float.NegativeInfinity;
 
@@ -163,16 +168,15 @@ public class PlayerController : MonoBehaviour
     {
         get
         {
-            // TODO re-add aim assist
             Vector2 rawAimDir = RotateInput.normalized;
-            return rawAimDir;
+            float angle = Mathf.Atan2(rawAimDir.y, rawAimDir.x) * Mathf.Rad2Deg - 90;
+            float assistedAngle = GetAssistedAngle(angle, transform.position);
             
-            //float angle = Mathf.Atan2(rawAimDir.y, rawAimDir.x) * Mathf.Rad2Deg - 90;
-            //float assistedAngle = _aimAssist.GetAssistedAngle(angle, transform.position);
-            //
-            //return Quaternion.Euler(0, 0, assistedAngle) * Vector2.up;
+            return Quaternion.Euler(0, 0, assistedAngle) * Vector2.up;
         }
     }
+
+    public EnemyController[] Enemies { get; set; }
 
     public Vector2 MovementVelocity { get; set; }
     public Vector2 KnockbackVelocity { get; set; }
@@ -208,7 +212,7 @@ public class PlayerController : MonoBehaviour
         InitStateMachine();
     }
 
-        void OnEnable()
+    void OnEnable()
     {
         SignalBus.Subscribe<Signal_ToggleFreeze>(Freeze);
     }
@@ -223,6 +227,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        Enemies = FindObjectsByType<EnemyController>(FindObjectsInactive.Exclude,FindObjectsSortMode.None);
+        
         PlayerVariableAnchor.PlayerVariables.Health = PlayerVariableAnchor.PlayerVariables.HealthMax;
         PlayerVariableAnchor.PlayerVariables.Charge = 1;
         PlayerVariableAnchor.PlayerVariables.ChargeProgress = 0;
@@ -558,6 +564,51 @@ public class PlayerController : MonoBehaviour
                 enemy.NormalDeathTrigger.Trigger();
             }
         }
+    }
+    
+    public float GetAssistedAngle(float playerAimAngle, Vector2 playerPos)
+    {
+        if (!enabled || !gameObject.activeSelf) return playerAimAngle;
+        
+        // TODO lots of stuff to improve here. Distance, Block behind Walls, etc.
+        
+        float bestDiff = Mathf.Infinity;
+        float bestAngle = playerAimAngle;
+        
+        foreach (var enemy in Enemies)
+        {
+            if (!enemy) continue;
+
+            Vector2 dir = (Vector2)enemy.transform.position - playerPos;
+
+            if (dir.sqrMagnitude > Mathf.Pow(_maxDistance, 2)) continue;
+
+            float enemyAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
+
+            float diff = Mathf.Abs(Mathf.DeltaAngle(playerAimAngle, enemyAngle));
+
+            if (diff < bestDiff && diff <= _maxAssistAngle)
+            {
+                bestDiff = diff;
+                bestAngle = enemyAngle;
+            }
+        }
+        
+        if (float.IsPositiveInfinity(bestDiff))
+            return playerAimAngle;
+        
+        float tDistance = Mathf.Clamp01(bestDiff / _maxAssistAngle);
+        
+        float foundAngle = Mathf.LerpAngle(bestAngle, playerAimAngle, SmoothStep(tDistance, _smoothingPower));
+
+        return foundAngle;
+    }
+    
+    float SmoothStep(float x, float power)
+    {
+        x = Mathf.Clamp01(x);
+        x = Mathf.Pow(x, power);
+        return x * x * (3f - 2f * x);
     }
 
     

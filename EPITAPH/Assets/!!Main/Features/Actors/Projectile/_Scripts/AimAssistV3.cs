@@ -3,11 +3,9 @@ using UnityEngine;
 public class AimAssistV3 : MonoBehaviour
 {
     // TODO Distance Used For Lock on Decision
-    [Range(0f, 15f)] 
-    [SerializeField] float _maxDistance = 10f;
+    [Range(0f, 15f)] [SerializeField] float _maxDistance = 10f;
     
-    [Range(0f, 30f)]
-    [SerializeField] float maxAssistAngle = 10f;
+    [Range(0f, 30f)] [SerializeField] float maxAssistAngle = 10f;
     
     [Range(0f, 16f)]
     [SerializeField] float smoothingPower = 1;
