@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
     
     [field: Header("Ravage")]
     [field: SerializeField, Range(0, 10)] public float ExplosionRadius { get; private set; } = 3;
-    [field: SerializeField] public GameObject ExplosionVFXObject { get; set; }
+    [field: SerializeField] public ParticleSystem ExplosionVFXObject { get; set; }
     [field: SerializeField, Range(0, 10)] public float RavageTime { get; private set; } = 1;
     [field: SerializeField, Range(0, 500)] public float ExplosionKnockbackStrength { get; private set; } = 200;
     

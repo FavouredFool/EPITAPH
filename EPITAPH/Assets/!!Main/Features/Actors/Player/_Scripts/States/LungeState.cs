@@ -96,6 +96,7 @@ public class LungeState : VampireBaseState
         _ctx.PlayerController.MainCollider.enabled = true;
         _ctx.PlayerController.LungeCollider.enabled = false;
         _ctx.PlayerController.WallCollider.enabled = true;
+        CameraShake.Instance.TriggerShake(_ctx.PlayerController.transform.forward, 0.5f);
 
         //if (PlayerVariableAnchor.PlayerVariables.Charge < 1)
         //{
