@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Linq;
-using NUnit.Framework;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -177,7 +176,7 @@ public class EnemyController : MonoBehaviour
 
     public void EverythingFixedUpdate()
     {
-        Debug.Log(Time.time+ " : everything fixed update");
+        //Debug.Log(Time.time+ " : everything fixed update");
         ChaseBehaviourFixedUpdateTick();
         _agent.nextPosition = transform.position;
     }
