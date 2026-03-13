@@ -70,6 +70,8 @@ public class EnemyController : MonoBehaviour
 
     public Vector2 LatestHitVelocity { get; set; }
 
+    public bool IsStopped { get; private set; }
+    
     public Vector3 offset;
     void Awake()
     {
@@ -103,6 +105,7 @@ public class EnemyController : MonoBehaviour
         StakedState stakedState = new(ctx);
         StunnedState stunnedState = new(ctx);
         IdleState idleState = new(ctx);
+        NullEnemyState nullState = new(ctx);
 
         EnterKnockback = new TriggerPredicate();
         ExitKnockback = new TriggerPredicate();
@@ -127,6 +130,10 @@ public class EnemyController : MonoBehaviour
         At(chaseState, stunnedState, EnterStun);
 
         At(normalDeathState, chaseState, ReviveTrigger);
+        
+        Any(nullState, new FuncStatePredicate(() => IsStopped));
+        At(nullState, chaseState, new FuncStatePredicate(() => !IsStopped));
+        
         StateMachine.SetState(idleState);
     }
 
