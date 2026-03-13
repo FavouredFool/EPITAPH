@@ -56,7 +56,11 @@ public class LevelDoor : MonoBehaviour
         if (player == null) return;
 
         if (AllEnemiesDefeated)
+        {
+            MusicPlayer.StopEnemiesGone();
+
             ProgressionManager.LoadNextLevel();
+        }
 
         counterObject.SetActive(true);
     }

@@ -19,6 +19,7 @@ public class RavageState : VampireBaseState
 
         Explode();
         _ctx.PlayerController.ExplosionVFXObject.Play();
+        PlayerAudio.PlayBite();
     }
     
     public override void Update()

@@ -177,14 +177,7 @@ public class MusicPlayer : MonoBehaviour
 
     public static void StopEnemiesGone()
     {
-        PLAYBACK_STATE state;
-        PlayerInstance.enemiesGoneInstance = FMODUnity.RuntimeManager.CreateInstance(PlayerInstance.EnemiesGoneEvent);
-        PlayerInstance.enemiesGoneInstance.getPlaybackState(out state);
 
-        if (state == PLAYBACK_STATE.PLAYING)
-        {
-            return;
-        }
         PlayerInstance.enemiesGoneInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         
     }
