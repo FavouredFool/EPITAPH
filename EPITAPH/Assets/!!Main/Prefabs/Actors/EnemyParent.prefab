@@ -20491,6 +20491,9 @@ MonoBehaviour:
   _knockbackDecay: 6.26
   _knockbackResistance: 3.5
   <ReviveRange>k__BackingField: {x: 2, y: 5}
+  _meshRenderer: {fileID: 4547481700887997403}
+  _bloodColor: {r: 1, g: 0, b: 0.3137255, a: 1}
+  _bloodMaterial: {fileID: 2100000, guid: 39f36d44bc0a477469427094ab256bec, type: 2}
   <BoltBone>k__BackingField: {fileID: 8553025245396779203}
   <KnockbackMagnitudeThreshold>k__BackingField: 5
   _deadSprite: {fileID: 7276502925574245455}
@@ -26424,6 +26427,11 @@ Transform:
 --- !u!4 &4196017620629054465 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7016248279147120768, guid: 6fe48fe348c21af409d006239212ad86, type: 3}
+  m_PrefabInstance: {fileID: 6585818918267219073}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &4547481700887997403 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7241332912104785754, guid: 6fe48fe348c21af409d006239212ad86, type: 3}
   m_PrefabInstance: {fileID: 6585818918267219073}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &8238375662509093344 stripped

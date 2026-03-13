@@ -488,6 +488,8 @@ public class PlayerController : MonoBehaviour
         // successful parry -> gain +1
         // successful ravage -> 3 - done
         // bat form -> ensure 1
+
+        if (PlayerVariableAnchor.PlayerVariables.CurrentAmmoCount == 0) return;
         
         if (PlayerVariableAnchor.PlayerVariables.Charge < chargeLevel)
         {

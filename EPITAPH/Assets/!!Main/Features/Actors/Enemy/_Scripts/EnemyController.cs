@@ -20,6 +20,11 @@ public class EnemyController : MonoBehaviour
     //[field: SerializeField, UnityEngine.Range(1, 20)] public float FinalCollapsePush { get; set; } = 1;
     [field: SerializeField] public Vector2 ReviveRange { get; set; } = new(2, 5);
 
+    [SerializeField] SkinnedMeshRenderer _meshRenderer;
+    [SerializeField] Color _bloodColor;
+    [SerializeField] Material _bloodMaterial;
+    
+
 
     [Header("3D Stuff")]
     [field: SerializeField] public Transform BoltBone { get; set; }
@@ -373,6 +378,12 @@ public class EnemyController : MonoBehaviour
 
     public void Die()
     {
+        Material[] materials = _meshRenderer.materials;
+
+        materials[0] = _bloodMaterial;
+        
+        _meshRenderer.materials = materials;
+        
         SignalBus.Fire(new Signal_EnemyDeath(this));
     }
 
