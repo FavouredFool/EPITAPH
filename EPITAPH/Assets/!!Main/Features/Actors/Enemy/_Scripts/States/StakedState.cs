@@ -11,11 +11,13 @@ public class StakedState : EnemyBaseState
 
     public override void OnEnter()
     {
+        _ctx.EnemyController.Rb.simulated = false;
+        
         _ctx.EnemyController.Animator.SetBool(StakedTriggerAnim, true);
         _ctx.EnemyController.Die();
         PlayerAudio.PlayWallHit(_ctx.EnemyController.transform.position);
         _ctx.EnemyController.StakedBlood.Play();
-        _ctx.EnemyController.Rb.simulated = false;
+        
         CameraShake.Instance.TriggerShake(Random.insideUnitSphere,1);
 
         _ctx.EnemyController.CurrentlyStickingBolt.IsStakeBolt = true;
