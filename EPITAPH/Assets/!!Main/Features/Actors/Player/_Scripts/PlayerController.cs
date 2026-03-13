@@ -377,20 +377,7 @@ public class PlayerController : MonoBehaviour
 
     public void ParrySuccessful()
     {
-        SetCharge(Mathf.Clamp(PlayerVariableAnchor.PlayerVariables.Charge + 1, 0, 3));
-    }
-    
-    // TODO whyy is this not connected anymore?
-    public void LungeToBolt(BoltType boltType)
-    {
-        if (PlayerVariableAnchor.PlayerVariables.CurrentBoltsHeld[boltType] == null) return;
-        
-        BoltController boltToLunge = PlayerVariableAnchor.PlayerVariables.CurrentBoltsHeld[boltType];
-
-        if (!boltToLunge.IsLineOfSight) return;
- 
-        CurrentLungeBolt = boltToLunge;
-        LungeTrigger.Trigger();
+        SetChargeMin(Mathf.Clamp(PlayerVariableAnchor.PlayerVariables.Charge + 1, 0, 3));
     }
     
     public void ShootBolt()
@@ -437,6 +424,9 @@ public class PlayerController : MonoBehaviour
     
     public void Hit(Vector2 dir)
     {
+        // Terrible code, add more manually if relevant
+        if (StateMachine.CurrentState is LungeState or HitRecoveryState or RavageState) return;
+        
         LastHitDir = dir;
         GetHitTrigger.Trigger();
     }
@@ -489,7 +479,7 @@ public class PlayerController : MonoBehaviour
         LungeTrigger.Trigger();
     }
 
-    public void SetCharge(int chargeLevel)
+    public void SetChargeMin(int chargeLevel)
     {
         // successful parry -> gain +1
         // successful ravage -> 3 - done

@@ -28,7 +28,7 @@ public class HitRecoveryState : VampireBaseState
         
         _ctx.PlayerController.Knockback(_ctx.PlayerController.LastHitDir * _ctx.PlayerController.HitKnockbackStrength);
         
-        _ctx.PlayerController.SetCharge(1);
+        _ctx.PlayerController.SetChargeMin(1);
     }
 
     public override void Update()
