@@ -1,3 +1,4 @@
+using FMOD.Studio;
 using System;
 using System.Collections;
 using System.Runtime.CompilerServices;
@@ -27,9 +28,15 @@ public class MusicPlayer : MonoBehaviour
     GCHandle timelineHandle; // Weird Handle for the data
 
     public FMODUnity.EventReference MusicEvent; //
+    public FMODUnity.EventReference EnemiesGoneEvent; //
 
     FMOD.Studio.EVENT_CALLBACK beatCallback;
     FMOD.Studio.EventInstance musicInstance;
+    FMOD.Studio.EventInstance enemiesGoneInstance;
+
+    private bool AllEnemiesDefeated => deadEnemyCount >= enemyCount;
+    private int enemyCount;
+    private int deadEnemyCount;
 
     // Make the Music player a singleton for now
     static MusicPlayer PlayerInstance;
@@ -52,14 +59,19 @@ public class MusicPlayer : MonoBehaviour
         // by the garbage collected while it's being used
         beatCallback = new FMOD.Studio.EVENT_CALLBACK(BeatEventCallback);
         StartMusic();
+        
+        EnemyController[] enemies = FindObjectsByType<EnemyController>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        enemyCount = enemies.Length;
+        deadEnemyCount = 0;
+
     }
 
     void OnDestroy()
     {
         StopAllCoroutines();
         PlayerInstance = null;
-        musicInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        musicInstance.release();
+        StopMusic();
+        
     }
 
     public void StartMusic()
@@ -73,6 +85,32 @@ public class MusicPlayer : MonoBehaviour
 
         musicInstance.setCallback(beatCallback, FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_BEAT | FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_MARKER);
         musicInstance.start();
+    }
+
+    public void StopMusic()
+    {
+        musicInstance.stop(STOP_MODE.ALLOWFADEOUT);
+        musicInstance.release();
+    }
+
+    private void OnEnable()
+    {
+        SignalBus.Subscribe<Signal_EnemyDeath>(OnEnemyDeath);
+    }
+    private void OnDisable()
+    {
+        SignalBus.Unsubscribe<Signal_EnemyDeath>(OnEnemyDeath);
+        StopMusic();
+
+    }
+
+    public void OnEnemyDeath(Signal_EnemyDeath signal)
+    {
+        deadEnemyCount++;
+        if(deadEnemyCount >= enemyCount)
+        {
+            StartEnemiesGone();
+        }
     }
 
 
@@ -128,5 +166,28 @@ public class MusicPlayer : MonoBehaviour
         yield return null;
         
     }
-    
+
+    public static void StartEnemiesGone()
+    {
+        PlayerInstance.enemiesGoneInstance = FMODUnity.RuntimeManager.CreateInstance(PlayerInstance.EnemiesGoneEvent);
+
+        PlayerInstance.enemiesGoneInstance.start();
+    }
+
+
+    public static void StopEnemiesGone()
+    {
+        PLAYBACK_STATE state;
+        PlayerInstance.enemiesGoneInstance = FMODUnity.RuntimeManager.CreateInstance(PlayerInstance.EnemiesGoneEvent);
+        PlayerInstance.enemiesGoneInstance.getPlaybackState(out state);
+
+        if (state == PLAYBACK_STATE.PLAYING)
+        {
+            return;
+        }
+        PlayerInstance.enemiesGoneInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        
+    }
+
+
 }

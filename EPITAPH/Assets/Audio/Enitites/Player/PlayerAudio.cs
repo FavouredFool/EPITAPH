@@ -125,8 +125,7 @@ public class PlayerAudio : MonoBehaviour
 
     public static void PlayLunge()
     {
-        PlayRecovery();
-        return;
+
         PLAYBACK_STATE state;
         instance.lungeInstance.getPlaybackState(out state);
         if (state == PLAYBACK_STATE.PLAYING)

@@ -51,4 +51,11 @@ MonoBehaviour:
       Data3: -1669752669
       Data4: 657173584
     Path: event:/Music/Track_00
+  EnemiesGoneEvent:
+    Guid:
+      Data1: 1543564580
+      Data2: 1174134105
+      Data3: -1958635859
+      Data4: -1284439311
+    Path: snapshot:/EnemysGone
   lookahead: 0
