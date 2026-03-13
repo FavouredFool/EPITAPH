@@ -306,6 +306,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeathScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 4189322207752509149, guid: 7c7e3b6cd85fdb5479fbfab8d1189963, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8020723459600895831, guid: 7c7e3b6cd85fdb5479fbfab8d1189963, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -368,11 +372,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8020723459600895831, guid: 7c7e3b6cd85fdb5479fbfab8d1189963, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1628.3458
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8020723459600895831, guid: 7c7e3b6cd85fdb5479fbfab8d1189963, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -299.90164
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8020723459600895831, guid: 7c7e3b6cd85fdb5479fbfab8d1189963, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
