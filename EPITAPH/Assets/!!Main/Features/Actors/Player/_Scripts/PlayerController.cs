@@ -461,11 +461,14 @@ public class PlayerController : MonoBehaviour
     public void Hit(Vector2 dir)
     {
         // Terrible code, add more manually if relevant
-        if (StateMachine.CurrentState is LungeState or HitRecoveryState or RavageState) return;
+        if (StateMachine.CurrentState is MoveState or AimState or ReloadState)
+        {
+            LastHitDir = dir;
+            GetHitTrigger.Trigger();
+            ParticleSystem playerBlood = Instantiate(PlayerBlood, transform.position, transform.rotation);
+        }
         
-        LastHitDir = dir;
-        GetHitTrigger.Trigger();
-        ParticleSystem playerBlood = Instantiate(PlayerBlood, transform.position, transform.rotation);
+        
 
     }
 
