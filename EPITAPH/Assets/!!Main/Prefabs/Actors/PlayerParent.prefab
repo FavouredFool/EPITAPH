@@ -10090,7 +10090,7 @@ MonoBehaviour:
   <MainCollider>k__BackingField: {fileID: 5073509689141753427}
   <WallCollider>k__BackingField: {fileID: 8497733251553354946}
   <HitKnockbackStrength>k__BackingField: 10
-  _speed: 4
+  _speed: 3.5
   _speedAimReduction: 1.5
   _reloadAimReduction: 16
   _moveLockThreshold: 0.95
@@ -10105,6 +10105,8 @@ MonoBehaviour:
   <ShootSpeedCharge1>k__BackingField: 82.5
   <ShootSpeedCharge2>k__BackingField: 165
   <ShootSpeedCharge3>k__BackingField: 264
+  <KnockbackMultiplier2>k__BackingField: 150
+  <KnockbackMultiplier3>k__BackingField: 150
   _cameraFollow: {fileID: 6711845830664808249}
   _cameraAimOffset: 2.5
   PADScriptableObject: {fileID: 11400000, guid: 97171c05725167e438dded62167c2289, type: 2}
@@ -10128,6 +10130,9 @@ MonoBehaviour:
   <CorsetRenderer>k__BackingField: {fileID: 982514966045538243}
   <DressMatBase>k__BackingField: {fileID: 2100000, guid: 53fff5fb74c8e474bab1fd44d4c83697, type: 2}
   <DressMatNoParry>k__BackingField: {fileID: 2100000, guid: 554ba48d4efbc6c45b44241319c44888, type: 2}
+  _maxDistance: 8
+  _maxAssistAngle: 10
+  _smoothingPower: 1
   ParryEffect: {fileID: 4095246488593112102}
   BatDash: {fileID: 5573530521736914947}
   PlayerBlood: {fileID: 2774372810828526051, guid: 9ff6ede3015f7f049993c08c2aa52994, type: 3}
