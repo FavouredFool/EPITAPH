@@ -1,13 +1,13 @@
 ﻿title: TutorialStart
 ---
 <<ToggleFreeze>>
-
 Use ["Left Joystick"] to move.
 Use ["Right Joystick"] to aim, then ["Right Trigger"] to shoot!
 ===
 
 title: TutorialReload
 ---
+<<ToggleFreeze>>
 You have 3 bolts and need to retrieve them.
 Hold ["Left Trigger"] to reload! Keep holding it to empower your shot!
 ===
@@ -25,4 +25,5 @@ title: TutorialParry
 ---
 <<ToggleFreeze>>
 Use ["Left Shoulder"] to parry enemy attacks!
+Now feast, find the exit and stake your prey into the wall.
 ===
