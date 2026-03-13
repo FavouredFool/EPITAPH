@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class BoltMarkerUIDManager : MonoBehaviour
 {
+    [SerializeField] Canvas _canvas;
     [SerializeField] BoltMarker _markerPrefab;
 
     [SerializeField] List<BoltMarker> _markers;
@@ -22,6 +23,7 @@ public class BoltMarkerUIDManager : MonoBehaviour
     public BoltMarker GetNewMarker()
     {
         BoltMarker result = Instantiate(_markerPrefab, transform);
+        result.Canvas = _canvas;
         result.SetSleep();
         _markers.Add(result);
 

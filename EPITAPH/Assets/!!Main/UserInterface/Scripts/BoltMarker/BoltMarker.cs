@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -7,10 +8,11 @@ using System.Collections.Generic;
 public class BoltMarker : MonoBehaviour
 {
     RectTransform rect;
-    [SerializeField]Canvas canvas;
     public Transform Parent {get; set;}
     [SerializeField] GameObject _basicVisuals, _dashVisuals, _feedVisuals;
 
+    public Canvas Canvas { get; set; }
+    
     void Awake()
     {
         rect = GetComponent<RectTransform>();
@@ -28,24 +30,21 @@ public class BoltMarker : MonoBehaviour
 
     }
 
+    RectTransform _rectTransform;
+
+    void Start()
+    {
+        _rectTransform = Canvas.GetComponent<RectTransform>();
+    }
+
     void Update()
     {
         if (Parent != null)
         {
-        var ViewportPos = Camera.main.WorldToViewportPoint(Parent.transform.position);
-        rect.anchoredPosition = new Vector2(Screen.width * ViewportPos.x, Screen.height * ViewportPos.y);
-//              Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, Parent.transform.position);
-
-// // convert the screen position to the local anchored position
-
-// Vector2 anchoredPosition = transform.InverseTransformPoint(screenPoint); 
-// rect.position=anchoredPosition;
-// return;
-
-//             // var screen = Camera.main.WorldToScreenPoint(Parent.transform.position);
-//             // screen.z = (canvas.transform.position -);
-//             // RectTransformUtility.ScreenPointToLocalPointInRectangle(rect, , Camera.main, out Vector2 canvasPos);
-//             // rect.position = canvasPos;
+            var viewportPos = Camera.main.WorldToViewportPoint(Parent.transform.position);
+            
+            rect.anchoredPosition = new Vector2(_rectTransform.rect.width * viewportPos.x - _rectTransform.rect.width / 2, _rectTransform.rect.height * viewportPos.y - _rectTransform.rect.height / 2);
+            
         }
     }
 
@@ -81,5 +80,10 @@ public class BoltMarker : MonoBehaviour
     void OnDestroy()
     {
         DOTween.Kill(gameObject);
+    }
+
+    void OnDrawGizmos()
+    {
+        
     }
 }

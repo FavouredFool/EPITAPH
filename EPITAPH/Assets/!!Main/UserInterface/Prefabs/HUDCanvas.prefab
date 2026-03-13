@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593d6d0f76ff2c34e98306f555dd0c6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoltMarkerUIDManager
+  _canvas: {fileID: 7778047695032193459}
   _markerPrefab: {fileID: 7585468652049786413, guid: 19e7a4b9e8aa48744a0dc6b0a838e761, type: 3}
   _markers: []
 --- !u!1 &1870053075811706761
@@ -266,6 +267,10 @@ PrefabInstance:
     - target: {fileID: 6928837701579821435, guid: 1d631579d2d39ff4a839b4a3ae4106ef, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8892504225161062998, guid: 1d631579d2d39ff4a839b4a3ae4106ef, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
