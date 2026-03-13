@@ -35,7 +35,7 @@ public class StyleUID : MonoBehaviour
     public void RefreshUID(Signal_RefreshUI_Style signal)
     {
         Debug.Log("STYLE UI");
-        SetText(coolWords[signal.variables.Style]);
+        SetText(coolWords[Mathf.Clamp(signal.variables.Style,0,coolWords.Length)]);
         Color color = _timerFill.color;
 
         DOTween.Kill(this, true);

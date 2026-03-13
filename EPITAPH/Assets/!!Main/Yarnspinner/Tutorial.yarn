@@ -1,15 +1,15 @@
 ﻿title: TutorialStart
 ---
 <<ToggleFreeze>>
-Use ["Left Joystick"] to move.
-Use ["Right Joystick"] to aim, then ["Right Trigger"] to shoot!
+Use <sprite name="L"> to move.
+Use <sprite name="R"> to aim, then <sprite name="RT"> to shoot!
 ===
 
 title: TutorialReload
 ---
 <<ToggleFreeze>>
 You have 3 bolts and need to retrieve them.
-Hold ["Left Trigger"] to reload! Keep holding it to empower your shot!
+Hold <sprite name="LT"> to reload! Keep holding it to empower your shot!
 ===
 
 title: TutorialExitLevel
@@ -17,13 +17,13 @@ title: TutorialExitLevel
 <<ToggleFreeze>>
 To enter the next level, hunt down all your prey.
 Downed enemies will recover, until you stake them into a wall.
-Use ["Right Joystick"] to aim at shot bolts, then ["Right Shoulder"] to dash to them!
+Use <sprite name="R"> to aim at shot bolts, then <sprite name="RB"> to dash to them!
 Dash to staked enemies to feed on their blood and regenerate health.
 ===
 
 title: TutorialParry
 ---
 <<ToggleFreeze>>
-Use ["Left Shoulder"] to parry enemy attacks!
+Use <sprite name="LB"> to parry enemy attacks!
 Now feast, find the exit and stake your prey into the wall.
 ===
