@@ -31,5 +31,10 @@ public class BreakableWall : MonoBehaviour
                 BreakWall();
             }
         }
+        
+        if (other.GetComponentInParent<EnemyController>() is { } enemy)
+        {
+            BreakWall();
+        }
     }
 }

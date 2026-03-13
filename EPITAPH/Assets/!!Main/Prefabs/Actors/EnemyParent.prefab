@@ -15333,6 +15333,7 @@ Transform:
   - {fileID: 8472291778601935155}
   - {fileID: 2156999278010146445}
   - {fileID: 964725404209683376}
+  - {fileID: 4681116530243947173}
   m_Father: {fileID: 3615438809422013557}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6323240407353874924
@@ -20494,6 +20495,7 @@ MonoBehaviour:
   _meshRenderer: {fileID: 4547481700887997403}
   _bloodColor: {r: 1, g: 0, b: 0.3137255, a: 1}
   _bloodMaterial: {fileID: 2100000, guid: 39f36d44bc0a477469427094ab256bec, type: 2}
+  <GlassCrusher>k__BackingField: {fileID: 4575520084215584291}
   Light: {fileID: 7694807463491057771}
   <BoltBone>k__BackingField: {fileID: 8553025245396779203}
   <KnockbackMagnitudeThreshold>k__BackingField: 5
@@ -25545,6 +25547,74 @@ SortingGroup:
   m_SortingOrder: 300
   m_SortAtRoot: 0
   m_Sort3DAs2D: 0
+--- !u!1 &8768043607403372701
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4681116530243947173}
+  - component: {fileID: 4575520084215584291}
+  m_Layer: 16
+  m_Name: GlassCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4681116530243947173
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8768043607403372701}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2554441304551925697}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &4575520084215584291
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8768043607403372701}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.75
 --- !u!1 &9107659123264090709
 GameObject:
   m_ObjectHideFlags: 0
