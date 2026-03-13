@@ -50,6 +50,9 @@ TagManager:
   - name: WallLayer
     uniqueID: 3516082567
     locked: 0
+  - name: WSUI
+    uniqueID: 1469225617
+    locked: 0
   m_RenderingLayers:
   - Default
   - Light Layer 1

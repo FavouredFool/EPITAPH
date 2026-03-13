@@ -20,9 +20,9 @@ public class BoltMarkerUIDManager : MonoBehaviour
 
     void Start()
     {
-        SignalBus.Fire(new Signal_ShowBoltMarker(transform,BoltType.DOWN,true, true));
+        //SignalBus.Fire(new Signal_ShowBoltMarker(transform,BoltType.DOWN,true, true));
     }
-      [ContextMenu("Trigger Test")]void TriggerTest()
+    [ContextMenu("Trigger Test")] void TriggerTest()
     {
         SignalBus.Fire(new Signal_TriggerBoltMarker(BoltType.DOWN));
     }
@@ -50,7 +50,7 @@ public class BoltMarkerUIDManager : MonoBehaviour
     public void ShowMarker(Transform parent, BoltType type, bool dash, bool feed)
     {
         BoltMarker marker= GetNewMarker();
-        marker.TweenAppear(parent,type, dash, feed);
+        marker.TweenAppear(parent, type, dash, feed);
     }
 
 //TRIGGER

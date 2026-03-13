@@ -28,8 +28,6 @@ public class LungeState : VampireBaseState
 
         // AUDIO
         PlayerAudio.PlayLunge();
-
-        // TODO add a max lunge time for a breakout when something goes horribly wrong
     }
 
     public override void Update()

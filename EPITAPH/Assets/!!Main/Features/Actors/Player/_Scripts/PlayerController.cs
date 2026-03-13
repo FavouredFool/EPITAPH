@@ -474,6 +474,7 @@ public class PlayerController : MonoBehaviour
 
         if (activeBolt == null) return;
         
+        activeBolt.TriggerBoltMarker();
         CurrentLungeBolt = activeBolt;
         LungeTrigger.Trigger();
     }
