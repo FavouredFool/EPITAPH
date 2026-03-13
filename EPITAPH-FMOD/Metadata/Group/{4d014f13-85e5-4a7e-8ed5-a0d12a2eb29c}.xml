@@ -22,6 +22,9 @@
 	</object>
 	<object class="MixerBusPanner" id="{7345a78e-6772-44a3-a35c-72f58a183cc8}" />
 	<object class="CompressorEffect" id="{1fd3c0f2-de3d-4875-a5fd-09c3686dc4fd}">
+		<property name="bypass">
+			<value>true</value>
+		</property>
 		<property name="threshold">
 			<value>-24</value>
 		</property>

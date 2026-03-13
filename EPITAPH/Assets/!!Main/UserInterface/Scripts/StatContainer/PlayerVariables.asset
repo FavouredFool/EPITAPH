@@ -19,4 +19,4 @@ MonoBehaviour:
   _chargeProgress: 0
   _style: 0
   _styleMax: 7
-  _styleResetTime: 4
+  _styleResetTime: 13
