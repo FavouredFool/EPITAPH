@@ -59,9 +59,11 @@ public struct Signal_ShowBoltMarker
 public struct Signal_TriggerBoltMarker
 {
     public Transform parent;
-    public Signal_TriggerBoltMarker(Transform parent)
+    public bool kill;
+    public Signal_TriggerBoltMarker(Transform parent, bool kill)
     {
         this.parent = parent;
+        this.kill = kill;
     }
 }
 public struct Hit_Enemy
