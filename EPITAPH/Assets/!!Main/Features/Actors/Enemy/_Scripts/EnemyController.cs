@@ -325,16 +325,16 @@ public class EnemyController : MonoBehaviour
             {
                 Vector2 dirToPlayer = (player.transform.position - transform.position).normalized;
 
-                Debug.Log(Vector2.Angle(transform.right, dirToPlayer));
-                    if (player.IsParrying)
+                //Debug.Log(Vector2.Angle(transform.right, dirToPlayer));
+                
+                if (player.IsParrying)
                 {
                     EnterStun.Trigger();
-
+                    player.ParrySuccessful();
                 }
                 else
                 {
                     player.Hit((player.transform.position - transform.position).normalized);
-
                 }
             }
         });

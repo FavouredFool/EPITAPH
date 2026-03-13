@@ -20207,7 +20207,7 @@ MonoBehaviour:
     m_Bits: 1024
   _speed: 4.15
   _knockbackDecay: 6.26
-  _knockbackResistance: 5
+  _knockbackResistance: 3.5
   <ReviveRange>k__BackingField: {x: 2, y: 5}
   <BoltBone>k__BackingField: {fileID: 8553025245396779203}
   <KnockbackMagnitudeThreshold>k__BackingField: 5
@@ -20218,7 +20218,7 @@ MonoBehaviour:
   ChargeAnticipation: {fileID: 4491525150756422466}
   offset: {x: 0, y: 0, z: 0}
   _chargeSpeed: 8
-  _chargeStartRange: 3
+  _chargeStartRange: 0
   _chargeAttackRange: 1.5
   _chargeDuration: 0.5
   _chargeCooldown: 12
