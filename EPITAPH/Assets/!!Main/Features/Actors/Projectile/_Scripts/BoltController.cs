@@ -147,11 +147,11 @@ public class BoltController : MonoBehaviour, AudioEventSubscriber<EarlyBeatChang
         RaycastRotation = Quaternion.Euler(0f, 0f, angle);
         
         // Check glass
-        RaycastHit2D glassHit = Physics2D.Raycast(shootPosition, shootDirection, float.PositiveInfinity, _glassLayer);
-        if (glassHit.collider != null && glassHit.collider.GetComponentInParent<BreakableWall>() is {} glass)
-        {
-            glass.BreakWall();
-        }
+        //RaycastHit2D glassHit = Physics2D.Raycast(shootPosition, shootDirection, float.PositiveInfinity, _glassLayer);
+        //if (glassHit.collider != null && glassHit.collider.GetComponentInParent<BreakableWall>() is {} glass)
+        //{
+        //    glass.BreakWall();
+        //}
     }
     
     public void HitSomething(Collider2D other = null)
