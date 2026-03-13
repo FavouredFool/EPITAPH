@@ -260,7 +260,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &948697080988933718
 Transform:
@@ -285,7 +285,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5522538275079258361}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -419,8 +419,8 @@ MonoBehaviour:
   m_SerializedVersion: 0
   m_OverrideArea: 1
   m_Area: 1
-  m_OverrideGenerateLinks: 0
-  m_GenerateLinks: 0
+  m_OverrideGenerateLinks: 1
+  m_GenerateLinks: 1
   m_IgnoreFromBuild: 0
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
