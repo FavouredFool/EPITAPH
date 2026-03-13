@@ -355,7 +355,15 @@ public class EnemyController : MonoBehaviour
                 }
                 else
                 {
-                    player.Hit((player.transform.position - transform.position).normalized);
+                    if(StateMachine.CurrentState is StunnedState)
+                    {
+
+                    }
+                    else
+                    {
+                        player.Hit((player.transform.position - transform.position).normalized);
+
+                    }
                 }
             }
         });
