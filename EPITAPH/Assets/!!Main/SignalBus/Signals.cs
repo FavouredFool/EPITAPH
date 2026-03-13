@@ -163,6 +163,7 @@ public struct Signal_PlayerDeath
 {
     
 }
+
 public struct Signal_ToggleFreeze
 {
     public bool on;
