@@ -126,7 +126,7 @@ public class MenuUIDManager : MonoBehaviour
         int flow= PlayerPrefs.GetInt(variableName,0);
         
         flow++;
-        if (flow >= 3) flow = 0;
+        if (flow > 3) flow = 0;
 
         PlayerPrefs.SetInt(variableName, flow);
     }
