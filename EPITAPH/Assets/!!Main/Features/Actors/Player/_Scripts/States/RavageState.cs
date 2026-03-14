@@ -16,8 +16,7 @@ public class RavageState : VampireBaseState
         _ctx.PlayerController.CharacterAnimator.SetTrigger(PlayerController.RavageTriggerAnim);
 
         _hasEaten = false;
-
-        Explode();
+        
         _ctx.PlayerController.ExplosionVFXObject.Play();
         PlayerAudio.PlayBite();
     }
@@ -28,6 +27,7 @@ public class RavageState : VampireBaseState
         {
             PlayerVariableAnchor.PlayerVariables.Health = PlayerVariableAnchor.PlayerVariables.HealthMax;
             _hasEaten = true;
+            Explode();
             
             _ctx.PlayerController.SetChargeMin(Mathf.Clamp(PlayerVariableAnchor.PlayerVariables.Charge + 1, 0, 3));
         }
