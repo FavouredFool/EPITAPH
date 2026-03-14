@@ -50,6 +50,8 @@ public class RavageState : VampireBaseState
         
         foreach (EnemyController enemy in enemiesHit.Select(e => e.GetComponentInParent<EnemyController>()).Where(e => e !=null))
         {
+            if (enemy.StateMachine.CurrentState is StakedState) continue;
+            
             Vector2 dir = (enemy.Rb.position - _ctx.PlayerController.Rb.position).normalized;
             enemy.LatestHitVelocity = dir * _ctx.PlayerController.ExplosionKnockbackStrength;
             enemy.NormalDeathTrigger.Trigger();

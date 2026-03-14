@@ -447,6 +447,8 @@ public class EnemyController : MonoBehaviour
 
     public void Hit(Vector2 velocity)
     {
+        if (StateMachine.CurrentState is StakedState) return;
+        
         LatestHitVelocity = velocity;
         EnterKnockback.Trigger();
     }

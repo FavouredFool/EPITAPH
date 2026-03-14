@@ -88,7 +88,7 @@
 	</object>
 	<object class="SingleSound" id="{3106968c-119f-4551-ad63-32a8941fbd0d}">
 		<property name="start">
-			<value>0.13651785704656141</value>
+			<value>0.094982309737778908</value>
 		</property>
 		<property name="length">
 			<value>1.8990249433106576</value>
@@ -105,7 +105,7 @@
 	<object class="MixerBusPanner" id="{4976263c-f0ce-49b6-8185-b03a03663627}" />
 	<object class="SnapshotModule" id="{d2c20b7e-8067-47e5-a761-14b27056c66b}">
 		<property name="length">
-			<value>1.645935960591133</value>
+			<value>1.0875136023286123</value>
 		</property>
 		<relationship name="fadeInCurve">
 			<destination>{ad7fa879-131b-4992-9d53-94d74922fa36}</destination>
@@ -188,15 +188,18 @@
 	</object>
 	<object class="AutomationPoint" id="{056cfcaf-6407-4dfd-baf4-232ba167b2d4}">
 		<property name="position">
-			<value>1.2949507389162562</value>
+			<value>0.67653259009660527</value>
 		</property>
 		<property name="value">
 			<value>100</value>
 		</property>
+		<property name="curveShape">
+			<value>0.338187546</value>
+		</property>
 	</object>
 	<object class="AutomationPoint" id="{959c953c-94e7-43da-a431-57580ce12675}">
 		<property name="position">
-			<value>1.645935960591133</value>
+			<value>1.0875136023286123</value>
 		</property>
 		<property name="value">
 			<value>0</value>
