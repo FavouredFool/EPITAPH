@@ -3031,8 +3031,7 @@ MonoBehaviour:
   _bodyRect: {fileID: 6023796506103861694}
   _glowRect: {fileID: 8939131056998152229}
   _mainMenu: {fileID: 1111666250589960843}
-  _optionMenu: {fileID: 3345322731173364877}
-  _audioOptionMenu: {fileID: 6954774610822309633}
+  _allMenus: []
 --- !u!1 &7218958573849426022
 GameObject:
   m_ObjectHideFlags: 0
@@ -3225,10 +3224,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuScreen
   _buttons:
+  - {fileID: 5358276982134239818}
   - {fileID: 307101763030072479}
   - {fileID: 1588733356208584668}
   - {fileID: 9195782952806623906}
   - {fileID: 7718302132298880943}
+  - {fileID: 4316121627333253837}
+  - {fileID: 1698254485260645145}
+  - {fileID: 1801426382365143861}
+  - {fileID: 2122438600107243465}
 --- !u!1 &8808644503768359240
 GameObject:
   m_ObjectHideFlags: 0
