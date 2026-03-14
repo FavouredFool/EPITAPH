@@ -43,9 +43,9 @@ public class MenuUIDManager : MonoBehaviour
         _currentMenu = nextMenu;
         foreach (MenuScreen screen in _allMenus)
         {
-            screen.Toggle(screen == _currentMenu);
+            screen.Toggle(false);
         }
-
+        _currentMenu.Toggle(true);
         Toggle(true);
     }
 
