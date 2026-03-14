@@ -69,9 +69,9 @@ public class BoltController : MonoBehaviour, AudioEventSubscriber<EarlyBeatChang
 
     void OnDisable()
     {
-                DOTween.Kill(this);
+        DOTween.Kill(this);
         AudioBus.Unsubscribe<EarlyBeatChanged>(this);
-        SignalBus.Fire(new Signal_TriggerBoltMarker(_visual3D.transform, true));
+        SignalBus.Fire(new Signal_TriggerBoltMarker(_visual3D.transform, true, BoltType));
     }
 
     public void GetShot(float shootSpeed)
@@ -201,19 +201,19 @@ public class BoltController : MonoBehaviour, AudioEventSubscriber<EarlyBeatChang
                 transform.position = RaycastPosition;
                 transform.rotation = RaycastRotation;
                 EnablePickup();
-                SignalBus.Fire(new Signal_ShowBoltMarker(_visual3D.transform,true,false));
+                SignalBus.Fire(new Signal_ShowBoltMarker(_visual3D.transform,true, false, _boltType));
             }
 		}
         else
         {
             EnablePickup();
-            SignalBus.Fire(new Signal_ShowBoltMarker(_visual3D.transform,true,false));
+            SignalBus.Fire(new Signal_ShowBoltMarker(_visual3D.transform,true,false, _boltType));
         }
     }
 
     public void EnableBoltMarker(bool allowFeed)
     {
-        SignalBus.Fire(new Signal_ShowBoltMarker(_visual3D.transform, true, allowFeed));
+        SignalBus.Fire(new Signal_ShowBoltMarker(_visual3D.transform, true, allowFeed, _boltType));
     }
 
     public bool TestLineOfSight()
@@ -284,7 +284,7 @@ public class BoltController : MonoBehaviour, AudioEventSubscriber<EarlyBeatChang
 
     public void TriggerBoltMarker()
     {
-        SignalBus.Fire(new Signal_TriggerBoltMarker(_visual3D.transform, false));
+        SignalBus.Fire(new Signal_TriggerBoltMarker(_visual3D.transform, false, _boltType));
     }
 }
 

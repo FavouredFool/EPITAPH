@@ -47,23 +47,27 @@ public struct Signal_RefreshUI_Style
 
 public struct Signal_ShowBoltMarker
 {
+    public BoltType type;
     public Transform parent;
     public bool dash, feed;
-    public Signal_ShowBoltMarker(Transform parent, bool dash, bool feed)
+    public Signal_ShowBoltMarker(Transform parent, bool dash, bool feed, BoltType type)
     {
         this.parent = parent;
         this.dash = dash;
         this.feed = feed;
+        this.type = type;
     }
 }
 public struct Signal_TriggerBoltMarker
 {
+    public BoltType type;
     public Transform parent;
     public bool kill;
-    public Signal_TriggerBoltMarker(Transform parent, bool kill)
+    public Signal_TriggerBoltMarker(Transform parent, bool kill, BoltType type)
     {
         this.parent = parent;
         this.kill = kill;
+        this.type = type;
     }
 }
 public struct Hit_Enemy
