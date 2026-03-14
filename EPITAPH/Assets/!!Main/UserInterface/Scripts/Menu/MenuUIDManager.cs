@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using Yarn.Unity;
 
 public class MenuUIDManager : MonoBehaviour
 {
@@ -117,5 +118,24 @@ public class MenuUIDManager : MonoBehaviour
 
         PlayerPrefs.SetInt(variableName, volume);
         AudioManager.SetVolumeLevel(variableName, volume);
+    }
+
+    public void IncrimentDraculasFlow()
+    {
+        string variableName = "DraculasFlow";
+        int flow= PlayerPrefs.GetInt(variableName,0);
+        
+        flow++;
+        if (flow >= 3) flow = 0;
+
+        PlayerPrefs.SetInt(variableName, flow);
+    }
+
+    [YarnFunction("DraculasFlow")]
+    public static int CheckOutDraculasFlow()
+    {
+        string variableName = "DraculasFlow";
+        int flow = PlayerPrefs.GetInt(variableName, 0);
+        return flow;
     }
 }
