@@ -1,6 +1,7 @@
 ﻿title: Dracula
 ---
 <<if DraculasFlow() > 0>>
+<<ToggleDraculaFlow true>>
 <<jump Flow>>
 <<endif>>
 ===
@@ -12,147 +13,408 @@ when: always
 
 title: Flow
 when: LevelName() == "2_Level"
-when: DraculasFlow() >= 2
+when: DraculasFlow() == 1
 ---
 Dracula Flow: There are consequences to your crimes against dracula.
 ===
 
 title: Flow
-when: LevelName() == "7_Level"
+when: LevelName() == "2_Level"
+when: DraculasFlow() == 2
+---
+Dracula Flow: I have no sympathy, I live for this shit.
+===
+
+
+title: Flow
+when: DraculasFlow() == 2
 ---
 Dracula Flow: I have seen the Magna Carta.
 Dracula Flow: I have seen the Eye of Horror.
-Dracula Flow: I was flipping bricks for Mansa Musa before y'all even became a type-one civilisation.
+Dracula Flow: I was flipping bricks for Mansa Musa before y'all even became a type-1 civilisation.
 ===
 
 title: Flow
 when: once
----
-Dracula Flow: I can see the pattern now. All my enemies must go the therapy.
-===
-
-title: Flow
-when: once
+when: DraculasFlow() == 1
 ---
 Dracula Flow: I have no loyalty for anyone - never did, never will.
 ===
 
 title: Flow
 when: once
+when: DraculasFlow() == 1
 ---
 Dracula Flow: On and off the court straight fundamentals. No funny business.
 ===
 
 title: Flow
 when: once
----
-Dracula Flow: Moving like Dracula, we get it back in blood.
-===
-
-title: Flow
-when: once
+when: DraculasFlow() == 2
 ---
 Dracula Flow: They ask me to shoot, I do it. I have no character.
 ===
 
 title: Flow
 when: once
+when: DraculasFlow() == 2
 ---
 Dracula Flow: You can't trust me. I dont even trust myself.
 ===
 
 title: Flow
 when: once
+when: DraculasFlow() == 3
 ---
 Dracula Flow: They must have amnesia. They forgot that I'm Him.
 ===
 
 title: Flow
 when: once
+when: DraculasFlow() == 1
 ---
 Dracula Flow: Reach for my neck, you'll get turned into an example.
 ===
 
 title: Flow
 when: once
+when: DraculasFlow() == 3
 ---
 Dracula Flow: I pushed the camel through the eye of the needle.
 ===
 
 title: Flow
 when: once
+when: DraculasFlow() == 3
 ---
 Dracula Flow: Didn't drink any water all day.
 ===
 
 title: Flow
 when: once
+when: DraculasFlow() == 2
 ---
 Dracula Flow: Ring so heavy I can't answer the phone.
 ===
 
 title: Flow
 when: once
+when: DraculasFlow() == 2
 ---
 Dracula Flow: Got the registered God Particle on my hip.
 ===
 
 title: Flow
 when: once
+when: DraculasFlow() == 1
+when: LevelName() == "3_Level"
 ---
 Dracula Flow: I have the blueprint to the catacombs.
 ===
 
 title: Flow
 when: once
+when: DraculasFlow() == 2
 ---
 Dracula Flow: I see the pattern now, all my enemies must go to therapy.
 ===
 
 title: Flow
 when: once
+when: DraculasFlow() == 2
 ---
 Dracula Flow: This shit ain't nothing to me man.
 ===
 
 title: Flow
 when: once
+when: DraculasFlow() == 2
 ---
 Dracula Flow: I have no loyalty for anyone - never did, never will.
 ===
 
 title: Flow
 when: once
----
-Dracula Flow: On and off the court straight fundamentals. No funny business.
-===
-
-title: Flow
-when: once
+when: DraculasFlow() == 1
 ---
 Dracula Flow: Step the wrong way and you will perish.
 ===
 
 title: Flow
 when: once
+when: DraculasFlow() == 1
 ---
 Dracula Flow: I'm Dracula. I'm twelve million years old.
 ===
 
 title: Flow
 when: once
+when: DraculasFlow() == 1
 ---
-Dracula Flow: I have more perks than there are stars in the Leo Cluster.
-Dracula Flow: I'm claiming every corner--
-Dracula Flow: Every block--
-Dracula Flow: I'm coming for every enzyme.
+Dracula Flow: I need to see absolutely everything.
+===
+
+
+title: Flow
+when: once
+when: DraculasFlow() == 3
+---
+Dracula Flow: I have more perks than there are stars in the Leo Cluster
+Dracula Flow: I'm claiming every corner
+Dracula Flow: Every block
+Dracula Flow: I'm coming for every enzyme
 ===
 
 title: Flow
 when: once
+when: DraculasFlow() == 3
 ---
-Dracula Flow: I have no morals or belief system.
-Dracula Flow: I have no spirituality or anything that gives my life meaning or structure.
-Dracula Flow: They asked me to shoot, I do it.
-Dracula Flow: I have no character.
+Dracula Flow: I have no morals or belief system
+Dracula Flow: I have no spirituality or anything that gives my life meaning or structure
+Dracula Flow: They asked me to shoot, I do it
+Dracula Flow: I have no character
 ===
+
+title: Flow
+when: once
+when: DraculasFlow() == 3
+---
+Dracula Flow: You think I care about this shit?
+Dracula Flow: Ask me if I care about this shit, cause I don't give a shit
+Dracula Flow: If I had a dollar for every time they said I gave a shit
+Dracula Flow: I'd be broke cause I don't give a shit
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 3
+---
+Dracula Flow: This shit ain't nothin' to me, you stupid piece of shit
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 2
+---
+Dracula Flow: Cops wanna detain me for aggressively hitting the claw machine.
+Dracula Flow: I'm trying to explain to him that we are all just atoms so he might as well let me go.
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 3
+---
+Dracula Flow: Ops wanted some initiative, blew up their entire quadrant
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 3
+---
+Dracula Flow: Motherfucker looked like a Resident Evil 5 campaign extra after we was done with him
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 3
+---
+Dracula Flow: I threw diamonds at the strip clubs under the Great Pyramids
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 3
+---
+Dracula Flow: Last guy who ran off on the pack got choked out by some Givenchy gloves
+Dracula Flow: The last thing he ever saw was the price tag on them
+Dracula Flow: Slowly faded into darkness and I let the archangels take him
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 3
+---
+Dracula Flow: I don't give a fuck if I go blind
+Dracula Flow: I don't need to see the price tag anyways
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 3
+---
+Dracula Flow: We smokin' that IBM Quantum Computer
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 3
+---
+Dracula Flow: This Smith & Wesson got me movin' like an invasive species
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 3
+---
+Dracula Flow: What the fuck is Obamacare
+Dracula Flow: Hey Obama
+Dracula Flow: I don't care about shit
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 3
+---
+Dracula Flow: Spun around the block so many times
+Dracula Flow: They thought it was fucking Minecraft
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 2
+---
+Dracula Flow: The Vatican wants to wet me up with silver bullets
+Dracula Flow: But I'm on a god damn samurai pill.
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 2
+---
+Dracula Flow: You see it.
+Dracula Flow: I really did this.
+Dracula Flow: I'm really him.
+===
+
+
+title: Flow
+when: once
+when: DraculasFlow() == 2
+---
+Dracula Flow: Chanel optics got me seein' shit.
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 2
+---
+Dracula Flow: We smokin' dung beetle.
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 3
+---
+Dracula Flow: Learned how to load the 9mm Canik and changed the trajectory of everything
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 3
+---
+Dracula Flow: They told me I wouldn't shake the city
+Dracula Flow: So I shook that shit like a crying toddler
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 3
+---
+Dracula Flow: Hit the gelato papaya, took a sip of the Jose, everything turned red for eight minutes
+Dracula Flow: Woke up in Geneva, oh man, I did it again, didn't I?
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 3
+---
+Dracula Flow: This blunt is overwhelmingly large
+Dracula Flow: This blunt has a pulse
+Dracula Flow: This blunt got veins pumping through it
+Dracula Flow: This blunt curve right at the tip
+Dracula Flow: This blunt looks like it's been pushed out
+Dracula Flow: This blunt has a family somewhere worried as hell
+Dracula Flow: I ain't even gonna hide it no more
+Dracula Flow: This blunt feels like a solid, fibrous piece of shit, straight up
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 3
+---
+Dracula Flow: Balanced diets, lots of fruit and vegetables
+Dracula Flow: Would honestly float in the water, which is a sign of good health
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 2
+---
+Dracula Flow: I got interdimensional demons dropping the pin as we speak
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 3
+---
+Dracula Flow: I don't wanna kill them, shut up
+Dracula Flow: I don't wanna kill anybody
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 2
+---
+Dracula Flow: The casualties you will suffer trying to fuck with me will have you thinking like Magnus Carlson
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 2
+---
+Dracula Flow: Rome wasn't built in a day but this 9mm certainly was
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 3
+---
+Dracula Flow: I believe in you. You can accomplish anything you want in this life.
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 3
+---
+Dracula Flow: We smoking eucalyptus pigeon shit
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 3
+---
+Dracula Flow: Shorty's head built like the Warner Brothers logo
+Dracula Flow: Shorty's head built like Damian Lillard
+Dracula Flow: Shorty's head built like an asteroid
+Dracula Flow: Shorty's head built like a Bionicle
+Dracula Flow: Shorty's head built like a garlic knot
+Dracula Flow: Shorty head built like a Chevrolet
+Dracula Flow: Shorty head built like Papua New Guinea
+Dracula Flow: Shorty built like a South Park character
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 3
+---
+Dracula Flow: Ops wanted some initiative, blew up their entire quadrant
+Dracula Flow: I'm movin' like Oppenheimer
+===
+
+title: Flow
+when: once
+when: DraculasFlow() == 2
+---
+Dracula Flow: The day I go broke will be the day hell freezes over.
+===
+
