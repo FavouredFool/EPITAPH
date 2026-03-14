@@ -17,7 +17,7 @@ public class AmmoUID : MonoBehaviour
     public void RefreshUID(Signal_RefreshUI_Ammo signal)
     {
         float value= signal.variables.CurrentAmmoCount;
-        float max= signal.variables.CurrentBoltsHeld.Count;
+        float max= signal.variables.GetCurrentBoltsHeld().Count;
 
         for(int i=0; i<_ammoMarkers.Length; i++)
         {

@@ -100,6 +100,12 @@ public class MenuUIDManager : MonoBehaviour
         #endif
     }
 
+    public void LoadLevel(string levelName)
+    {
+        Debug.Log("LOAD SCENE "+levelName);
+        SceneManager.LoadScene(levelName);
+    }
+
     public void IncrimentVolume(string variableName = "VolumeMaster")
     {
         int volume= PlayerPrefs.GetInt(variableName,0);

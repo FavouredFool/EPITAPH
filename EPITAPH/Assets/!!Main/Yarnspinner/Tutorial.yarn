@@ -21,3 +21,8 @@ Attention: <sprite name="LB"> Parry enemy attacks!
 <sprite name="R"> Aim, then <sprite name="RB"> Dash to bolts.
 <sprite name="RB"> Dash to staked enemies and regain health.
 ===
+
+title: LevelOver
+---
+There is no prey left here. Head to the exit to continue.
+===

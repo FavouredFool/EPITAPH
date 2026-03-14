@@ -14,14 +14,14 @@ public class ProgressionVariables : ScriptableObject
         get => _level;
         set
         {
-            _level = Mathf.Clamp(value, 0, _levelSceneNames.Count);
+            _level = Mathf.Clamp(value, 0, _levelSceneNames.Count-1);
         }
     }
     public string LevelName => Level>=_levelSceneNames.Count?"_End": _levelSceneNames[Level];
 
     public void SetLevel(string name)
     {
-        _level = _levelSceneNames.IndexOf(name);
+        Level = _levelSceneNames.IndexOf(name);
     }
     
 }

@@ -10,16 +10,16 @@ public class PlayerVariables : ScriptableObject
     [SerializeField] int _healthMax;
 
 [Header("Ammo")]
-    public Dictionary<BoltType, BoltController> CurrentBoltsHeld { get; set; }
+    Dictionary<BoltType, BoltController> _currentBoltsHeld { get; set; }
     //[SerializeField] int _ammo;
     //[SerializeField] int _ammoMax;
 
 [Header("Charge")]
     [SerializeField] int _charge;
     [SerializeField] int _chargeMax;
-        [SerializeField] float _chargeProgress;
+    [SerializeField] float _chargeProgress;
 
-        [Header("Style")]
+    [Header("Style")]
     [SerializeField] int _style;
     [SerializeField] int _styleMax;
     [SerializeField] float _styleResetTime;
@@ -66,13 +66,13 @@ public class PlayerVariables : ScriptableObject
 
     public void AddAmmo(BoltType type)
     {
-        CurrentBoltsHeld[type] = null;
+        _currentBoltsHeld[type] = null;
         SignalBus.Fire(new Signal_RefreshUI_Ammo(this));
     }
 
     public void LoseAmmo(BoltController bolt)
     {
-        CurrentBoltsHeld[bolt.BoltType] = bolt;
+        _currentBoltsHeld[bolt.BoltType] = bolt;
         SignalBus.Fire(new Signal_RefreshUI_Ammo(this));
     }
     
@@ -82,7 +82,7 @@ public class PlayerVariables : ScriptableObject
         {
             int countAmmo = 0;
 
-            foreach (var bolts in CurrentBoltsHeld.Values)
+            foreach (var bolts in _currentBoltsHeld.Values)
             {
                 if (bolts == null)
                 {
@@ -113,4 +113,15 @@ public class PlayerVariables : ScriptableObject
         Health -= 1;
     }
     [ContextMenu("Heal Health Test")] public void HealTest() => HealMax();
+
+    public void SetCurrentBoltsHeld(Dictionary<BoltType, BoltController> currentBoltsHeld)
+    {
+        _currentBoltsHeld = currentBoltsHeld;
+        SignalBus.Fire(new Signal_RefreshUI_Ammo(this));
+    }
+
+    public Dictionary<BoltType, BoltController> GetCurrentBoltsHeld()
+    {
+        return _currentBoltsHeld;
+    }
 }

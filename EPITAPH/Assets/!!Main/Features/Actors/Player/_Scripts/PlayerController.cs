@@ -199,12 +199,12 @@ public class PlayerController : MonoBehaviour
 
         Rb = GetComponent<Rigidbody2D>();
 
-        PlayerVariableAnchor.PlayerVariables.CurrentBoltsHeld = new Dictionary<BoltType, BoltController>
+        PlayerVariableAnchor.PlayerVariables.SetCurrentBoltsHeld(new Dictionary<BoltType, BoltController>
         {
             [BoltType.DOWN] = null,
             [BoltType.LEFT] = null,
             [BoltType.UP] = null,
-        };
+        });
 
         PADScriptableObject.Setup(this.gameObject);
         
@@ -427,7 +427,7 @@ public class PlayerController : MonoBehaviour
 
     public BoltType GetBoltTypeToShoot()
     {
-        foreach (var kv in PlayerVariableAnchor.PlayerVariables.CurrentBoltsHeld.Where(kv => kv.Value == null))
+        foreach (var kv in PlayerVariableAnchor.PlayerVariables.GetCurrentBoltsHeld().Where(kv => kv.Value == null))
         {
             return kv.Key;
         }
@@ -480,7 +480,7 @@ public class PlayerController : MonoBehaviour
 
     public void UpdateActiveBolt(bool toggleAllOff)
     {
-        BoltController[] bolts = PlayerVariableAnchor.PlayerVariables.CurrentBoltsHeld.Select(e => e.Value).Where(e => e != null).ToArray();
+        BoltController[] bolts = PlayerVariableAnchor.PlayerVariables.GetCurrentBoltsHeld().Select(e => e.Value).Where(e => e != null).ToArray();
 
         BoltController bestBolt = null;
         float bestAngle = float.PositiveInfinity;
@@ -518,7 +518,7 @@ public class PlayerController : MonoBehaviour
 
     public void UseActiveBolt()
     {
-        BoltController activeBolt = PlayerVariableAnchor.PlayerVariables.CurrentBoltsHeld.FirstOrDefault(e => e.Value != null && e.Value.IsActivatable).Value;
+        BoltController activeBolt = PlayerVariableAnchor.PlayerVariables.GetCurrentBoltsHeld().FirstOrDefault(e => e.Value != null && e.Value.IsActivatable).Value;
 
         if (activeBolt == null) return;
         
@@ -558,6 +558,8 @@ public class PlayerController : MonoBehaviour
         
         if (other.GetComponentInParent<EnemyController>() is { } enemy)
         {
+            if (enemy.StateMachine.CurrentState is StakedState) return;
+            
             // same comment as above
             if (StateMachine.CurrentState is LungeState)
             {
