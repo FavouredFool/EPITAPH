@@ -558,6 +558,8 @@ public class PlayerController : MonoBehaviour
         
         if (other.GetComponentInParent<EnemyController>() is { } enemy)
         {
+            if (enemy.StateMachine.CurrentState is StakedState) return;
+            
             // same comment as above
             if (StateMachine.CurrentState is LungeState)
             {
