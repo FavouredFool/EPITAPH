@@ -21,22 +21,31 @@ public class YarnManager : MonoBehaviour
         SignalBus.Unsubscribe<Signal_DialogueForceContinue>(ForceContinueDialogue);
         SignalBus.Unsubscribe<Signal_StartDialogue>(SpinYarn);
     }
-
     public void SpinYarn(Signal_StartDialogue signal) => SpinYarn(signal.nodeName);
     public async void SpinYarn(string nodeName)
     {
         if (_dialogueRunner.IsDialogueRunning)
         {
-            await _dialogueRunner.Stop();
-            Debug.LogWarning("Dialogue started while it was already running!");
-            
+            if (nodeName == "Dracula")
+            {
+                ContinueDialogue();
+                return;
+            }
+            else
+            {
+                await _dialogueRunner.Stop();
+                Debug.LogWarning("Dialogue started while it was already running!");
+            }
         }
+        DialogueUIDManager.IsDraculaFlowing=false;
+        DialogueUIDManager.LastDraculaFlowTime=Time.time;
         ToggleDefaultDialogueContinue(true);
         SignalBus.Fire(new Signal_DialogueToggled( true));
         await _dialogueRunner.StartDialogue(nodeName);
     }
     public void OnEndDialogue()
     {
+        DialogueUIDManager.IsDraculaFlowing=false;
         SignalBus.Fire(new Signal_ToggleFreeze(false));
         SignalBus.Fire(new Signal_DialogueToggled(false));
     }
@@ -49,8 +58,11 @@ public class YarnManager : MonoBehaviour
     [YarnCommand("DoNothing")] public static void DoNothing(){}
     public void ContinueDialogue()
     {
-        if(_dialogueRunner.IsDialogueRunning)
+        if (_dialogueRunner.IsDialogueRunning)
+        {
+            DialogueUIDManager.LastDraculaFlowTime=Time.time;
             _dialogueRunner.RequestNextLine();
+        }
     }
 
     public void ForceContinueDialogue(Signal_DialogueForceContinue signal) => ContinueDialogue();

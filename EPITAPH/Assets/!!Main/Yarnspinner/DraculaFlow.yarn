@@ -2,7 +2,10 @@
 ---
 <<if DraculasFlow() > 0>>
 <<ToggleDraculaFlow true>>
-<<jump Flow>>
+<<detour Flow>>
+<<endif>>
+<<if DraculasFlow() >=3>>
+<<jump Dracula>>
 <<endif>>
 ===
 title: Flow
