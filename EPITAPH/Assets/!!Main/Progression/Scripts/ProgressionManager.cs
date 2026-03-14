@@ -10,14 +10,5 @@ public class ProgressionManager : MonoBehaviour
         if (!baseScene.isLoaded)
         SceneManager.LoadScene("_GameBase", LoadSceneMode.Additive);
     }
-    public static void LoadNextLevel()
-    {
-        ProgressionVariables progressionVariables = ProgressionVariableAnchor.ProgressionVariables;
-
-        SceneManager.UnloadSceneAsync(progressionVariables.LevelName);
-        progressionVariables.Level++;
-        string levelname = progressionVariables.LevelName;
-        SceneManager.LoadScene(levelname,levelname=="_End"? LoadSceneMode.Single: LoadSceneMode.Additive);
-    }
 
 }

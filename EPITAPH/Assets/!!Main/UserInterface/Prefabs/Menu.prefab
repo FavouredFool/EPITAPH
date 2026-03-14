@@ -4440,7 +4440,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6993024755280900675, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_text
-      value: 3. Glasshouse
+      value: 3. Vitrum
       objectReference: {fileID: 0}
     - target: {fileID: 8102628075893724787, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_Name
