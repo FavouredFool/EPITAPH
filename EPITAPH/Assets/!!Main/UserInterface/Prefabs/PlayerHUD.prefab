@@ -1363,7 +1363,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Epitaph
+  m_text: 'Epitaph
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bf34777b82bc2a64a83a4f308fa1e192, type: 2}
   m_sharedMaterial: {fileID: 1224085588783110384, guid: bf34777b82bc2a64a83a4f308fa1e192, type: 2}
@@ -1866,7 +1868,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Epitaph
+  m_text: 'Epitaph
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bf34777b82bc2a64a83a4f308fa1e192, type: 2}
   m_sharedMaterial: {fileID: 1224085588783110384, guid: bf34777b82bc2a64a83a4f308fa1e192, type: 2}
@@ -2870,7 +2874,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -19.333}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -7.2991943, y: 2.7187958}
+  m_AnchoredPosition: {x: -7.2990723, y: 2.7187958}
   m_SizeDelta: {x: -55.8816, y: 2191.0095}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4828995263710517986
@@ -4286,8 +4290,8 @@ RectTransform:
   m_GameObject: {fileID: 8269192355370433530}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1712834356972737496}
   m_Father: {fileID: 6021335815692159092}
@@ -4325,7 +4329,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Epitaph
+  m_text: 'Epitaph
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bf34777b82bc2a64a83a4f308fa1e192, type: 2}
   m_sharedMaterial: {fileID: 1224085588783110384, guid: bf34777b82bc2a64a83a4f308fa1e192, type: 2}

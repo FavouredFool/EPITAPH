@@ -46,6 +46,7 @@ public class YarnManager : MonoBehaviour
         IsDefaultDialogueContinueActive = on;
         SignalBus.Fire(new Signal_DialogueDefaultContinueToggled(IsDefaultDialogueContinueActive));
     }
+    [YarnCommand("DoNothing")] public static void DoNothing(){}
     public void ContinueDialogue()
     {
         if(_dialogueRunner.IsDialogueRunning)
