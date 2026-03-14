@@ -1,6 +1,8 @@
 ﻿title: Dracula
 ---
+<<if DraculasFlow() > 0>>
 <<jump Flow>>
+<<endif>>
 ===
 title: Flow
 when: always
@@ -10,6 +12,7 @@ when: always
 
 title: Flow
 when: LevelName() == "2_Level"
+when: DraculasFlow() >= 2
 ---
 Dracula Flow: There are consequences to your crimes against dracula.
 ===
