@@ -19,6 +19,7 @@ Dracula Flow: There are consequences to your crimes against dracula.
 ===
 
 title: Flow
+when: once
 when: LevelName() == "2_Level"
 when: DraculasFlow() == 2
 ---
@@ -27,6 +28,7 @@ Dracula Flow: I have no sympathy, I live for this shit.
 
 
 title: Flow
+when: once
 when: DraculasFlow() == 2
 ---
 Dracula Flow: I have seen the Magna Carta.
