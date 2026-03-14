@@ -19,6 +19,9 @@ public class RavageState : VampireBaseState
         
         _ctx.PlayerController.ExplosionVFXObject.Play();
         PlayerAudio.PlayBite();
+
+        if(MenuUIDManager.CheckOutDraculasFlow()==3)
+            SignalBus.Fire(new Signal_StartDialogue("Dracula"));
     }
     
     public override void Update()
