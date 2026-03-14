@@ -3124,7 +3124,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6956536910673448721
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3182,7 +3182,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4316179971161721049
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4263,7 +4263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6993024755280900675, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_text
-      value: 2. Cathedral
+      value: 2. Gallery
       objectReference: {fileID: 0}
     - target: {fileID: 8102628075893724787, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_Name
@@ -4409,7 +4409,7 @@ PrefabInstance:
     - target: {fileID: 6588962408509866407, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_Navigation.m_SelectOnRight
       value: 
-      objectReference: {fileID: 1801426382365143861}
+      objectReference: {fileID: 2122438600107243465}
     - target: {fileID: 6588962408509866407, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 5
@@ -4440,7 +4440,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6993024755280900675, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_text
-      value: 3. Glasshouse
+      value: 3. Catacombs
       objectReference: {fileID: 0}
     - target: {fileID: 8102628075893724787, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_Name
@@ -5041,7 +5041,7 @@ PrefabInstance:
     - target: {fileID: 6588962408509866407, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_Navigation.m_SelectOnDown
       value: 
-      objectReference: {fileID: 7718302132298880943}
+      objectReference: {fileID: 2122438600107243465}
     - target: {fileID: 6588962408509866407, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_Navigation.m_SelectOnLeft
       value: 
@@ -5076,7 +5076,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6993024755280900675, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_text
-      value: 6. Pyre
+      value: 6. Vitrum
       objectReference: {fileID: 0}
     - target: {fileID: 8102628075893724787, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_Name
@@ -5212,8 +5212,20 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6588962408509866407, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 1801426382365143861}
+    - target: {fileID: 6588962408509866407, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 5358276982134239818}
+    - target: {fileID: 6588962408509866407, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 7718302132298880943}
+    - target: {fileID: 6588962408509866407, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6588962408509866407, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -5221,7 +5233,7 @@ PrefabInstance:
       objectReference: {fileID: 8075099583954232297}
     - target: {fileID: 6588962408509866407, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OpenMenu
+      value: LoadLevel
       objectReference: {fileID: 0}
     - target: {fileID: 6588962408509866407, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -5230,28 +5242,43 @@ PrefabInstance:
     - target: {fileID: 6588962408509866407, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 3345322731173364877}
+      objectReference: {fileID: 0}
+    - target: {fileID: 6588962408509866407, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: 7_Level
+      objectReference: {fileID: 0}
     - target: {fileID: 6588962408509866407, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: MenuScreen, Assembly-CSharp
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6993024755280900675, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_text
-      value: Quit
+      value: 7. Pyre
       objectReference: {fileID: 0}
     - target: {fileID: 8102628075893724787, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_Name
-      value: Button_Quit
+      value: Button_Level7
       objectReference: {fileID: 0}
     - target: {fileID: 8102628075893724787, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
+--- !u!114 &2122438600107243465 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6588962408509866407, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
+  m_PrefabInstance: {fileID: 5045395870247958126}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!224 &8317457216629754122 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3848699211870895972, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
@@ -5966,7 +5993,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6993024755280900675, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_text
-      value: 5. Ossuary
+      value: '5. Cathedral
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 8102628075893724787, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_Name
@@ -6626,7 +6655,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6993024755280900675, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_text
-      value: 4. Catacombs
+      value: 4. Ossuary
       objectReference: {fileID: 0}
     - target: {fileID: 8102628075893724787, guid: 4652576313585634bad5e23b02d14b5e, type: 3}
       propertyPath: m_Name

@@ -604,6 +604,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: QuitApplication
       objectReference: {fileID: 0}
+    - target: {fileID: 8421595952088693092, guid: 1d631579d2d39ff4a839b4a3ae4106ef, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8639323320256929295, guid: 1d631579d2d39ff4a839b4a3ae4106ef, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class LevelDoor : MonoBehaviour
 {
+    public string levelName;
     private bool AllEnemiesDefeated => deadEnemyCount>=enemyCount;
     private int enemyCount;
     private int deadEnemyCount;
@@ -59,7 +61,7 @@ public class LevelDoor : MonoBehaviour
         {
             MusicPlayer.StopEnemiesGone();
 
-            ProgressionManager.LoadNextLevel();
+           SceneManager.LoadScene(levelName);
         }
 
         counterObject.SetActive(true);
