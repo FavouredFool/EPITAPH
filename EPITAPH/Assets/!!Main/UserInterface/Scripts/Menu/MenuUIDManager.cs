@@ -12,9 +12,9 @@ public class MenuUIDManager : MonoBehaviour
     _bodyRect,_glowRect;
 
     [SerializeField] MenuScreen
-        _mainMenu,
-        _optionMenu,
-        _audioOptionMenu;
+        _mainMenu;
+
+        [SerializeField] MenuScreen[] _allMenus;
 
     MenuScreen _currentMenu=null;
 
@@ -38,11 +38,13 @@ public class MenuUIDManager : MonoBehaviour
             Toggle(false);
             return;
         }
-        if(_currentMenu == nextMenu) return;
+        if (_currentMenu == nextMenu) return;
 
-        _currentMenu?.Toggle(false);
         _currentMenu = nextMenu;
-        _currentMenu.Toggle(true);
+        foreach (MenuScreen screen in _allMenus)
+        {
+            screen.Toggle(screen == _currentMenu);
+        }
 
         Toggle(true);
     }
