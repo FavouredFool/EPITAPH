@@ -292,6 +292,13 @@ MonoBehaviour:
       Data3: -1669752669
       Data4: 657173584
     Path: event:/Music/Track_00
+  EnemiesGoneEvent:
+    Guid:
+      Data1: 1543564580
+      Data2: 1174134105
+      Data3: -1958635859
+      Data4: -1284439311
+    Path: snapshot:/EnemysGone
   lookahead: 0.2
 --- !u!4 &332535528
 Transform:
@@ -1552,8 +1559,8 @@ MonoBehaviour:
   _bodyRect: {fileID: 6023796505368585440}
   _glowRect: {fileID: 8939131057739779451}
   _mainMenu: {fileID: 1111666251861643221}
-  _optionMenu: {fileID: 1146311958}
-  _audioOptionMenu: {fileID: 1146311958}
+  _allMenus:
+  - {fileID: 1111666251861643221}
 --- !u!1 &8421595952827698234
 GameObject:
   m_ObjectHideFlags: 0
